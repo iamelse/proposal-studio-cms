@@ -58,6 +58,9 @@ Route::get('/clear-caches', function () {
     Artisan::call('cache:clear');
     Artisan::call('route:clear');
 
+    // Clear permission cache
+    Artisan::call('permission:cache-reset');
+
     // (Optional) Cache again if you want
     // Artisan::call('config:cache');
     // Artisan::call('route:cache');
