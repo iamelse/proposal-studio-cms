@@ -45,10 +45,23 @@ Route::get('/refresh-database', function () {
 });
 
 Route::get('/route-cache', function () {
+    Artisan::call('permission:cache-reset');
     Artisan::call('route:cache');
 
     return response()->json([
         'message' => 'Routes cached successfully!',
+    ]);
+});
+
+Route::get('/debug-permissions', function () {
+    $user = auth()->user();
+    if (!$user) {
+        return response()->json(['error' => 'Not authenticated'], 401);
+    }
+
+    return response()->json([
+        'roles' => $user->getRoleNames(),
+        'permissions' => $user->getAllPermissions()->pluck('name'),
     ]);
 });
 
