@@ -2,9 +2,6 @@
 
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
-use Carbon\Carbon;
 
 Route::get('/config-clear', function () {
     Artisan::call('config:clear');
@@ -57,11 +54,14 @@ Route::get('/clear-caches', function () {
     Artisan::call('config:clear');
     Artisan::call('cache:clear');
     Artisan::call('route:clear');
+    Artisan::call('config:cache');
+    Artisan::call('view:clear');
+    Artisan::call('optimize:clear');
+    Artisan::call('view:cache');
+
 
     // Clear permission cache
     Artisan::call('permission:cache-reset');
-
-    Artisan::call('config:cache');
 
     return response()->json([
         'message' => 'Caches cleared and permission cache reset',
