@@ -61,9 +61,7 @@ Route::get('/clear-caches', function () {
     // Clear permission cache
     Artisan::call('permission:cache-reset');
 
-    // (Optional) Cache again if you want
-    // Artisan::call('config:cache');
-    // Artisan::call('route:cache');
+    Artisan::call('config:cache');
 
     return response()->json([
         'message' => 'Caches cleared and permission cache reset',
