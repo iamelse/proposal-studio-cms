@@ -45,11 +45,28 @@ Route::get('/refresh-database', function () {
 });
 
 Route::get('/route-cache', function () {
-    Artisan::call('permission:cache-reset');
     Artisan::call('route:cache');
 
     return response()->json([
         'message' => 'Routes cached successfully!',
+    ]);
+});
+
+Route::get('/clear-caches', function () {
+    // Clear config, route, cache
+    Artisan::call('config:clear');
+    Artisan::call('cache:clear');
+    Artisan::call('route:clear');
+
+    // Clear permission cache
+    Artisan::call('permission:cache-reset');
+
+    // (Optional) Cache again if you want
+    // Artisan::call('config:cache');
+    // Artisan::call('route:cache');
+
+    return response()->json([
+        'message' => 'Caches cleared and permission cache reset',
     ]);
 });
 
