@@ -1,0 +1,12 @@
+<svg
+    width="48"
+    height="48"
+    viewBox="0 0 48 48"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+>
+    <path
+        d="M42 0H6C4.34175 0 3 1.34175 3 3V45C3 46.6582 4.34175 48 6 48H21V36H27V48H42C43.6582 48 45 46.6582 45 45V3C45 1.34175 43.6582 0 42 0ZM21 30H15V24H21V30ZM21 18H15V12H21V18ZM33 30H27V24H33V30ZM33 18H27V12H33V18Z"
+        fill="#05408C"
+    />
+</svg>
