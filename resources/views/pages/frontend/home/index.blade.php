@@ -124,7 +124,7 @@
             </div>
         </div>
         <figure class="max-w-xl mt-5 lg:mt-0">
-            <img class="object-cover w-full h-full rounded-lg" src="https://www.proposal-studio.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofil.26ea71de.jpg&w=3840&q=75" alt="Foto Profil Proposal Studio">
+            <img class="object-cover w-full h-full rounded-lg" src="https://proposalstudio.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofil.26ea71de.jpg&w=3840&q=75" alt="Foto Profil Proposal Studio">
         </figure>
     </section>
 
