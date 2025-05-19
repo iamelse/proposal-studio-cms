@@ -32,4 +32,9 @@ Route::prefix('admin')->middleware('is.auth')->group(function () {
 
 
 include __DIR__ . '/web/frontend/web.php';
-include __DIR__ .'/dev-idcloudhost.php';
+
+if (app()->environment(['local', 'staging'])) {
+    include __DIR__ . '/dev-idcloudhost.php';
+} else {
+    abort(404);
+}
