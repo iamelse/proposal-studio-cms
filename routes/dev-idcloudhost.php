@@ -45,7 +45,6 @@ Route::get('/refresh-database', function () {
 });
 
 Route::get('/route-cache', function () {
-    Artisan::call('permission:cache-reset');
     Artisan::call('route:cache');
 
     return response()->json([
@@ -58,9 +57,6 @@ Route::get('/clear-caches', function () {
     Artisan::call('config:clear');
     Artisan::call('cache:clear');
     Artisan::call('route:clear');
-
-    // Clear permission cache
-    Artisan::call('permission:cache-reset');
 
     // (Optional) Cache again if you want
     // Artisan::call('config:cache');
