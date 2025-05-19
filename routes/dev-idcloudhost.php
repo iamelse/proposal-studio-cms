@@ -77,6 +77,7 @@ Route::get('/debug-permissions', function () {
     }
 
     return response()->json([
+        'user' => $user,
         'roles' => $user->getRoleNames(),
         'permissions' => $user->getAllPermissions()->pluck('name'),
     ]);
