@@ -45,6 +45,7 @@ Route::get('/refresh-database', function () {
 });
 
 Route::get('/route-cache', function () {
+    Artisan::call('permission:cache-reset');
     Artisan::call('route:cache');
 
     return response()->json([
