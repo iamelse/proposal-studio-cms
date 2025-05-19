@@ -32,7 +32,7 @@ Route::get('/optimize-clear', function () {
 
 Route::get('/refresh-database', function () {
 
-    //Artisan::call('session:table');
+    Artisan::call('session:table');
 
     Artisan::call('migrate:fresh', [
         '--seed' => true,
