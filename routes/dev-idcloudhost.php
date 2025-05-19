@@ -31,7 +31,13 @@ Route::get('/optimize-clear', function () {
 });
 
 Route::get('/refresh-database', function () {
-    Artisan::call('migrate:fresh --seed');
+
+    Artisan::call('session:table');
+
+    Artisan::call('migrate:fresh', [
+        '--seed' => true,
+        '--force' => true
+    ]);
 
     return response()->json([
         'message' => 'Database refreshed successfully!',
