@@ -14,11 +14,11 @@
         <div class="flex items-center space-x-2 dark:hidden">
           <img
               class="h-10 w-auto rounded"
-              src="{{ asset('logo/iamelse-logo-1.png') }}"
+              src="{{ asset('assets/images/logo.svg') }}"
               alt="Logo"
           />
-          <span class="ps-1 text-3xl font-bold text-gray-900 dark:text-white">
-            Iamelse
+          <span class="ps-1 text-2xl font-bold text-gray-900 dark:text-white">
+            Proposal Studio
           </span>
         </div>
 
@@ -26,11 +26,11 @@
         <div class="flex items-center space-x-2 hidden dark:flex">
           <img
               class="h-10 w-auto rounded"
-              src="{{ asset('logo/iamelse-logo-1.png') }}"
+              src="{{ asset('assets/images/logo.svg') }}"
               alt="Logo"
           />
-          <span class="ps-1 text-3xl font-bold text-gray-900 dark:text-white">
-            Iamelse
+          <span class="ps-1 text-2xl font-bold text-gray-900 dark:text-white">
+            Proposal Studio
           </span>
         </div>
       </span>
@@ -39,7 +39,7 @@
       <img
           class="logo-icon hidden lg:block rounded h-10 w-10"
           :class="{ 'lg:block': sidebarToggle, 'lg:hidden': !sidebarToggle }"
-          src="{{ asset('logo/iamelse-logo-1.png') }}"
+          src="{{ asset('assets/images/logo.svg') }}"
           alt="Logo"
       />
     </a>

@@ -13,7 +13,6 @@
     <div class="hidden lg:flex items-center gap-6 font-medium text-base lg:text-lg text-[#1f2328]">
         <a href="#home" class="hover:text-[#05408C] hover:underline underline-offset-4">Beranda</a>
         <a href="#about" class="hover:text-[#05408C] hover:underline underline-offset-4">Tentang Kami</a>
-        <a href="#about" class="hover:text-[#05408C] hover:underline underline-offset-4">Team Kami</a>
         <a href="#service" class="hover:text-[#05408C] hover:underline underline-offset-4">Layanan Kami</a>
         <a href="#proposal" class="hover:text-[#05408C] hover:underline underline-offset-4">Klien</a>
         <a href="#event" class="hover:text-[#05408C] hover:underline underline-offset-4">Kegiatan</a>
@@ -49,7 +48,6 @@
     <div class="flex flex-col p-5 gap-6">
         <a href="#home" class="text-base font-medium hover:text-[#05408C]">Beranda</a>
         <a href="#about" class="text-base font-medium hover:text-[#05408C]">Tentang Kami</a>
-        <a href="#about" class="text-base font-medium hover:text-[#05408C]">Team Kami</a>
         <a href="#service" class="text-base font-medium hover:text-[#05408C]">Layanan Kami</a>
         <a href="#proposal" class="text-base font-medium hover:text-[#05408C]">Klien</a>
         <a href="#event" class="text-base font-medium hover:text-[#05408C]">Kegiatan</a>

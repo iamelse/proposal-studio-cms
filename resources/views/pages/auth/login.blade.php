@@ -36,7 +36,7 @@
                               <!-- Error Message -->
                               <span class="text-xs mt-1 font-medium text-red-500 dark:text-red-500" x-show="hasError">
                                  @error('identity') * {{ $message }} @enderror
-                             </span>                            
+                             </span>
                         </div>
                      </div>
                      <!-- Password -->
@@ -66,6 +66,7 @@
                         </div>
                      </div>
                      <!-- Checkbox -->
+                     <!--
                      <div class="flex items-center justify-between">
                         <div x-data="{ checkboxToggle: false, hasError: {{ session('errors') && session('errors')->has('password') ? 'true' : 'false' }} }" :class="hasError ? 'pt-5' : 'pt-0' ">
                            <label for="checkboxLabelOne" class="flex cursor-pointer select-none items-center text-sm font-normal text-gray-700 dark:text-gray-400">
@@ -107,7 +108,7 @@
                            class="text-sm text-brand-500 hover:text-brand-600 dark:text-brand-400"
                            >Forgot password?</a
                            >
-                     </div>
+                     </div> -->
                      <!-- Button -->
                      <div>
                         <button
@@ -124,17 +125,18 @@
       </div>
    </div>
    <div
-      class="relative z-1 hidden flex-1 items-center justify-center bg-brand-950 p-8 dark:bg-white/5 lg:flex"
+      class="relative z-1 hidden flex-1 items-center justify-center bg-brandBase p-8 dark:bg-white/5 lg:flex"
       >
       <!-- ===== Common Grid Shape Start ===== -->
-      <include src="./partials/common-grid-shape.html"></include>
+
       <!-- ===== Common Grid Shape End ===== -->
       <div class="flex max-w-xs flex-col items-center">
-         <a href="index.html" class="mb-4 block">
-         <img src="{{ asset('tailadmin/images/logo/auth-logo.svg') }}" alt="Logo" />
-         </a>
-         <p class="text-center text-gray-400 dark:text-white/60">
-            Free and Open-Source Tailwind CSS Admin Dashboard Template
+          <a href="/" class="mb-4 flex items-center space-x-3 text-white font-semibold text-lg">
+              <img src="{{ asset('assets/images/logo.svg') }}" alt="Logo" class="h-52 w-auto" />
+              <!-- <span class="text-3xl">Proposal Studio</span> -->
+          </a>
+          <p class="text-center text-gray-400 dark:text-white/60">
+
          </p>
       </div>
    </div>

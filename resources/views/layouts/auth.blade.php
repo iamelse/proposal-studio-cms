@@ -7,7 +7,22 @@
          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
          />
       <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-      <link rel="icon" href="{{ asset('favicon/favicon.ico')  }}">
+
+       <!-- Standard Favicons -->
+       <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/images/favicons/favicon-32x32.png') }}">
+       <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/images/favicons/favicon-32x32.png') }}">
+       <link rel="shortcut icon" href="{{ asset('assets/images/favicons/favicon.ico') }}">
+
+       <!-- Apple Touch Icon -->
+       <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/images/favicons/apple-touch-icon.png') }}">
+
+       <!-- Android Chrome -->
+       <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('assets/images/favicons/android-chrome-192x192.png') }}">
+       <link rel="icon" type="image/png" sizes="512x512" href="{{ asset('assets/images/favicons/android-chrome-512x512.png') }}">
+
+       <!-- Manifest for PWA -->
+       <link rel="manifest" href="{{ asset('assets/images/favicons/site.webmanifest') }}">
+
       <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
       <title>{{ $title ?? env('APP_NAME') }}</title>
 
