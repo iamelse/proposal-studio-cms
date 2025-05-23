@@ -2,25 +2,27 @@
 
 @section('hero')
     <!-- Hero Section -->
+    @php
+        $content = json_decode($hero->content);
+    @endphp
+
     <section id="home" class="mt-24 md:mt-[170px] max-w-full mx-4 flex items-center justify-center bg-cover bg-center" style="background-image: url('{{ asset('assets/images/bg.png') }}')">
         <div class="text-center flex flex-col items-center mt-2 w-full">
             <header class="px-4 py-2 rounded-full md:px-4 md:py-3 border-2 border-brandSecondary bg-[#FAE8DF] w-fit">
                 <p class="text-xs font-medium md:text-sm text-brandSecondary">
-                    JASA PROPOSAL PROFESIONAL
+                    {{ $content->subtitle ?? '' }}
                 </p>
             </header>
 
             <div class="items-center mt-2 max-w-5xl">
                 <h1 class="text-3xl md:text-5xl lg:text-7xl font-bold text-[#1f2328]">
-                    Realisasikan Tujuanmu Bersama
-                    <span class="text-brandPrimary"> PROPOSAL</span>
-                    <span class="text-brandSecondary"> STUDIO</span>
+                    {!! $content->title ?? '' !!}
                 </h1>
             </div>
 
             <div class="mt-[14px] max-w-4xl">
-                <p class="text-base md:text-xl font-medium text-[#1f2328]">
-                    “Percayakan kesuksesan proposal Anda kepada kami. Tim profesional dan berpengalaman dari kami akan membantu Anda meraih kesuksesan yang lebih besar”
+                <p class="text-base md:text-xl font-medium text-brandBase">
+                    {!! $content->description ?? '' !!}
                 </p>
             </div>
 
