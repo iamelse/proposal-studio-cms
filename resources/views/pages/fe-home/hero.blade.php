@@ -8,6 +8,7 @@
 <!-- ===== Main Content Start ===== -->
 <main>
     <div class="p-4 mx-auto max-w-screen-2xl md:p-6">
+
         <!-- Header Section -->
         <div class="flex px-6 flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
@@ -19,11 +20,6 @@
                 </p>
             </div>
 
-            <!-- Shortcut to Skills Page -->
-            <a href="{{ route('be.skill.index') }}" class="flex items-center gap-2 px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-lg transition">
-                <i class="bx bx-grid-alt text-lg"></i> <!-- Boxicon icon -->
-                Manage Skills
-            </a>
         </div>
 
         <!-- Hero Section Form -->
