@@ -336,7 +336,7 @@
             </div>
 
             <!-- Right Arrow -->
-            <button id="client-next" class="hidden lg:flex w-8 h-8 bg-white rounded-full border items-center justify-center hover:bg-gray-100 transition disabled:opacity-50 disabled:cursor-not-allowed">
+            <button id="event-next" class="hidden lg:flex w-8 h-8 bg-white rounded-full border items-center justify-center hover:bg-gray-100 transition disabled:opacity-50 disabled:cursor-not-allowed">
                 <i class='bx bx-right-arrow-alt text-lg'></i>
             </button>
         </div>
