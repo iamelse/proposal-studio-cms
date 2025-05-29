@@ -84,39 +84,43 @@
 
 @section('about')
     <!-- About Section -->
+    @php
+        $content = json_decode($about->content);
+    @endphp
     <section id="about" class="flex flex-col items-center justify-between lg:flex-row mx-5 lg:mx-20 my-16 md:my-[100px]">
         <div class="max-w-xl">
             <h2 class="text-baseBlack text-2xl md:text-4xl tracking-tight mb-4 font-bold">
-                <span class="text-brandPrimary">PROPOSAL</span>
-                <span class="text-brandSecondary"> STUDIO</span>
-                Keberhasilan project Anda adalah prioritas kami
+                {!! $content->title !!}
             </h2>
             <p class="mt-6 text-base md:text-lg text-baseBlack">
-                Proposal Studio adalah jasa pembuatan proposal komersial yang berdiri sejak Januari, 2022. Kami telah dipercaya
-                mengerjakan banyak project regional maupun project nasional oleh bermacam perusahaan, lembaga, event organizer,
-                business owner, cerative agency, dan influencer. Kami juga telah dipercaya mengisi materi proposal di organisasi
-                maupun komunitas di beberapa kampus ternama di Indonesia.
+                {!! $content->description !!}
             </p>
 
+            @php
+                $stats = old('content.stats', $content->stats ?? []);
+                $stats = array_pad($stats, 3, (object) ['title' => '', 'value' => '', 'suffix' => '']);
+            @endphp
+
             <div class="flex flex-row gap-1 items-center justify-between lg:flex-row pt-6 flex-wrap">
-                <div class="text-center">
-                    <h3 class="text-baseBlack font-semibold text-xl md:text-2xl lg:text-3xl">250+</h3>
-                    <p class="text-baseBlack font-normal text-base md:text-xl">Projek Selesai</p>
-                </div>
-                <div class="hidden md:block w-px h-10 bg-gray-300"></div>
-                <div class="text-center">
-                    <h3 class="text-baseBlack font-semibold text-xl md:text-2xl lg:text-3xl">2 Tahun+</h3>
-                    <p class="text-baseBlack font-normal text-base md:text-xl">Pengalaman Kerja</p>
-                </div>
-                <div class="hidden md:block w-px h-10 bg-gray-300"></div>
-                <div class="text-center">
-                    <h3 class="text-baseBlack font-semibold text-xl md:text-2xl lg:text-3xl">99%</h3>
-                    <p class="text-baseBlack font-normal text-base md:text-xl">Klien Puas</p>
-                </div>
+                @foreach (array_slice($stats, 0, 3) as $index => $stat)
+                    @if ($index > 0)
+                        <div class="hidden md:block w-px h-10 bg-gray-300"></div>
+                    @endif
+
+                    <div class="text-center">
+                        <h3 class="text-baseBlack font-semibold text-xl md:text-2xl lg:text-3xl">
+                            {{ $stat->value ?? '' }}{{ $stat->suffix ?? '' }}
+                        </h3>
+                        <p class="text-baseBlack font-normal text-base md:text-xl">
+                            {{ $stat->title ?? '' }}
+                        </p>
+                    </div>
+                @endforeach
             </div>
+
         </div>
         <figure class="max-w-xl mt-5 lg:mt-0">
-            <img class="object-cover w-full h-full rounded-lg" src="https://proposalstudio.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fprofil.26ea71de.jpg&w=3840&q=75" alt="Foto Profil Proposal Studio">
+            <img class="object-cover w-full h-full rounded-lg" src="{{ getAboutUsImageSection($content) }}" alt="Foto Profil Proposal Studio">
         </figure>
     </section>
 

@@ -81,24 +81,24 @@ if (!function_exists('getWhyUsListImagePath')) {
     }
 }
 
-if (!function_exists('getAboutMeImageSection')) {
-    function getAboutMeImageSection($content)
+if (!function_exists('getAboutUsImageSection')) {
+    function getAboutUsImageSection($content)
     {
         $disk = env('FILESYSTEM_DISK');
         $placeholderUrl = 'https://dummyimage.com/300';
         $appUrl = rtrim(env('APP_URL'), '/');
         $publicHtmlPath = base_path('../public_html');
 
+        $image = is_array($content) ? ($content['image'] ?? null) : ($content->image ?? null);
+
         if ($disk === FileSystemDiskEnum::PUBLIC->value) {
-            if ($content['image'] && Storage::disk('public')->exists($content['image'])) {
-                return asset('storage/' . $content['image']);
+            if ($image && Storage::disk('public')->exists($image)) {
+                return asset('storage/' . $image);
             }
-        }
-        elseif ($disk === FileSystemDiskEnum::PUBLIC_UPLOADS->value) {
-            $filePath = $content['image'];
-            $fullPath = $publicHtmlPath . '/' . $filePath;
-            if ($content['image'] && file_exists($fullPath)) {
-                return $appUrl . '/' . $filePath;
+        } elseif ($disk === FileSystemDiskEnum::PUBLIC_UPLOADS->value) {
+            $fullPath = $publicHtmlPath . '/' . $image;
+            if ($image && file_exists($fullPath)) {
+                return $appUrl . '/' . $image;
             }
         }
 

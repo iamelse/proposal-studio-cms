@@ -114,7 +114,7 @@
                             'active' => 'be.home.about',
                             'route' => 'be.home.about.index',
                             'icon' => 'bx-id-card',
-                            'label' => 'About Me',
+                            'label' => 'About Us',
                             'permission' => PermissionEnum::UPDATE_HOME_ABOUT
                         ],
                         [
@@ -136,22 +136,8 @@
                     ]
                 ],
                 [
-                    'title' => 'About',
-                    'order' => 4,
-                    'children' => [
-                        [
-                            'order' => 1,
-                            'active' => 'be.about',
-                            'route' => 'be.about.index',
-                            'icon' => 'bx-bulb',
-                            'label' => 'About',
-                            'permission' => PermissionEnum::UPDATE_ABOUT
-                        ],
-                    ]
-                ],
-                [
                     'title' => 'Resume',
-                    'order' => 5,
+                    'order' => 4,
                     'children' => [
                         [
                             'order' => 1,
@@ -165,7 +151,7 @@
                 ],
                 [
                     'title' => 'Master Data',
-                    'order' => 6,
+                    'order' => 5,
                     'children' => [
                         [
                             'order' => 1,

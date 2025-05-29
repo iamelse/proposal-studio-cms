@@ -25,6 +25,7 @@ class UpdateAboutRequest extends FormRequest
             'content.title' => 'required|string|max:255',
             'content.image' => 'nullable',
             'content.description' => 'required|string',
+            'content.stats' => 'required|array',
         ];
     }
 

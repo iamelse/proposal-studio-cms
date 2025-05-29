@@ -19,7 +19,7 @@ class AboutController extends Controller
     public function __construct(
         protected ImageManagementService $imageManagementService
     ) {}
-    
+
     public function index(): View
     {
         Gate::authorize(PermissionEnum::UPDATE_HOME_ABOUT->value);
@@ -27,7 +27,7 @@ class AboutController extends Controller
         $about = Section::where('name', 'about')->firstOrFail();
 
         return view('pages.fe-home.about', [
-            'title' => 'Home | About Me',
+            'title' => 'Home | About Us',
             'about' => $about
         ]);
     }
@@ -37,28 +37,39 @@ class AboutController extends Controller
         try {
             Gate::authorize(PermissionEnum::UPDATE_HOME_ABOUT->value);
 
+            $validated = $request->validated();
+            $content = $validated['content'];
+
+            $rules = [
+                'title'       => ['HTML.Allowed' => 'span[style]'],  // Only <span> with style
+                'description' => ['HTML.Allowed' => 'span[style]'],
+            ];
+
+            $cleanedContent = cleanHtmlFields($content, $rules);
+
             $section = Section::where('name', 'about')->firstOrFail();
-            $content = $request->validated()['content'];
 
             $existingContent = json_decode($section->content, true) ?? [];
-            $content['image'] = $this->_handleImageUpload($request, $section) ?? ($existingContent['image'] ?? null);
 
-            $section->content = json_encode($content);
+            $cleanedContent['image'] = $this->_handleImageUpload($request, $section)
+                ?? ($existingContent['image'] ?? null);
+
+            $section->content = json_encode($cleanedContent);
             $section->save();
-    
+
             return redirect()->back()->with('success', 'About section updated successfully.');
         } catch (AuthorizationException $authorizationException) {
             Log::error($authorizationException->getMessage());
             abort(403, 'This action is unauthorized.');
         } catch (Exception $e) {
-            Log::error('Failed to update ABout section', [
+            Log::error('Failed to update About section', [
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
                 'request_data' => $request->all(),
                 'user_id' => Auth::user()->id,
             ]);
 
-            return redirect()->back()->with('error', 'Failed to update Hero section. ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Failed to update About section. ' . $e->getMessage());
         }
     }
 

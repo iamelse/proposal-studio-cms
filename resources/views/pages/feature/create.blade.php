@@ -7,8 +7,8 @@
         <!-- Header Section -->
         <div class="flex px-6 flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-                <h1 class="text-2xl font-bold text-gray-800 dark:text-white">Create New Skill</h1>
-                <p class="text-gray-600 dark:text-gray-400">Add a new skill.</p>
+                <h1 class="text-2xl font-bold text-gray-800 dark:text-white">Create New Feature</h1>
+                <p class="text-gray-600 dark:text-gray-400">Add a new feature.</p>
             </div>
         </div>
 
@@ -78,7 +78,9 @@
                                 name="image"
                                 type="file"
                                 accept="image/*"
-                                :class="hasError ? 'border-red-500 dark:border-red-500' : ''"
+                                :class="hasError
+                                    ? 'border-red-500 dark:border-red-500 focus:ring-2 focus:ring-red-500 dark:focus:ring-red-500'
+                                    : 'border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-500'"
                                 required
                             >
                             <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="image_help">
