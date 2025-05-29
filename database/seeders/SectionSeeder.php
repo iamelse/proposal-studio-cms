@@ -14,8 +14,45 @@ class SectionSeeder extends Seeder
     public function run(): void
     {
         $sections = [
-            ['name' => 'hero', 'content' => json_encode(['title' => '<span style="color:rgb(31,35,40);">Realisasikan Tujuanmu Bersama</span> <span style="color:rgb(5,64,140);">PROPOSAL</span> <span style="color:rgb(202,84,25);">STUDIO</span>', 'subtitle' => "JASA PROPOSAL PROFESIONAL", 'description' => '<span style="color:#1f2328;">“Percayakan kesuksesan proposal Anda kepada kami. Tim profesional dan berpengalaman dari kami akan membantu Anda meraih kesuksesan yang lebih besar”</span>'])],
-            ['name' => 'about', 'content' => json_encode(['title' => 'About Me', 'image' => 'null' ,'description' => "Hello! I'm Lana Septiana, a passionate Laravel Web Developer with over X years of experience in building scalable and high-performance web applications. I specialize in Laravel and have extensive knowledge in web technologies like MySQL, JavaScript, and modern front-end tools such as Tailwind CSS and Bootstrap. My expertise allows me to create clean, maintainable, and optimized code for long-term success.Throughout my career, I've worked on a variety of projects, collaborating with teams to deliver exceptional user experiences. I am always eager to learn and grow, and I strive to implement industry best practices to achieve optimal results. I'm committed to creating value through my work and continuously improving my skills."])],
+            [
+                'name' => 'hero',
+                'content' => json_encode([
+                    'title' => '<span style="color:rgb(31,35,40);">Realisasikan Tujuanmu Bersama</span>
+                    <span style="color:rgb(5,64,140);">PROPOSAL</span>
+                    <span style="color:rgb(202,84,25);">STUDIO</span>',
+                    'subtitle' => 'JASA PROPOSAL PROFESIONAL',
+                    'description' => '<span style="color:#1f2328;">
+                            “Percayakan kesuksesan proposal Anda kepada kami.
+                            Tim profesional dan berpengalaman dari kami akan
+                            membantu Anda meraih kesuksesan yang lebih besar”
+                          </span>'
+                ])
+            ],
+            [
+                    'name' => 'about',
+                    'content' => json_encode([
+                        'title' => '<span style="color:#05408C;">PROPOSAL</span> <span style="color:#CA5419;">STUDIO</span> Keberhasilan project Anda adalah prioritas kami',
+                        'image' => 'null',
+                        'description' => 'Proposal Studio adalah jasa pembuatan proposal komersial yang berdiri sejak Januari, 2022. Kami telah dipercaya mengerjakan banyak project regional maupun project nasional oleh bermacam perusahaan, lembaga, event organizer, business owner, cerative agency, dan influencer. Kami juga telah dipercaya mengisi materi proposal di organisasi maupun komunitas di beberapa kampus ternama di Indonesia.',
+                        'stats' => [
+                            [
+                                'title' => 'Projek Selesai',
+                                'value' => '250',
+                                'suffix' => '+'
+                            ],
+                            [
+                                'title' => 'Pengalaman Kerja',
+                                'value' => '2',
+                                'suffix' => 'Tahun+'
+                            ],
+                            [
+                                'title' => 'Klien Puas',
+                                'value' => '99',
+                                'suffix' => '%'
+                            ]
+                        ]
+                    ])
+                ],
             ['name' => 'cta', 'content' => json_encode(['title' => "Let's Collaborate and Build Something Amazing!", 'description' => "I’m open to exciting projects and opportunities in web development, Laravel, and beyond. Let’s create something impactful together. "])],
             ['name' => 'footer', 'content' => json_encode(['title' => 'About Me', 'description' => "Passionate web developer specializing in Laravel, Vue.js, and modern web technologies. Let's build something amazing together!"])],
             ['name' => 'about-page.about', 'content' => ''],

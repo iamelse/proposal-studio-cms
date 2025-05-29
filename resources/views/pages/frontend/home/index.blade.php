@@ -123,7 +123,9 @@
             <img class="object-cover w-full h-full rounded-lg" src="{{ getAboutUsImageSection($content) }}" alt="Foto Profil Proposal Studio">
         </figure>
     </section>
+@endsection
 
+@section('services')
     <section id="service" class="mx-5 my-14 md:mx-20 md:my-[100px]">
         @php
             $services = [

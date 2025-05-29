@@ -62,6 +62,7 @@
 @yield('hero')
 @yield('features')
 @yield('about')
+@yield('services')
 @yield('clients')
 @yield('events')
 @yield('reviews')
