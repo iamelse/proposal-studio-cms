@@ -169,6 +169,14 @@
                     'children' => [
                         [
                             'order' => 1,
+                            'active' => 'be.feature',
+                            'route' => 'be.feature.index',
+                            'icon' => 'bx-group',
+                            'label' => 'Feature',
+                            'permission' => PermissionEnum::READ_DASHBOARD
+                        ],
+                        [
+                            'order' => 2,
                             'active' => 'be.social-media',
                             'route' => 'be.social-media.index',
                             'icon' => 'bx-group',
@@ -176,7 +184,7 @@
                             'permission' => PermissionEnum::READ_SOCIAL_MEDIA
                         ],
                         [
-                            'order' => 2,
+                            'order' => 3,
                             'active' => 'be.skill',
                             'route' => 'be.skill.index',
                             'icon' => 'bx-code-alt',
@@ -184,7 +192,7 @@
                             'permission' => PermissionEnum::READ_SKILL
                         ],
                         [
-                            'order' => 3,
+                            'order' => 4,
                             'active' => [
                                 'be.quick-link.index',
                                 'be.quick-link.create',

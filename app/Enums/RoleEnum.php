@@ -37,6 +37,11 @@ enum RoleEnum: string
                 PermissionEnum::UPDATE_SKILL,
                 PermissionEnum::DELETE_SKILL,
 
+                PermissionEnum::CREATE_FEATURE,
+                PermissionEnum::READ_FEATURE,
+                PermissionEnum::UPDATE_FEATURE,
+                PermissionEnum::DELETE_FEATURE,
+
                 PermissionEnum::CREATE_USER,
                 PermissionEnum::READ_USER,
                 PermissionEnum::UPDATE_USER,

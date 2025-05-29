@@ -40,5 +40,6 @@ class DatabaseSeeder extends Seeder
         $this->call(SkillSeeder::class);
         $this->call(SocialMediaSeeder::class);
         $this->call(QuickLinkSeeder::class);
+        $this->call(WhyUsSeeder::class);
     }
 }

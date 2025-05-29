@@ -56,6 +56,31 @@ if (!function_exists('getAuthorPostImagePath')) {
     }
 }
 
+if (!function_exists('getWhyUsListImagePath')) {
+    function getWhyUsListImagePath($feature)
+    {
+        $disk = env('FILESYSTEM_DISK');
+        $placeholderUrl = 'https://dummyimage.com/300';
+        $appUrl = rtrim(env('APP_URL'), '/');
+        $publicHtmlPath = base_path('../public_html');
+
+        if ($disk === FileSystemDiskEnum::PUBLIC->value) {
+            if ($feature->image && Storage::disk('public')->exists($feature->image)) {
+                return asset('storage/' . $feature->image);
+            }
+        }
+        elseif ($disk === FileSystemDiskEnum::PUBLIC_UPLOADS->value) {
+            $filePath = $feature->image;
+            $fullPath = $publicHtmlPath . '/' . $filePath;
+            if ($feature->image && file_exists($fullPath)) {
+                return $appUrl . '/' . $filePath;
+            }
+        }
+
+        return $placeholderUrl;
+    }
+}
+
 if (!function_exists('getAboutMeImageSection')) {
     function getAboutMeImageSection($content)
     {

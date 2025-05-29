@@ -48,19 +48,12 @@
         <!-- Mobile/Tablet Slider -->
         <div class="lg:hidden mt-14 overflow-hidden relative">
             <div id="feature-slider" class="flex transition-transform duration-500 ease-in-out w-full">
-                @foreach ([
-                    ['src' => 'trusted.svg', 'alt' => 'Terpercaya'],
-                    ['src' => 'proffesional-teams.svg', 'alt' => 'Tim Profesional'],
-                    ['src' => 'fast.svg', 'alt' => 'Pengerjaan Cepat'],
-                    ['src' => 'free-consultation.svg', 'alt' => 'Gratis Konsultasi'],
-                    ['src' => 'free-revision.svg', 'alt' => 'Bebas Revisi'],
-                    ['src' => 'good-service.svg', 'alt' => 'Pelayanan Ramah'],
-                ] as $feature)
+                @foreach ($whyUsList as $feature)
                     <article class="flex-shrink-0 w-full px-8 flex flex-col items-center text-center max-w-full">
                         <figure class="rounded-full bg-white p-5 w-[108px] h-[108px] flex items-center justify-center mx-auto">
-                            <img src="{{ asset('assets/images/why-us/' . $feature['src']) }}" alt="{{ $feature['alt'] }}">
+                            <img src="{{ getWhyUsListImagePath($feature) }}" alt="{{ $feature->title }}">
                         </figure>
-                        <h3 class="font-medium text-lg text-white mt-4">{{ $feature['alt'] }}</h3>
+                        <h3 class="font-medium text-lg text-white mt-4">{{ $feature->title }}</h3>
                     </article>
                 @endforeach
             </div>
@@ -75,19 +68,14 @@
 
         <!-- Desktop Grid -->
         <div class="hidden lg:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-y-12 gap-x-6 mt-14 justify-items-center">
-            @foreach ([
-                ['src' => 'trusted.svg', 'alt' => 'Terpercaya'],
-                ['src' => 'proffesional-teams.svg', 'alt' => 'Tim Profesional'],
-                ['src' => 'fast.svg', 'alt' => 'Pengerjaan Cepat'],
-                ['src' => 'free-consultation.svg', 'alt' => 'Gratis Konsultasi'],
-                ['src' => 'free-revision.svg', 'alt' => 'Bebas Revisi'],
-                ['src' => 'good-service.svg', 'alt' => 'Pelayanan Ramah'],
-            ] as $feature)
+            @foreach ($whyUsList as $feature)
                 <article class="flex flex-col items-center text-center max-w-[160px]">
                     <figure class="rounded-full bg-white p-5 w-[108px] h-[108px] flex items-center justify-center">
-                        <img src="{{ asset('assets/images/why-us/' . $feature['src']) }}" alt="{{ $feature['alt'] }}">
+                        <img src="{{ getWhyUsListImagePath($feature) }}" alt="{{ $feature->title }}">
                     </figure>
-                    <h3 class="font-medium text-base sm:text-lg md:text-xl text-white mt-3 break-words">{{ $feature['alt'] }}</h3>
+                    <h3 class="font-medium text-base sm:text-lg md:text-xl text-white mt-3 break-words">
+                        {{ $feature->title }}
+                    </h3>
                 </article>
             @endforeach
         </div>

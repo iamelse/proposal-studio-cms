@@ -33,6 +33,11 @@ enum PermissionEnum: string
     case UPDATE_SKILL = 'skills_update';
     case DELETE_SKILL = 'skills_delete';
 
+    case CREATE_FEATURE = 'features_create';
+    case READ_FEATURE = 'features_read';
+    case UPDATE_FEATURE = 'features_update';
+    case DELETE_FEATURE = 'features_delete';
+
     case CREATE_USER = 'users_create';
     case READ_USER = 'users_read';
     case UPDATE_USER = 'users_update';
