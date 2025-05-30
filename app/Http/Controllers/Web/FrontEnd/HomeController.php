@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\FrontEnd;
 
 use App\Http\Controllers\Controller;
 use App\Models\Section;
+use App\Models\Service;
 use App\Models\Skill;
 use App\Models\WhyUs;
 use Illuminate\Http\Request;
@@ -16,6 +17,8 @@ class HomeController extends Controller
         $hero = Section::where('name', 'hero')->firstOrFail();
         $whyUsList = WhyUs::all();
         $about = Section::where('name', 'about')->firstOrFail();
+        $ourService = Section::where('name', 'services')->firstOrFail();
+        $services = Service::all();
         $callToAction = Section::where('name','cta')->firstOrFail();
 
         return view('pages.frontend.home.index', [
@@ -23,6 +26,8 @@ class HomeController extends Controller
             'hero' => $hero,
             'whyUsList' => $whyUsList,
             'about' => $about,
+            'ourService' => $ourService,
+            'services' => $services,
             'callToAction' => $callToAction
         ]);
     }

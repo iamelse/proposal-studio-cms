@@ -10,6 +10,8 @@ enum PermissionEnum: string
 
     case UPDATE_HOME_ABOUT = 'home_about_update';
 
+    case UPDATE_HOME_OUR_SERVICE = 'home_our_service_update';
+
     case UPDATE_HOME_CTA = 'home_cta_update';
 
     case UPDATE_HOME_FOOTER = 'home_footer_update';
@@ -37,6 +39,11 @@ enum PermissionEnum: string
     case READ_FEATURE = 'features_read';
     case UPDATE_FEATURE = 'features_update';
     case DELETE_FEATURE = 'features_delete';
+
+    case CREATE_OUR_SERVICE = 'our_service_create';
+    case READ_OUR_SERVICE = 'our_service_read';
+    case UPDATE_OUR_SERVICE = 'our_service_update';
+    case DELETE_OUR_SERVICE = 'our_service_delete';
 
     case CREATE_USER = 'users_create';
     case READ_USER = 'users_read';

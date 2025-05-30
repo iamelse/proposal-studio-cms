@@ -119,6 +119,14 @@
                         ],
                         [
                             'order' => 3,
+                            'active' => 'be.home.our-service',
+                            'route' => 'be.home.our-service.index',
+                            'icon' => 'bx-id-card',
+                            'label' => 'Our Service',
+                            'permission' => PermissionEnum::UPDATE_HOME_OUR_SERVICE
+                        ],
+                        [
+                            'order' => 4,
                             'active' => 'be.home.cta',
                             'route' => 'be.home.cta.index',
                             'icon' => 'bx-rocket',
@@ -126,7 +134,7 @@
                             'permission' => PermissionEnum::UPDATE_HOME_CTA
                         ],
                         [
-                            'order' => 4,
+                            'order' => 5,
                             'active' => 'be.home.footer',
                             'route' => 'be.home.footer.index',
                             'icon' => 'bx-dock-bottom',
@@ -159,10 +167,18 @@
                             'route' => 'be.feature.index',
                             'icon' => 'bx-group',
                             'label' => 'Feature',
-                            'permission' => PermissionEnum::READ_DASHBOARD
+                            'permission' => PermissionEnum::READ_FEATURE
                         ],
                         [
                             'order' => 2,
+                            'active' => 'be.our-service-list',
+                            'route' => 'be.our-service-list.index',
+                            'icon' => 'bx-id-card',
+                            'label' => 'Service List',
+                            'permission' => PermissionEnum::READ_OUR_SERVICE
+                        ],
+                        [
+                            'order' => 3,
                             'active' => 'be.social-media',
                             'route' => 'be.social-media.index',
                             'icon' => 'bx-group',
@@ -170,7 +186,7 @@
                             'permission' => PermissionEnum::READ_SOCIAL_MEDIA
                         ],
                         [
-                            'order' => 3,
+                            'order' => 4,
                             'active' => 'be.skill',
                             'route' => 'be.skill.index',
                             'icon' => 'bx-code-alt',
@@ -178,7 +194,7 @@
                             'permission' => PermissionEnum::READ_SKILL
                         ],
                         [
-                            'order' => 4,
+                            'order' => 5,
                             'active' => [
                                 'be.quick-link.index',
                                 'be.quick-link.create',

@@ -126,71 +126,16 @@
 @endsection
 
 @section('services')
+    @php
+        $content = json_decode($ourService->content);
+    @endphp
     <section id="service" class="mx-5 my-14 md:mx-20 md:my-[100px]">
-        @php
-            $services = [
-            [
-                'id' => 1,
-                'icon' => 'bisnis.svg', // Example icon
-                'title' => 'Proposal Bisnis',
-                'desc' => 'Dokumen rinci yang merencanakan dan meyakinkan tentang potensi kesuksesan suatu bisnis.',
-            ],
-            [
-                'id' => 2,
-                'icon' => 'kegiatan.svg', // Example icon
-                'title' => 'Proposal Kegiatan',
-                'desc' => 'Dokumen yang merinci rencana dan pelaksanaan suatu kegiatan atau acara untuk mendapatkan persetujuan dan dukungan.',
-            ],
-            [
-                'id' => 3,
-                'icon' => 'sponsorship.svg', // Example icon
-                'title' => 'Proposal Sponsorship',
-                'desc' => 'Dokumen permohonan dukungan finansial dari sponsor untuk suatu acara atau inisiatif tertentu.',
-            ],
-            [
-                'id' => 4,
-                'icon' => 'investasi.svg', // Example icon
-                'title' => 'Proposal Investasi',
-                'desc' => 'Dokumen yang merinci potensi keuntungan dan proyeksi keuangan suatu investasi untuk meyakinkan para investor.',
-            ],
-            [
-                'id' => 5,
-                'icon' => 'kerjasama.svg', // Example icon
-                'title' => 'Proposal Kerjasama',
-                'desc' => 'Dokumen formal yang merinci tujuan, manfaat, dan syarat-syarat kerjasama antara pihak-pihak terlibat.',
-            ],
-            [
-                'id' => 6,
-                'icon' => 'sewa-tempat.svg', // Example icon
-                'title' => 'Proposal Sewa Tempat',
-                'desc' => 'Dokumen permohonan dan rincian kontrak penyewaan untuk mendapatkan persetujuan penyewaan tempat.',
-            ],
-            [
-                'id' => 7,
-                'icon' => 'penawaran-produk.svg',
-                'title' => 'Proposal Penawaran Produk',
-                'desc' => 'Dokumen yang merinci informasi produk, harga, dan manfaat untuk mendapatkan persetujuan pembelian dari calon pelanggan.'
-            ],
-            [
-                'id' => 8,
-                'icon' => 'company-profile.svg', // Example icon
-                'title' => 'Company Profile',
-                'desc' => 'Dokumen ringkas yang menyajikan informasi mengenai identitas, visi, misi, nilai-nilai, dan pencapaian perusahaan.',
-            ],
-            [
-                'id' => 9,
-                'icon' => 'curriculum-vitae.svg', // Example icon
-                'title' => 'Curriculum Vitae',
-                'desc' => 'Ringkasan tertulis tentang latar belakang pendidikan, pengalaman kerja, dan keterampilan seseorang.',
-            ],
-        ];
-        @endphp
         <div class="lg:w-1/2 text-center mx-auto">
             <h1 class="text-baseBlack text-2xl md:text-4xl tracking-tight font-bold text-center">
-                Mewujudkan Ide Brilian Anda Melalui Proposal Yang Mengesankan
+                {{ $content->title }}
             </h1>
             <h2 class="mt-1 lg:mt-3 text-center font-semibold text-lg md:text-xl text-baseBlack">
-                Temukan Layanan Profesional yang Tepat di Proposal Studio.
+                {{ $content->subtitle }}
             </h2>
         </div>
 
@@ -198,13 +143,13 @@
             @foreach ($services as $service)
                 <article class="py-6 px-2 flex flex-col items-center justify-center text-center">
                     <div class="mb-2">
-                        <img src="{{ asset('assets/images/services/proposals/' . $service['icon']) }}" alt="{{ $service['title'] }}" class="w-16 h-16 object-contain">
+                        <img src="{{ getServiceListImagePath($service) }}" alt="{{ $service->title }}" class="w-16 h-16 object-contain">
                     </div>
                     <h2 class="md:text-xl lg:text-2xl text-baseBlack font-semibold mt-2">
-                        {{ $service['title'] }}
+                        {{ $service->title }}
                     </h2>
                     <p class="font-normal md:text-sm lg:text-base text-baseBlack mt-3">
-                        {{ $service['desc'] }}
+                        {{ $service->description }}
                     </p>
                 </article>
             @endforeach

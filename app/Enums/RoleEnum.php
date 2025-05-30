@@ -15,6 +15,7 @@ enum RoleEnum: string
 
                 PermissionEnum::UPDATE_HOME_HERO,
                 PermissionEnum::UPDATE_HOME_ABOUT,
+                PermissionEnum::UPDATE_HOME_OUR_SERVICE,
                 PermissionEnum::UPDATE_HOME_CTA,
                 PermissionEnum::UPDATE_HOME_FOOTER,
 
@@ -41,6 +42,11 @@ enum RoleEnum: string
                 PermissionEnum::READ_FEATURE,
                 PermissionEnum::UPDATE_FEATURE,
                 PermissionEnum::DELETE_FEATURE,
+
+                PermissionEnum::CREATE_OUR_SERVICE,
+                PermissionEnum::READ_OUR_SERVICE,
+                PermissionEnum::UPDATE_OUR_SERVICE,
+                PermissionEnum::DELETE_OUR_SERVICE,
 
                 PermissionEnum::CREATE_USER,
                 PermissionEnum::READ_USER,
