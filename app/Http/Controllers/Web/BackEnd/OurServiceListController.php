@@ -52,7 +52,7 @@ class OurServiceListController extends Controller
     {
         Gate::authorize(PermissionEnum::CREATE_OUR_SERVICE);
 
-        return view('pages.our-service-list.create', [
+        return view('pages.service.create', [
             'title' => 'New Service',
         ]);
     }
@@ -86,7 +86,7 @@ class OurServiceListController extends Controller
     {
         Gate::authorize(PermissionEnum::UPDATE_OUR_SERVICE);
 
-        return view('pages.our-service-list.edit', [
+        return view('pages.service.edit', [
             'title' => 'Edit Service',
             'service' => $service,
         ]);
