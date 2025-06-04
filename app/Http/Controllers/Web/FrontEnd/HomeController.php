@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\FrontEnd;
 
 use App\Http\Controllers\Controller;
+use App\Models\Proposal;
 use App\Models\Section;
 use App\Models\Service;
 use App\Models\Skill;
@@ -20,6 +21,7 @@ class HomeController extends Controller
         $ourService = Section::where('name', 'services')->firstOrFail();
         $services = Service::all();
         $callToAction = Section::where('name','cta')->firstOrFail();
+        $proposals = Proposal::limit(20)->orderBy('created_at', 'desc')->get();
 
         return view('pages.frontend.home.index', [
             'title' => 'Home',
@@ -28,6 +30,7 @@ class HomeController extends Controller
             'about' => $about,
             'ourService' => $ourService,
             'services' => $services,
+            'proposals' => $proposals,
             'callToAction' => $callToAction
         ]);
     }

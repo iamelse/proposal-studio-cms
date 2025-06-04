@@ -130,3 +130,28 @@ if (!function_exists('getServiceListImagePath')) {
         return $placeholderUrl;
     }
 }
+
+if (!function_exists('getProposalListImagePath')) {
+    function getProposalListImagePath($proposal)
+    {
+        $disk = env('FILESYSTEM_DISK');
+        $placeholderUrl = 'https://dummyimage.com/400x600';
+        $appUrl = rtrim(env('APP_URL'), '/');
+        $publicHtmlPath = base_path('../public_html');
+
+        if ($disk === FileSystemDiskEnum::PUBLIC->value) {
+            if ($proposal->image && Storage::disk('public')->exists($proposal->image)) {
+                return asset('storage/' . $proposal->image);
+            }
+        }
+        elseif ($disk === FileSystemDiskEnum::PUBLIC_UPLOADS->value) {
+            $filePath = $proposal->image;
+            $fullPath = $publicHtmlPath . '/' . $filePath;
+            if ($proposal->image && file_exists($fullPath)) {
+                return $appUrl . '/' . $filePath;
+            }
+        }
+
+        return $placeholderUrl;
+    }
+}

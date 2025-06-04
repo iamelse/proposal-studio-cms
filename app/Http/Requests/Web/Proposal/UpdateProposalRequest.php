@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Web\Feature;
+namespace App\Http\Requests\Web\Proposal;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreFeatureRequest extends FormRequest
+class UpdateProposalRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,9 +21,11 @@ class StoreFeatureRequest extends FormRequest
      */
     public function rules(): array
     {
+        $proposalId = $this->route('proposal')->id;
+
         return [
             'title' => 'required|max:255',
-            'slug' =>'required|max:255|unique:proposals,slug',
+            'slug' => 'required|max:255|unique:proposals,slug,' . $proposalId,
             'image' => 'nullable|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
         ];
     }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Web\Feature;
+namespace App\Http\Requests\Web\Home;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreFeatureRequest extends FormRequest
+class UpdateProposalRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,8 @@ class StoreFeatureRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|max:255',
-            'slug' =>'required|max:255|unique:proposals,slug',
-            'image' => 'nullable|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
+            'content.title' => 'required|string|max:255',
+            'content.subtitle' => 'required|string|max:255',
         ];
     }
 }

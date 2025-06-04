@@ -158,20 +158,6 @@
 @endsection
 
 @section('clients')
-    @php
-        $images = [
-            ['image' => 'https://picsum.photos/400/600?random=1'],
-            ['image' => 'https://picsum.photos/400/600?random=2'],
-            ['image' => 'https://picsum.photos/400/600?random=3'],
-            ['image' => 'https://picsum.photos/400/600?random=4'],
-            ['image' => 'https://picsum.photos/400/600?random=5'],
-            ['image' => 'https://picsum.photos/400/600?random=6'],
-            ['image' => 'https://picsum.photos/400/600?random=7'],
-            ['image' => 'https://picsum.photos/400/600?random=8'],
-            ['image' => 'https://picsum.photos/400/600?random=9'],
-            ['image' => 'https://picsum.photos/400/600?random=10'],
-        ];
-    @endphp
     <div id="proposal" class="mx-5 my-14 md:mx-10">
         <h2 class="text-baseBlack text-2xl md:text-4xl tracking-tight font-bold text-center">
             Preview Proposal High Quality
@@ -193,10 +179,10 @@
                     <!-- Spacer at start -->
                     <div class="hidden md:block flex-shrink-0 w-[calc(50%-16px)] lg:w-[calc(33.3333%-16px)]"></div>
 
-                    @foreach ($images as $image)
+                    @foreach ($proposals as $proposal)
                         <div class="flex-shrink-0 w-[calc(100%-16px)] md:w-[calc(50%-16px)] lg:w-[calc(33.3333%-16px)] snap-start mx-2 border rounded-md">
                             <div class="bg-white rounded-md hover:shadow-lg transition-shadow duration-300 p-4 flex items-center justify-center">
-                                <img src="{{ asset($image['image']) }}" alt="Proposal Image" class="w-full h-full object-cover rounded-md" />
+                                <img src="{{ getProposalListImagePath($proposal) }}" alt="{{ $proposal->title }}" class="w-full h-full object-cover rounded-md" />
                             </div>
                         </div>
                     @endforeach
@@ -240,12 +226,12 @@
             ],
         ];
     @endphp
-    <div id="proposal" class="mx-5 my-14 md:mx-10 bg-cover bg-center" style="background-image: url('https://raw.githubusercontent.com/vikifsyh/proposal-studio/main/public/bg2.png')">
+    <div id="event" class="mx-5 my-14 md:mx-10 bg-cover bg-center" style="background-image: url('https://raw.githubusercontent.com/vikifsyh/proposal-studio/main/public/bg2.png')">
         <h2 class="text-baseBlack text-2xl md:text-4xl tracking-tight font-bold text-center">
-            Preview Proposal High Quality
+            Kegiatan Terkini Kami
         </h2>
         <p class="mt-1 lg:mt-3 text-center font-semibold text-lg md:text-xl text-baseBlack">
-            Proyek-proyek Berkualitas yang Telah Kami Selesaikan dengan Penuh Keberhasilan.
+            Dapatkan Wawasan Mendalam melalui Serangkaian Kegiatan, Termasuk Webinar Terbaru Kami yang Penuh Informasi.
         </p>
 
         <!-- Carousel with Arrows Flex Wrapper -->

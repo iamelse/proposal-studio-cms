@@ -24,7 +24,7 @@ class StoreOurServiceRequest extends FormRequest
         return [
             'title' => 'required|max:255',
             'description' => 'required|string',
-            'slug' =>'required|max:255|unique:skills,slug',
+            'slug' =>'required|max:255|unique:proposals,slug',
             'image' => 'nullable|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
         ];
     }

@@ -54,6 +54,13 @@ class SectionSeeder extends Seeder
                     ])
             ],
             [
+                'name' => 'proposal',
+                'content' => json_encode([
+                    'title' => 'Preview Proposal High Quality',
+                    'subtitle' => 'Proyek-proyek Berkualitas yang Telah Kami Selesaikan dengan Penuh Keberhasilan.',
+                ])
+            ],
+            [
                 'name' => 'services',
                 'content' => json_encode([
                     'title' => 'Mewujudkan Ide Brilian Anda Melalui Proposal Yang Mengesankan',

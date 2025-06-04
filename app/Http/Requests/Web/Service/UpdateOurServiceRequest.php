@@ -25,7 +25,7 @@ class UpdateOurServiceRequest extends FormRequest
 
         return [
             'title' => 'required|max:255',
-            'slug' => 'required|max:255|unique:skills,slug,' . $servicId,
+            'slug' => 'required|max:255|unique:proposals,slug,' . $servicId,
             'image' => 'nullable|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
         ];
     }

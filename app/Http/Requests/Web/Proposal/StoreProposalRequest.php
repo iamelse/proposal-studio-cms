@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Web\Feature;
+namespace App\Http\Requests\Web\Proposal;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreFeatureRequest extends FormRequest
+class StoreProposalRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

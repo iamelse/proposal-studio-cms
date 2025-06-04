@@ -12,19 +12,19 @@
         <div class="flex px-6 flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
                 <h1 class="text-2xl font-bold text-gray-800 dark:text-white">
-                    Service Section
+                    Proposal Section
                 </h1>
                 <p class="text-gray-600 dark:text-gray-400">
-                    Enter the main title and subtitle that will appear at the top of the Service section. These texts should clearly communicate the purpose and value of the services you offer.
+                    Enter the main title and description that will appear at the top of the Proposal section. This content should clearly outline the purpose and key highlights of your proposal to engage your audience effectively.
                 </p>
             </div>
 
             <!-- Shortcut Button -->
             <div>
-                <a href="{{ route('be.our-service-list.index') }}"
+                <a href="{{ route('be.proposal.index') }}"
                    class="inline-flex items-center flex-nowrap gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm transition-colors whitespace-nowrap">
                     <i class='bx bx-cog text-lg'></i>
-                    Manage Services
+                    Manage Proposals
                 </a>
             </div>
         </div>
@@ -32,15 +32,15 @@
         <!-- Hero Section Form -->
         <div class="border-gray-100 p-5 dark:border-gray-800 sm:p-6">
             <div class="rounded-2xl px-6 pb-8 pt-4 border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
-                <form action="{{ route('be.home.our-service.update') }}" method="POST">
+                <form action="{{ route('be.home.proposal.update') }}" method="POST">
                     @csrf
                     @method('PUT')
 
                     @php
-                        $content = json_decode($ourService->content ?? '{}', true);
+                        $content = json_decode($proposal->content ?? '{}', true);
                     @endphp
 
-                    <!-- Our Service Title -->
+                    <!-- Proposal Title -->
                     <div class="mb-4">
                         <!-- Label -->
                         <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
@@ -183,7 +183,7 @@
                         @enderror
                     </div>
 
-                    <!-- Our Service Subtitle -->
+                    <!-- Proposal Subtitle -->
                     <div class="mb-4">
                         <!-- Label -->
                         <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">

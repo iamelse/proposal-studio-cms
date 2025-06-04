@@ -1,11 +1,7 @@
 <?php
 
 use App\Http\Controllers\Web\BackEnd\OurServiceListController;
-use App\Http\Controllers\Web\BackEnd\Home\OurServiceController;
 use Illuminate\Support\Facades\Route;
-
-Route::get('/our-service', [OurServiceController::class, 'index'])->name('be.home.our-service.index');
-Route::put('/our-service/update', [OurServiceController::class, 'update'])->name('be.home.our-service.update');
 
 Route::get('/our-service-list', [OurServiceListController::class, 'index'])->name('be.our-service-list.index');
 Route::get('/our-service-list/create', [OurServiceListController::class, 'create'])->name('be.our-service-list.create');

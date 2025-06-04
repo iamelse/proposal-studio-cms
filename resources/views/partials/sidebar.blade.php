@@ -127,6 +127,14 @@
                         ],
                         [
                             'order' => 4,
+                            'active' => 'be.home.proposal',
+                            'route' => 'be.home.proposal.index',
+                            'icon' => 'bx-id-card',
+                            'label' => 'Proposal',
+                            'permission' => PermissionEnum::UPDATE_HOME_PROPOSAL
+                        ],
+                        [
+                            'order' => 5,
                             'active' => 'be.home.cta',
                             'route' => 'be.home.cta.index',
                             'icon' => 'bx-rocket',
@@ -134,7 +142,7 @@
                             'permission' => PermissionEnum::UPDATE_HOME_CTA
                         ],
                         [
-                            'order' => 5,
+                            'order' => 6,
                             'active' => 'be.home.footer',
                             'route' => 'be.home.footer.index',
                             'icon' => 'bx-dock-bottom',
@@ -179,6 +187,14 @@
                         ],
                         [
                             'order' => 3,
+                            'active' => 'be.proposal',
+                            'route' => 'be.proposal.index',
+                            'icon' => 'bx-id-card',
+                            'label' => 'Proposal List',
+                            'permission' => PermissionEnum::READ_PROPOSAL
+                        ],
+                        [
+                            'order' => 4,
                             'active' => 'be.social-media',
                             'route' => 'be.social-media.index',
                             'icon' => 'bx-group',
@@ -186,7 +202,7 @@
                             'permission' => PermissionEnum::READ_SOCIAL_MEDIA
                         ],
                         [
-                            'order' => 4,
+                            'order' => 5,
                             'active' => 'be.skill',
                             'route' => 'be.skill.index',
                             'icon' => 'bx-code-alt',
@@ -194,7 +210,7 @@
                             'permission' => PermissionEnum::READ_SKILL
                         ],
                         [
-                            'order' => 5,
+                            'order' => 6,
                             'active' => [
                                 'be.quick-link.index',
                                 'be.quick-link.create',
