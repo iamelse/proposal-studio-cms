@@ -203,14 +203,6 @@
                         ],
                         [
                             'order' => 5,
-                            'active' => 'be.skill',
-                            'route' => 'be.skill.index',
-                            'icon' => 'bx-code-alt',
-                            'label' => 'Skill',
-                            'permission' => PermissionEnum::READ_SKILL
-                        ],
-                        [
-                            'order' => 6,
                             'active' => [
                                 'be.quick-link.index',
                                 'be.quick-link.create',

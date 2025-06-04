@@ -32,11 +32,6 @@ enum PermissionEnum: string
     case UPDATE_QUICK_LINK = 'quick_link_update';
     case DELETE_QUICK_LINK = 'quick_link_delete';
 
-    case CREATE_SKILL = 'skills_create';
-    case READ_SKILL = 'skills_read';
-    case UPDATE_SKILL = 'skills_update';
-    case DELETE_SKILL = 'skills_delete';
-
     case CREATE_FEATURE = 'features_create';
     case READ_FEATURE = 'features_read';
     case UPDATE_FEATURE = 'features_update';

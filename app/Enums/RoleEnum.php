@@ -34,11 +34,6 @@ enum RoleEnum: string
                 PermissionEnum::UPDATE_QUICK_LINK,
                 PermissionEnum::DELETE_QUICK_LINK,
 
-                PermissionEnum::CREATE_SKILL,
-                PermissionEnum::READ_SKILL,
-                PermissionEnum::UPDATE_SKILL,
-                PermissionEnum::DELETE_SKILL,
-
                 PermissionEnum::CREATE_FEATURE,
                 PermissionEnum::READ_FEATURE,
                 PermissionEnum::UPDATE_FEATURE,
