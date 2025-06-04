@@ -42,5 +42,6 @@ class DatabaseSeeder extends Seeder
         $this->call(WhyUsSeeder::class);
         $this->call(ServiceSeeder::class);
         $this->call(ProposalSeeder::class);
+        $this->call(EventSeeder::class);
     }
 }

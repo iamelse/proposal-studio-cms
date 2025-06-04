@@ -3,12 +3,11 @@
 namespace App\Http\Controllers\Web\FrontEnd;
 
 use App\Http\Controllers\Controller;
+use App\Models\Event;
 use App\Models\Proposal;
 use App\Models\Section;
 use App\Models\Service;
-use App\Models\Skill;
 use App\Models\WhyUs;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class HomeController extends Controller
@@ -24,6 +23,7 @@ class HomeController extends Controller
         $proposal = Section::where('name', 'proposal')->firstOrFail();
         $proposals = Proposal::limit(20)->orderBy('created_at', 'desc')->get();
         $event = Section::where('name', 'event')->firstOrFail();
+        $events = Event::limit(20)->orderBy('created_at', 'desc')->get();
 
         return view('pages.frontend.home.index', [
             'title' => 'Home',
@@ -35,6 +35,7 @@ class HomeController extends Controller
             'proposal' => $proposal,
             'proposals' => $proposals,
             'event' => $event,
+            'events' => $events,
             'callToAction' => $callToAction
         ]);
     }

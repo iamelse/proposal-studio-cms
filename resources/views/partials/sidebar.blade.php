@@ -203,6 +203,14 @@
                         ],
                         [
                             'order' => 4,
+                            'active' => 'be.event',
+                            'route' => 'be.event.index',
+                            'icon' => 'bx-id-card',
+                            'label' => 'Event List',
+                            'permission' => PermissionEnum::READ_EVENT
+                        ],
+                        [
+                            'order' => 4,
                             'active' => 'be.social-media',
                             'route' => 'be.social-media.index',
                             'icon' => 'bx-group',

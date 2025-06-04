@@ -21,7 +21,7 @@
 
             <!-- Shortcut Button -->
             <div>
-                <a href=""
+                <a href="{{ route('be.event.index') }}"
                    class="inline-flex items-center flex-nowrap gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm transition-colors whitespace-nowrap">
                     <i class='bx bx-cog text-lg'></i>
                     Manage Events

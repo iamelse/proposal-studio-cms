@@ -155,3 +155,28 @@ if (!function_exists('getProposalListImagePath')) {
         return $placeholderUrl;
     }
 }
+
+if (!function_exists('getEventListImagePath')) {
+    function getEventListImagePath($event)
+    {
+        $disk = env('FILESYSTEM_DISK');
+        $placeholderUrl = 'https://dummyimage.com/400x600';
+        $appUrl = rtrim(env('APP_URL'), '/');
+        $publicHtmlPath = base_path('../public_html');
+
+        if ($disk === FileSystemDiskEnum::PUBLIC->value) {
+            if ($event->image && Storage::disk('public')->exists($event->image)) {
+                return asset('storage/' . $event->image);
+            }
+        }
+        elseif ($disk === FileSystemDiskEnum::PUBLIC_UPLOADS->value) {
+            $filePath = $event->image;
+            $fullPath = $publicHtmlPath . '/' . $filePath;
+            if ($event->image && file_exists($fullPath)) {
+                return $appUrl . '/' . $filePath;
+            }
+        }
+
+        return $placeholderUrl;
+    }
+}

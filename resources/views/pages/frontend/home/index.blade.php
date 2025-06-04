@@ -202,33 +202,6 @@
 
 @section('events')
     @php
-        $images = [
-            [
-                'image' => 'https://picsum.photos/400/600?random=1',
-                'title' => 'Webinar on Digital Marketing Trends',
-            ],
-            [
-                'image' => 'https://picsum.photos/400/600?random=2',
-                'title' => 'Workshop: Effective Team Management',
-            ],
-            [
-                'image' => 'https://picsum.photos/400/600?random=3',
-                'title' => 'Community Meetup: Startup Insights',
-            ],
-            [
-                'image' => 'https://picsum.photos/400/600?random=4',
-                'title' => 'Annual Tech Conference 2025',
-            ],
-            [
-                'image' => 'https://picsum.photos/400/600?random=5',
-                'title' => 'Webinar: UI/UX Best Practices',
-            ],
-            [
-                'image' => 'https://picsum.photos/400/600?random=6',
-                'title' => 'Networking Event for Creatives',
-            ],
-        ];
-
         $content = json_decode($event->content);
     @endphp
     <div id="event" class="mx-5 my-14 md:mx-10 bg-cover bg-center" style="background-image: url('https://raw.githubusercontent.com/vikifsyh/proposal-studio/main/public/bg2.png')">
@@ -252,12 +225,12 @@
                     <!-- Spacer at start -->
                     <div class="hidden md:block flex-shrink-0 w-[calc(50%-16px)] lg:w-[calc(33.3333%-16px)]"></div>
 
-                    @foreach ($images as $image)
+                    @foreach ($events as $event)
                         <div class="flex-shrink-0 w-[calc(100%-16px)] md:w-[calc(50%-16px)] lg:w-[calc(33.3333%-16px)] snap-start mx-2 border rounded-md">
                             <div class="bg-white rounded-md hover:shadow-lg transition-shadow duration-300 p-4 flex flex-col items-start justify-start">
-                                <img src="{{ asset($image['image']) }}" alt="Proposal Image" class="w-full h-full object-cover rounded-md" />
+                                <img src="{{ getEventListImagePath($event) }}" alt="{{ $event->title }}" class="w-full h-full object-cover rounded-md" />
                                 <h3 class="text-baseBlack text-center text-base md:text-xl mt-4 line-clamp-2 font-semibold">
-                                    Proposal Title Blabababsbasbas
+                                    {{ $event->title }}
                                 </h3>
                             </div>
                         </div>

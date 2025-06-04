@@ -7,15 +7,15 @@
         <!-- Header Section -->
         <div class="flex px-6 flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-                <h1 class="text-2xl font-bold text-gray-800 dark:text-white">Edit Proposal</h1>
-                <p class="text-gray-600 dark:text-gray-400">Update proposal details.</p>
+                <h1 class="text-2xl font-bold text-gray-800 dark:text-white">Edit Event</h1>
+                <p class="text-gray-600 dark:text-gray-400">Update event details.</p>
             </div>
         </div>
 
         <!-- Form Section -->
         <div x-data="slugGenerator('{{ old('title', $proposal->title ?? '') }}', '{{ old('slug', $proposal->slug ?? '') }}')" class="border-gray-100 p-5 dark:border-gray-800 sm:p-6">
             <div class="rounded-2xl px-6 pb-8 pt-4 border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
-                <form action="{{ route('be.proposal.update', $proposal->slug) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('be.event.update', $proposal->slug) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
@@ -101,7 +101,7 @@
                     <div class="flex justify-end mt-6">
                         <button type="submit"
                             class="flex items-center gap-2 h-[42px] px-4 py-2.5 rounded-lg border border-blue-500 bg-blue-600 text-white font-medium transition-all hover:bg-blue-700 hover:border-blue-600 focus:ring focus:ring-blue-300 dark:bg-blue-700 dark:border-blue-600 dark:hover:bg-blue-800">
-                            Update Proposal
+                            Update Event
                         </button>
                     </div>
                 </form>
@@ -157,7 +157,7 @@
 
                 updateSlug() {
                     if (this.title.length > 0) {
-                        fetch("{{ route('be.proposal.generate.slug') }}", {
+                        fetch("{{ route('be.event.generate.slug') }}", {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json",

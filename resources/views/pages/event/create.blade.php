@@ -7,38 +7,40 @@
         <!-- Header Section -->
         <div class="flex px-6 flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-                <h1 class="text-2xl font-bold text-gray-800 dark:text-white">Edit Proposal</h1>
-                <p class="text-gray-600 dark:text-gray-400">Update proposal details.</p>
+                <h1 class="text-2xl font-bold text-gray-800 dark:text-white">Create New Event</h1>
+                <p class="text-gray-600 dark:text-gray-400">Add a new event.</p>
             </div>
         </div>
 
         <!-- Form Section -->
-        <div x-data="slugGenerator('{{ old('title', $proposal->title ?? '') }}', '{{ old('slug', $proposal->slug ?? '') }}')" class="border-gray-100 p-5 dark:border-gray-800 sm:p-6">
+        <div x-data="slugGenerator('{{ old('title','') }}', '{{ old('slug', '') }}')" class="border-gray-100 p-5 dark:border-gray-800 sm:p-6">
             <div class="rounded-2xl px-6 pb-8 pt-4 border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
-                <form action="{{ route('be.proposal.update', $proposal->slug) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('be.event.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    @method('PUT')
 
                     <!-- Title -->
-                    <div class="mt-4" x-data="{ hasError: {{ session('errors') && session('errors')->has('title') ? 'true' : 'false' }} }">
+                    <div class="mt-4">
                         <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
                             Title <span class="text-error-500">*</span>
                         </label>
-                        <input
-                            type="text"
-                            id="title"
-                            name="title"
-                            x-model="title"
-                            placeholder="e.g., JavaScript, Python, PHP"
-                            @input.debounce.300ms="updateSlug"
-                            :class="hasError
-                                ? 'border-red-500 dark:border-red-500 focus:ring-red-500 focus:border-red-500'
-                                : 'border-gray-300 dark:border-gray-700 focus:ring-blue-500 focus:border-blue-500'"
-                            class="h-11 w-full text-sm mt-1 px-4 py-2.5 border rounded-lg bg-white border-gray-300 dark:border-gray-700 dark:bg-gray-900 text-gray-700 dark:text-gray-300 placeholder:text-gray-400 dark:placeholder:text-white/30 focus:ring-2"
-                            required>
-                        @error('title')
-                            <span class="text-xs mt-1 font-medium text-red-500 dark:text-red-500">* {{ $message }}</span>
-                        @enderror
+                        <div x-data="{ hasError: {{ session('errors') && session('errors')->has('title') ? 'true' : 'false' }} }">
+                            <input
+                                type="text"
+                                id="title"
+                                name="title"
+                                x-model="title"
+                                value="{{ old('title') }}"
+                                @input.debounce.300ms="updateSlug"
+                                placeholder="e.g., Terpercaya, Profesional, Gratis Konsultasi"
+                                    :class="hasError
+                                    ? 'border-red-500 dark:border-red-500 focus:ring-red-500 focus:border-red-500'
+                                    : 'border-gray-300 dark:border-gray-700 focus:ring-blue-500 focus:border-blue-500'"
+                                class="h-11 w-full text-sm mt-1 px-4 py-2.5 border rounded-lg bg-white border-gray-300 dark:border-gray-700 dark:bg-gray-900 text-gray-700 dark:text-gray-300 placeholder:text-gray-400 dark:placeholder:text-white/30 focus:ring-2"
+                                required>
+                            <span class="text-xs mt-1 font-medium text-red-500 dark:text-red-500" x-show="hasError">
+                                @error('title') * {{ $message }} @enderror
+                            </span>
+                        </div>
                     </div>
 
                     <!-- Slug -->
@@ -51,7 +53,7 @@
                             id="slug"
                             name="slug"
                             x-model="slug"
-                            placeholder="Slug will be generated automatically from the name you provided."
+                            placeholder="Slug will be generated automatically from the title you provided."
                             :class="hasError
                                 ? 'border-red-500 dark:border-red-500 focus:ring-red-500 focus:border-red-500'
                                 : 'border-gray-300 dark:border-gray-700 focus:ring-blue-500 focus:border-blue-500'"
@@ -63,12 +65,11 @@
                         @enderror
                     </div>
 
-                    <!-- Image Upload (Edit) -->
+                    <!-- Image Upload -->
                     <div class="mt-4">
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="image">
-                            Upload file
+                            Upload file <span class="text-error-500">*</span>
                         </label>
-
                         <div x-data="{ hasError: {{ session('errors') && session('errors')->has('image') ? 'true' : 'false' }} }">
                             <input
                                 class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
@@ -80,6 +81,7 @@
                                 :class="hasError
                                     ? 'border-red-500 dark:border-red-500 focus:ring-2 focus:ring-red-500 dark:focus:ring-red-500'
                                     : 'border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-500'"
+                                required
                             >
                             <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="image_help">
                                 SVG, PNG, JPG or GIF (MAX. 800x400px).
@@ -88,25 +90,19 @@
                                 @error('image') * {{ $message }} @enderror
                             </span>
                         </div>
-
-                        @if (!empty($proposal->image))
-                            <div class="mt-3">
-                                <p class="text-sm text-gray-700 dark:text-white mb-1">Current Image:</p>
-                                <img src="{{ getWhyUsListImagePath($proposal) }}" alt="Current Image" class="h-24 rounded border">
-                            </div>
-                        @endif
                     </div>
 
                     <!-- Submit Button -->
                     <div class="flex justify-end mt-6">
                         <button type="submit"
                             class="flex items-center gap-2 h-[42px] px-4 py-2.5 rounded-lg border border-blue-500 bg-blue-600 text-white font-medium transition-all hover:bg-blue-700 hover:border-blue-600 focus:ring focus:ring-blue-300 dark:bg-blue-700 dark:border-blue-600 dark:hover:bg-blue-800">
-                            Update Proposal
+                            Create Event
                         </button>
                     </div>
                 </form>
             </div>
         </div>
+
     </div>
 </main>
 <!-- ===== Main Content End ===== -->
@@ -157,7 +153,7 @@
 
                 updateSlug() {
                     if (this.title.length > 0) {
-                        fetch("{{ route('be.proposal.generate.slug') }}", {
+                        fetch("{{ route('be.event.generate.slug') }}", {
                             method: "POST",
                             headers: {
                                 "Content-Type": "application/json",
