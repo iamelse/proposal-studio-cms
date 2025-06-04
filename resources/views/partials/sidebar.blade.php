@@ -135,6 +135,14 @@
                         ],
                         [
                             'order' => 5,
+                            'active' => 'be.home.event',
+                            'route' => 'be.home.event.index',
+                            'icon' => 'bx-id-card',
+                            'label' => 'Event',
+                            'permission' => PermissionEnum::UPDATE_HOME_EVENT
+                        ],
+                        [
+                            'order' => 5,
                             'active' => 'be.home.cta',
                             'route' => 'be.home.cta.index',
                             'icon' => 'bx-rocket',

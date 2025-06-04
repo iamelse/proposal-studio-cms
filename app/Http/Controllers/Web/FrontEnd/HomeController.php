@@ -21,7 +21,9 @@ class HomeController extends Controller
         $ourService = Section::where('name', 'services')->firstOrFail();
         $services = Service::all();
         $callToAction = Section::where('name','cta')->firstOrFail();
+        $proposal = Section::where('name', 'proposal')->firstOrFail();
         $proposals = Proposal::limit(20)->orderBy('created_at', 'desc')->get();
+        $event = Section::where('name', 'event')->firstOrFail();
 
         return view('pages.frontend.home.index', [
             'title' => 'Home',
@@ -30,7 +32,9 @@ class HomeController extends Controller
             'about' => $about,
             'ourService' => $ourService,
             'services' => $services,
+            'proposal' => $proposal,
             'proposals' => $proposals,
+            'event' => $event,
             'callToAction' => $callToAction
         ]);
     }

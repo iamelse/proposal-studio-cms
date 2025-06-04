@@ -37,7 +37,6 @@ class DatabaseSeeder extends Seeder
         Post::factory()->count(50)->create();
 
         $this->call(SectionSeeder::class);
-        $this->call(SkillSeeder::class);
         $this->call(SocialMediaSeeder::class);
         $this->call(QuickLinkSeeder::class);
         $this->call(WhyUsSeeder::class);

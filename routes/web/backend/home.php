@@ -6,6 +6,7 @@ use App\Http\Controllers\Web\BackEnd\Home\FooterController;
 use App\Http\Controllers\Web\BackEnd\Home\HeroController;
 use App\Http\Controllers\Web\BackEnd\Home\OurServiceController;
 use App\Http\Controllers\Web\BackEnd\Home\ProposalController;
+use App\Http\Controllers\Web\BackEnd\Home\EventController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/home/hero', [HeroController::class,'index'])->name('be.home.hero.index');
@@ -19,6 +20,9 @@ Route::put('/our-service/update', [OurServiceController::class, 'update'])->name
 
 Route::get('/proposal', [ProposalController::class, 'index'])->name('be.home.proposal.index');
 Route::put('/proposal/update', [ProposalController::class, 'update'])->name('be.home.proposal.update');
+
+Route::get('/event', [EventController::class, 'index'])->name('be.home.event.index');
+Route::put('/event/update', [EventController::class, 'update'])->name('be.home.event.update');
 
 Route::get('/home/cta', [CallToActionController::class,'index'])->name('be.home.cta.index');
 Route::put('/home/cta/update', [CallToActionController::class,'update'])->name('be.home.cta.update');

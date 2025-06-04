@@ -67,6 +67,13 @@ class SectionSeeder extends Seeder
                     'subtitle' => 'Temukan Layanan Profesional yang Tepat di Proposal Studio.',
                 ]),
             ],
+            [
+                'name' => 'event',
+                'content' => json_encode([
+                    'title' => 'Kegiatan Terkini Kami',
+                    'subtitle' => 'Dapatkan Wawasan Mendalam melalui Serangkaian Kegiatan, Termasuk Webinar Terbaru Kami yang Penuh Informasi.',
+                ])
+            ],
             ['name' => 'cta', 'content' => json_encode(['title' => "Let's Collaborate and Build Something Amazing!", 'description' => "I’m open to exciting projects and opportunities in web development, Laravel, and beyond. Let’s create something impactful together. "])],
             ['name' => 'footer', 'content' => json_encode(['title' => 'About Me', 'description' => "Passionate web developer specializing in Laravel, Vue.js, and modern web technologies. Let's build something amazing together!"])],
             ['name' => 'about-page.about', 'content' => ''],

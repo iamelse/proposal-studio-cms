@@ -158,12 +158,15 @@
 @endsection
 
 @section('clients')
+    @php
+        $content = json_decode($proposal->content);
+    @endphp
     <div id="proposal" class="mx-5 my-14 md:mx-10">
         <h2 class="text-baseBlack text-2xl md:text-4xl tracking-tight font-bold text-center">
-            Preview Proposal High Quality
+            {{ $content->title }}
         </h2>
         <p class="mt-1 lg:mt-3 text-center font-semibold text-lg md:text-xl text-baseBlack">
-            Proyek-proyek Berkualitas yang Telah Kami Selesaikan dengan Penuh Keberhasilan.
+            {{ $content->subtitle }}
         </p>
 
         <!-- Carousel with Arrows Flex Wrapper -->
@@ -225,13 +228,15 @@
                 'title' => 'Networking Event for Creatives',
             ],
         ];
+
+        $content = json_decode($event->content);
     @endphp
     <div id="event" class="mx-5 my-14 md:mx-10 bg-cover bg-center" style="background-image: url('https://raw.githubusercontent.com/vikifsyh/proposal-studio/main/public/bg2.png')">
         <h2 class="text-baseBlack text-2xl md:text-4xl tracking-tight font-bold text-center">
-            Kegiatan Terkini Kami
+            {{ $content->title }}
         </h2>
         <p class="mt-1 lg:mt-3 text-center font-semibold text-lg md:text-xl text-baseBlack">
-            Dapatkan Wawasan Mendalam melalui Serangkaian Kegiatan, Termasuk Webinar Terbaru Kami yang Penuh Informasi.
+            {{ $content->subtitle }}
         </p>
 
         <!-- Carousel with Arrows Flex Wrapper -->
