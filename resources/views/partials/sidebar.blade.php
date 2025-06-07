@@ -142,7 +142,15 @@
                             'permission' => PermissionEnum::UPDATE_HOME_EVENT
                         ],
                         [
-                            'order' => 5,
+                            'order' => 6,
+                            'active' => 'be.home.review',
+                            'route' => 'be.home.review.index',
+                            'icon' => 'bx-id-card',
+                            'label' => 'Review',
+                            'permission' => PermissionEnum::UPDATE_HOME_REVIEW
+                        ],
+                        [
+                            'order' => 7,
                             'active' => 'be.home.cta',
                             'route' => 'be.home.cta.index',
                             'icon' => 'bx-rocket',
@@ -150,7 +158,7 @@
                             'permission' => PermissionEnum::UPDATE_HOME_CTA
                         ],
                         [
-                            'order' => 6,
+                            'order' => 8,
                             'active' => 'be.home.footer',
                             'route' => 'be.home.footer.index',
                             'icon' => 'bx-dock-bottom',
@@ -210,7 +218,15 @@
                             'permission' => PermissionEnum::READ_EVENT
                         ],
                         [
-                            'order' => 4,
+                            'order' => 5,
+                            'active' => 'be.review',
+                            'route' => 'be.review.index',
+                            'icon' => 'bx-id-card',
+                            'label' => 'Review List',
+                            'permission' => PermissionEnum::READ_REVIEW
+                        ],
+                        [
+                            'order' => 6,
                             'active' => 'be.social-media',
                             'route' => 'be.social-media.index',
                             'icon' => 'bx-group',
@@ -218,7 +234,7 @@
                             'permission' => PermissionEnum::READ_SOCIAL_MEDIA
                         ],
                         [
-                            'order' => 5,
+                            'order' => 7,
                             'active' => [
                                 'be.quick-link.index',
                                 'be.quick-link.create',

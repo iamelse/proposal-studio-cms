@@ -16,6 +16,8 @@ enum PermissionEnum: string
 
     case UPDATE_HOME_EVENT = 'home_event_update';
 
+    case UPDATE_HOME_REVIEW = 'home_review_update';
+
     case UPDATE_HOME_CTA = 'home_cta_update';
 
     case UPDATE_HOME_FOOTER = 'home_footer_update';
@@ -53,6 +55,11 @@ enum PermissionEnum: string
     case READ_EVENT = 'event_read';
     case UPDATE_EVENT = 'event_update';
     case DELETE_EVENT = 'event_delete';
+
+    case CREATE_REVIEW = 'review_create';
+    case READ_REVIEW = 'review_read';
+    case UPDATE_REVIEW = 'review_update';
+    case DELETE_REVIEW = 'review_delete';
 
     case CREATE_USER = 'users_create';
     case READ_USER = 'users_read';

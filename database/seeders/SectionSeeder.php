@@ -74,6 +74,13 @@ class SectionSeeder extends Seeder
                     'subtitle' => 'Dapatkan Wawasan Mendalam melalui Serangkaian Kegiatan, Termasuk Webinar Terbaru Kami yang Penuh Informasi.',
                 ])
             ],
+            [
+                'name' => 'review',
+                'content' => json_encode([
+                    'title' => 'Proposal Studio telah memiliki banyak <span style="color:#05408C;">testimoni positif</span> dari klien',
+                    'subtitle' => '',
+                ])
+            ],
             ['name' => 'cta', 'content' => json_encode(['title' => "Let's Collaborate and Build Something Amazing!", 'description' => "I’m open to exciting projects and opportunities in web development, Laravel, and beyond. Let’s create something impactful together. "])],
             ['name' => 'footer', 'content' => json_encode(['title' => 'About Me', 'description' => "Passionate web developer specializing in Laravel, Vue.js, and modern web technologies. Let's build something amazing together!"])],
             ['name' => 'about-page.about', 'content' => ''],

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Web\FrontEnd;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\Proposal;
+use App\Models\Review;
 use App\Models\Section;
 use App\Models\Service;
 use App\Models\WhyUs;
@@ -24,6 +25,8 @@ class HomeController extends Controller
         $proposals = Proposal::limit(20)->orderBy('created_at', 'desc')->get();
         $event = Section::where('name', 'event')->firstOrFail();
         $events = Event::limit(20)->orderBy('created_at', 'desc')->get();
+        $review = Section::where('name', 'review')->firstOrFail();
+        $reviews = Review::limit(20)->orderBy('created_at', 'desc')->get();
 
         return view('pages.frontend.home.index', [
             'title' => 'Home',
@@ -36,6 +39,8 @@ class HomeController extends Controller
             'proposals' => $proposals,
             'event' => $event,
             'events' => $events,
+            'review' => $review,
+            'reviews' => $reviews,
             'callToAction' => $callToAction
         ]);
     }

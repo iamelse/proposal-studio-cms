@@ -19,6 +19,7 @@ Route::prefix('admin')->middleware('is.auth')->group(function () {
     include __DIR__ . '/web/backend/feature.php';
     include __DIR__ . '/web/backend/proposal.php';
     include __DIR__ . '/web/backend/event.php';
+    include __DIR__ . '/web/backend/review.php';
     include __DIR__ . '/web/backend/role.php';
     include __DIR__ . '/web/backend/user.php';
     include __DIR__ . '/web/backend/social-media.php';

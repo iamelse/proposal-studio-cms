@@ -132,7 +132,7 @@
     <section id="service" class="mx-5 my-14 md:mx-20 md:my-[100px]">
         <div class="lg:w-1/2 text-center mx-auto">
             <h1 class="text-baseBlack text-2xl md:text-4xl tracking-tight font-bold text-center">
-                {{ $content->title }}
+                {!! $content->title !!}
             </h1>
             <h2 class="mt-1 lg:mt-3 text-center font-semibold text-lg md:text-xl text-baseBlack">
                 {{ $content->subtitle }}
@@ -163,7 +163,7 @@
     @endphp
     <div id="proposal" class="mx-5 my-14 md:mx-10">
         <h2 class="text-baseBlack text-2xl md:text-4xl tracking-tight font-bold text-center">
-            {{ $content->title }}
+            {!! $content->title !!}
         </h2>
         <p class="mt-1 lg:mt-3 text-center font-semibold text-lg md:text-xl text-baseBlack">
             {{ $content->subtitle }}
@@ -206,7 +206,7 @@
     @endphp
     <div id="event" class="mx-5 my-14 md:mx-10 bg-cover bg-center" style="background-image: url('https://raw.githubusercontent.com/vikifsyh/proposal-studio/main/public/bg2.png')">
         <h2 class="text-baseBlack text-2xl md:text-4xl tracking-tight font-bold text-center">
-            {{ $content->title }}
+            {!! $content->title !!}
         </h2>
         <p class="mt-1 lg:mt-3 text-center font-semibold text-lg md:text-xl text-baseBlack">
             {{ $content->subtitle }}
@@ -248,207 +248,56 @@
 
 @section('reviews')
     @php
-        $reviews = [
-            [
-                'id' => 1,
-                'name' => 'Kak Nunung',
-                'rating' => 5,
-                'comment' => 'Kakaknya baik sekali, sabar menghadapi customer. Untuk pengerjaan cepat dan halus...',
-                'created_at' => 'Finalis Miss Hijab Indonesia 2022',
-                'image' => 'https://ui-avatars.com/api/?name=Kak+Nunung&background=random',
-            ],
-            [
-                'id' => 2,
-                'name' => 'Kak Ade',
-                'rating' => 5,
-                'comment' => 'Ini udah kali ketiganya pakai Proposal Studio...',
-                'created_at' => 'Atlet Badminton Top 11 National Rank',
-                'image' => 'https://ui-avatars.com/api/?name=Kak+Ade&background=random',
-            ],
-            [
-                'id' => 3,
-                'name' => 'Kak Tatang',
-                'rating' => 5,
-                'comment' => 'Pelayanannya sangat memuaskan dan cepat tanggap!',
-                'created_at' => 'Duta Literasi Indonesia',
-                'image' => 'https://ui-avatars.com/api/?name=Kak+Tatang&background=random',
-            ],
-            [
-                'id' => 4,
-                'name' => 'Trend Coffee',
-                'rating' => 5,
-                'comment' => 'Proposalnya sangat profesional dan tepat waktu.',
-                'created_at' => 'Trend Coffee',
-                'image' => 'https://ui-avatars.com/api/?name=Trend+Coffee&background=random',
-            ],
-            [
-                'id' => 5,
-                'name' => "Majelis Ta'lim",
-                'rating' => 4.5,
-                'comment' => 'Desainnya bagus, pengerjaan cepat. Terima kasih!',
-                'created_at' => "Majelis Ta'lim Bustanul Wildan",
-                'image' => 'https://ui-avatars.com/api/?name=Majelis+Ta\'lim&background=random',
-            ],
-            [
-                'id' => 6,
-                'name' => 'CV Kutai Media',
-                'rating' => 5,
-                'comment' => 'Sangat puas dengan hasil proposal yang diberikan.',
-                'created_at' => 'CV Kutai Media Utama',
-                'image' => 'https://ui-avatars.com/api/?name=Kutai+Media&background=random',
-            ],
-            [
-                'id' => 7,
-                'name' => 'Hackfest 2023',
-                'rating' => 5,
-                'comment' => 'Proposalnya keren dan proses pengerjaan cepat.',
-                'created_at' => 'Hackfest 2023',
-                'image' => 'https://ui-avatars.com/api/?name=Hackfest+2023&background=random',
-            ],
-            [
-                'id' => 8,
-                'name' => 'Pak Paulus',
-                'rating' => 5,
-                'comment' => 'Makasih Proposal Studio, hasilnya sangat memuaskan.',
-                'created_at' => 'Project Batu Bara & Kayu',
-                'image' => 'https://ui-avatars.com/api/?name=Pak+Paulus&background=random',
-            ],
-            [
-                'id' => 9,
-                'name' => 'IM3 Denpasar',
-                'rating' => 5,
-                'comment' => 'Proposal sangat sesuai dengan kebutuhan event kami.',
-                'created_at' => 'IM3 Denpasar Bali',
-                'image' => 'https://ui-avatars.com/api/?name=IM3+Denpasar&background=random',
-            ],
-            [
-                'id' => 10,
-                'name' => 'Neko Esport',
-                'rating' => 5,
-                'comment' => 'Desainnya keren dan sesuai request. Recommended!',
-                'created_at' => 'Neko Esport',
-                'image' => 'https://ui-avatars.com/api/?name=Neko+Esport&background=random',
-            ],
-            [
-                'id' => 11,
-                'name' => 'Baby Ourlens',
-                'rating' => 5,
-                'comment' => 'Konsep proposalnya mantap, cepat dan tepat!',
-                'created_at' => 'Baby Ourlens Kediri',
-                'image' => 'https://ui-avatars.com/api/?name=Baby+Ourlens&background=random',
-            ],
-            [
-                'id' => 12,
-                'name' => 'Camp Naga Sakti',
-                'rating' => 5,
-                'comment' => 'Desain menarik, service cepat dan ramah.',
-                'created_at' => 'Pelatihan Muay Thai dan Boxing',
-                'image' => 'https://ui-avatars.com/api/?name=Naga+Sakti&background=random',
-            ],
-            [
-                'id' => 13,
-                'name' => 'HAMN 2022',
-                'rating' => 5,
-                'comment' => 'Revisi cepat, hasil sangat memuaskan!',
-                'created_at' => 'Macroworldmania',
-                'image' => 'https://ui-avatars.com/api/?name=HAMN+2022&background=random',
-            ],
-            [
-                'id' => 14,
-                'name' => 'Sapta Mahifal',
-                'rating' => 5,
-                'comment' => 'Fast respon dan hasil luar biasa. Terbaik!',
-                'created_at' => 'Sapta Mahifal Corporate',
-                'image' => 'https://ui-avatars.com/api/?name=Sapta+Mahifal&background=random',
-            ],
-            [
-                'id' => 15,
-                'name' => 'Relawan Banjarnegara',
-                'rating' => 5,
-                'comment' => 'Proposalnya keren semua, sukses terus!',
-                'created_at' => 'Relawan Banjarnegara Atas',
-                'image' => 'https://ui-avatars.com/api/?name=Relawan+Banjarnegara&background=random',
-            ],
-            [
-                'id' => 16,
-                'name' => 'Ve House Solo',
-                'rating' => 5,
-                'comment' => 'Semua aspek dalam proposal sangat bagus.',
-                'created_at' => 'Ve House of Beauty Solo',
-                'image' => 'https://ui-avatars.com/api/?name=Ve+House+Solo&background=random',
-            ],
-        ];
-
-        function renderStars($rating) {
-            $fullStars = floor($rating);
-            $hasHalfStar = $rating - $fullStars > 0;
-
-            $starsHtml = '';
-            for ($i = 0; $i < 5; $i++) {
-                if ($i < $fullStars) {
-                    $starsHtml .= '<i class="bx bxs-star bx-sm text-yellow-400"></i>';
-                } elseif ($hasHalfStar && $i === $fullStars) {
-                    $starsHtml .= '<i class="bx bxs-star-half bx-sm text-yellow-400"></i>';
+        $content = json_decode($review->content);
+    @endphp
+    @php
+        function renderStars($rating): string {
+            $stars = '';
+            $rating = floatval($rating); // pastikan float
+            for ($i = 1; $i <= 5; $i++) {
+                if ($rating >= $i) {
+                    $stars .= '<i class="bx bxs-star bx-sm text-yellow-400"></i>';
+                } elseif ($rating >= $i - 0.5) {
+                    $stars .= '<i class="bx bxs-star-half bx-sm text-yellow-400"></i>';
                 } else {
-                    $starsHtml .= '<i class="bx bx-star bx-sm text-yellow-400"></i>';
+                    $stars .= '<i class="bx bx-star bx-sm text-yellow-400"></i>';
                 }
             }
-            return $starsHtml;
+            return $stars;
         }
     @endphp
 
     <div class="my-24 mx-5 md:mx-20">
         <div class="text-center">
             <h2 class="text-gray-900 text-2xl md:text-4xl font-bold">
-                Proposal Studio telah memiliki banyak
-                <span class="text-brandPrimary">testimoni positif</span> dari klien.
+                {!! $content->title !!}
             </h2>
         </div>
 
         <div class="relative overflow-hidden mt-8 md:mt-16">
             <!-- Fade effect sides -->
-            <!-- Original: w-16 = 4rem (64px) -->
             <div class="absolute top-0 left-0 w-32 h-full z-10 bg-gradient-to-r from-white to-transparent pointer-events-none"></div>
             <div class="absolute top-0 right-0 w-32 h-full z-10 bg-gradient-to-l from-white to-transparent pointer-events-none"></div>
 
             <!-- Marquee track -->
-            <div class="marquee whitespace-nowrap flex gap-5 w-max animate-marquee">
+            <div class="flex w-max gap-5 animate-marquee-fast">
                 @foreach ($reviews as $review)
                     <figure class="w-[400px] h-[240px] rounded-[20px] px-8 py-7 border border-slate-200 bg-white flex-shrink-0">
                         <figcaption class="flex gap-5 items-center">
                             <div class="w-14 h-14 rounded-full overflow-hidden">
-                                <img src="{{ asset($review['image']) }}" alt="profil" class="w-full h-full object-cover rounded-full">
+                                <img src="{{ $review->image }}" alt="Review oleh {{ $review->company_name }}" class="w-full h-full object-cover rounded-full">
                             </div>
                             <div class="flex flex-col">
-                                <span class="font-semibold text-gray-800">{{ $review['name'] }}</span>
-                                <span class="text-sm text-slate-500">{{ $review['created_at'] }}</span>
+                                <span class="font-semibold text-gray-800">{{ $review->name }}</span>
+                                <span class="text-sm text-slate-500">{{ $review->company_name }}</span>
                             </div>
                         </figcaption>
                         <blockquote>
-                            <p class="text-gray-600 text-base mt-6 line-clamp-3">{{ $review['comment'] }}</p>
+                            <p class="text-gray-600 text-base mt-6 line-clamp-3 break-words">
+                                {{ $review->comment }}
+                            </p>
                             <div class="flex gap-1 mt-5">
-                                {!! renderStars($review['rating']) !!}
-                            </div>
-                        </blockquote>
-                    </figure>
-                @endforeach
-                <!-- Clone for seamless loop -->
-                @foreach ($reviews as $review)
-                    <figure class="w-[400px] h-[240px] rounded-[20px] px-8 py-7 border border-slate-200 bg-white flex-shrink-0">
-                        <!-- (Same content as above) -->
-                        <figcaption class="flex gap-5 items-center">
-                            <div class="w-14 h-14 rounded-full overflow-hidden">
-                                <img src="{{ asset($review['image']) }}" alt="profil" class="w-full h-full object-cover rounded-full">
-                            </div>
-                            <div class="flex flex-col">
-                                <span class="font-semibold text-gray-800">{{ $review['name'] }}</span>
-                                <span class="text-sm text-slate-500">{{ $review['created_at'] }}</span>
-                            </div>
-                        </figcaption>
-                        <blockquote>
-                            <p class="text-gray-600 text-base mt-6 line-clamp-3">{{ $review['comment'] }}</p>
-                            <div class="flex gap-1 mt-5">
-                                {!! renderStars($review['rating']) !!}
+                                {!! renderStars($review->rating) !!}
                             </div>
                         </blockquote>
                     </figure>
