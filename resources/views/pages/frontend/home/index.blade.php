@@ -356,27 +356,33 @@
 @section('cta')
     <div class="md:mx-20 mx-5 mt-14 md:mt-[100px] md:mb-16 mb-8">
         <div class="bg-brandPrimary rounded-2xl md:rounded-[40px] p-8 md:p-16">
-            <div class="lg:flex lg:gap-20">
-                <h1 class="text-4xl text-white font-semibold hidden lg:block">
-                    Konsultasikan secara
-                    <span class="text-brandSecondary font-bold"> GRATIS </span>
-                    proposal Anda <br> dan segera realisasikan tujuan Anda Bersama Kami
-                </h1>
-                <h1 class="text-lg text-white font-semibold block lg:hidden text-center">
-                    Konsultasikan secara
-                    <span class="text-brandSecondary"> GRATIS </span>
-                    proposal Anda <br> dan segera realisasikan tujuan Anda Bersama Kami
-                </h1>
-                <a href="https://wa.me/6281226831649?text={{ urlencode('Hallo Kak, saya ingin tanya terkait proposal, apakah bisa dibantu?') }}">
+            <div class="lg:flex lg:items-center lg:justify-between lg:gap-20">
+                <!-- Teks di kiri -->
+                <div class="text-center lg:text-left">
+                    <h1 class="text-4xl text-white font-semibold hidden lg:block">
+                        Konsultasikan secara
+                        <span class="text-brandSecondary font-bold"> GRATIS </span>
+                        proposal Anda <br> dan segera realisasikan tujuan Anda Bersama Kami
+                    </h1>
+                    <h1 class="text-lg text-white font-semibold block lg:hidden mt-6">
+                        Konsultasikan secara
+                        <span class="text-brandSecondary"> GRATIS </span>
+                        proposal Anda <br> dan segera realisasikan tujuan Anda Bersama Kami
+                    </h1>
+                </div>
+
+                <!-- Tombol di kanan -->
+                <a href="https://wa.me/6281226831649?text={{ urlencode('Hallo Kak, saya ingin tanya terkait proposal, apakah bisa dibantu?') }}"
+                   class="flex-shrink-0 mt-6 lg:mt-0"
+                >
                     <button
-                        class="flex gap-2 w-fit items-center justify-center mx-auto md:gap-4 px-4 py-2 mt-3 md:px-8 md:py-4 bg-brandPrimary border border-white rounded-full
-                           md:hover:bg-brandPrimary/50 ease-in-out duration-200 focus:ring-4 focus:ring-blue-300 focus:text-white hover:text-white"
+                        class="flex gap-2 items-center justify-center px-4 py-2 bg-brandPrimary border border-white rounded-full
+                               md:px-8 md:py-4 md:gap-4
+                               hover:bg-brandPrimary/50 ease-in-out duration-200 focus:ring-4 focus:ring-blue-300 focus:text-white hover:text-white
+                               text-white whitespace-nowrap text-sm md:text-xl"
                     >
-                    <span class="text-white whitespace-nowrap text-sm md:text-xl">
                         Konsultasi Gratis
-                    </span>
-                        {{-- Replace below with your icon component or inline SVG --}}
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 md:w-6 md:h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 md:w-6 md:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                         </svg>
                     </button>
