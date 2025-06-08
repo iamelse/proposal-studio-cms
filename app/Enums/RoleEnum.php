@@ -19,6 +19,7 @@ enum RoleEnum: string
                 PermissionEnum::UPDATE_HOME_PROPOSAL,
                 PermissionEnum::UPDATE_HOME_EVENT,
                 PermissionEnum::UPDATE_HOME_REVIEW,
+                PermissionEnum::UPDATE_HOME_FAQ,
                 PermissionEnum::UPDATE_HOME_CTA,
                 PermissionEnum::UPDATE_HOME_FOOTER,
 
@@ -60,6 +61,11 @@ enum RoleEnum: string
                 PermissionEnum::READ_REVIEW,
                 PermissionEnum::UPDATE_REVIEW,
                 PermissionEnum::DELETE_REVIEW,
+
+                PermissionEnum::CREATE_FAQ,
+                PermissionEnum::READ_FAQ,
+                PermissionEnum::UPDATE_FAQ,
+                PermissionEnum::DELETE_FAQ,
 
                 PermissionEnum::CREATE_USER,
                 PermissionEnum::READ_USER,

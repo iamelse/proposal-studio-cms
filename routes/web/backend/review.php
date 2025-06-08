@@ -9,4 +9,3 @@ Route::get('/reviews/{review}/edit', [ReviewController::class,'edit'])->name('be
 Route::put('/reviews/{review}/update', [ReviewController::class,'update'])->name('be.review.update');
 Route::delete('/reviews/{review}/destroy', [ReviewController::class,'destroy'])->name('be.review.destroy');
 Route::get('/reviews/mass-destroy', [ReviewController::class,'massDestroy'])->name('be.review.mass.destroy');
-Route::post('/reviews/generate-slug', [ReviewController::class,'generateSlug'])->name('be.review.generate.slug');

@@ -54,7 +54,7 @@
 
             <div class="flex justify-center items-center mt-16">
                 <h2 class="text-xs md:text-base text-gray-400 text-center">
-                    COPYRIGHT PROPOSAL STUDIO 2024 © ALL RIGHT RESERVED
+                    COPYRIGHT PROPOSAL STUDIO {{ date('Y') }} © ALL RIGHT RESERVED
                 </h2>
             </div>
         </div>

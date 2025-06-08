@@ -151,11 +151,11 @@
                         ],
                         [
                             'order' => 7,
-                            'active' => 'be.faq',
-                            'route' => 'be.review.index',
+                            'active' => 'be.home.faq',
+                            'route' => 'be.home.faq.index',
                             'icon' => 'bx-help-circle', // FAQ = icon tanda tanya
                             'label' => 'Frequently Asked Question',
-                            'permission' => PermissionEnum::READ_ROLE
+                            'permission' => PermissionEnum::UPDATE_HOME_FAQ
                         ],
                         [
                             'order' => 7,
@@ -236,10 +236,10 @@
                         [
                             'order' => 6,
                             'active' => 'be.faq',
-                            'route' => 'be.review.index',
+                            'route' => 'be.faq.index',
                             'icon' => 'bx-help-circle', // FAQ = icon tanda tanya
                             'label' => 'Frequently Asked Questions',
-                            'permission' => PermissionEnum::READ_ROLE
+                            'permission' => PermissionEnum::READ_FAQ
                         ],
                         [
                             'order' => 7,

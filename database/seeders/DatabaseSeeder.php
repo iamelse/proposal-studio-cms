@@ -44,5 +44,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ProposalSeeder::class);
         $this->call(EventSeeder::class);
         $this->call(ReviewSeeder::class);
+        $this->call(FAQSeeder::class);
     }
 }

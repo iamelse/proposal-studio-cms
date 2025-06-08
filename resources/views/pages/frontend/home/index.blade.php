@@ -308,43 +308,35 @@
 @endsection
 
 @section('faqs')
+    @php
+        $content = json_decode($faq->content);
+    @endphp
     <div class="mx-5 my-14 md:mx-20 md:my-[100px] flex flex-col items-center justify-center">
         <h2 class="text-baseBlack text-2xl md:text-4xl tracking-tight font-bold text-center">
-            Memiliki Pertanyaan?<br />
-            Temukan <span class="text-brandPrimary">jawabannya</span> secara mudah di FAQ kami
+            {!! $content->title !!}
         </h2>
 
         <div class="w-full max-w-6xl md:mt-10 mt-5">
-            @php
-                $faqs = [
-                    ['id' => 1, 'question' => 'Apakah bisa membuat proposal skripsi?', 'answer' => 'Maaf Kak, kami tidak menerima pembuatan proposal dalam ranah pendidikan/sekolah/kuliah seperti proposal skripsi, proposal penelitian, makalah, dan lainnya yang menyangkut dengan pendidikan.'],
-                    ['id' => 2, 'question' => 'Saya gatau apa-apa soal Proposal, apakah bisa dibantu sampai tuntas?', 'answer' => 'Bisa Kak, tenang saja kita akan bantu dari awal sampai akhir sesuai dengan kebutuhan Kakak. Kita juga ada KONSULTASI GRATIS kak, jadi Kakak bisa konsultasi sampai tuntas dengan kami.'],
-                    ['id' => 3, 'question' => 'Bisa buat proposal dalam waktu cepat?', 'answer' => 'Bisa Kak, pengerjaan kami hanya membutuhkan waktu 1-7 hari kerja saja.'],
-                    ['id' => 4, 'question' => 'Apakah proposal saya aman / tidak disebarluaskan?', 'answer' => 'Proposal 100% aman Kak, kami juga menyediakan Surat Perjanjian Kerjasama dalam menjaga keamanan data maupun proposalnya jika dibutuhkan.'],
-                    ['id' => 5, 'question' => 'Apakah boleh tanya-tanya terlebih dahulu?', 'answer' => 'Boleh Kak silahkan, dengan senang hati kami akan membantu. Kami akan lebih fast respon di Whatsapp dibandingkan di DM Instagram. Jadi silahkan kontak Whatsapp kami saja ya Kak untuk konsultasi/tanya-tanya terlebih dahulu.'],
-                ];
-            @endphp
-
             @foreach ($faqs as $faq)
                 <div class="border-b border-gray-300 last:border-b-0">
                     <button
                         type="button"
-                        aria-controls="faq-content-{{ $faq['id'] }}"
+                        aria-controls="faq-content-{{ $faq->id }}"
                         aria-expanded="false"
-                        id="faq-toggle-{{ $faq['id'] }}"
+                        id="faq-toggle-{{ $faq->id }}"
                         class="w-full flex flex-1 items-center justify-between p-4 rounded-2xl transition-all hover:text-white hover:bg-brandPrimary text-start text-base md:text-xl font-medium text-baseBlack faq-toggle"
-                        data-target="faq-content-{{ $faq['id'] }}"
+                        data-target="faq-content-{{ $faq->id }}"
                     >
-                        {{ $faq['question'] }}
+                        {{ $faq->question }}
                         <i class="bx bx-chevron-down text-2xl transition-transform duration-200"></i>
                     </button>
                     <div
-                        id="faq-content-{{ $faq['id'] }}"
+                        id="faq-content-{{ $faq->id }}"
                         class="hidden text-sm md:text-lg text-baseBlack font-normal mt-3 px-4 mb-4"
                         role="region"
-                        aria-labelledby="faq-toggle-{{ $faq['id'] }}"
+                        aria-labelledby="faq-toggle-{{ $faq->id }}"
                     >
-                        {{ $faq['answer'] }}
+                        {{ $faq->answer }}
                     </div>
                 </div>
             @endforeach
