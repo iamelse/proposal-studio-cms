@@ -22,21 +22,12 @@ enum PermissionEnum: string
 
     case UPDATE_HOME_CTA = 'home_cta_update';
 
-    case UPDATE_HOME_FOOTER = 'home_footer_update';
-
-    case UPDATE_ABOUT = 'about_update';
-
-    case UPDATE_RESUME = 'resume_update';
+    case UPDATE_SETTING_GENERAL = 'settings_general_update';
 
     case CREATE_SOCIAL_MEDIA = 'social_media_create';
     case READ_SOCIAL_MEDIA = 'social_media_read';
     case UPDATE_SOCIAL_MEDIA = 'social_media_update';
     case DELETE_SOCIAL_MEDIA = 'social_media_delete';
-
-    case CREATE_QUICK_LINK = 'quick_link_create';
-    case READ_QUICK_LINK = 'quick_link_read';
-    case UPDATE_QUICK_LINK = 'quick_link_update';
-    case DELETE_QUICK_LINK = 'quick_link_delete';
 
     case CREATE_FEATURE = 'features_create';
     case READ_FEATURE = 'features_read';

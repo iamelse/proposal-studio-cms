@@ -165,28 +165,6 @@
                             'label' => 'Call To Action',
                             'permission' => PermissionEnum::UPDATE_HOME_CTA
                         ],
-                        [
-                            'order' => 8,
-                            'active' => 'be.home.footer',
-                            'route' => 'be.home.footer.index',
-                            'icon' => 'bx-layout', // footer = layout/grid icon
-                            'label' => 'Footer',
-                            'permission' => PermissionEnum::UPDATE_HOME_FOOTER
-                        ],
-                    ]
-                ],
-                [
-                    'title' => 'Resume',
-                    'order' => 4,
-                    'children' => [
-                        [
-                            'order' => 1,
-                            'active' => 'be.resume',
-                            'route' => 'be.resume.index',
-                            'icon' => 'bx-file-blank', // resume = dokumen kosong
-                            'label' => 'Resume',
-                            'permission' => PermissionEnum::UPDATE_RESUME
-                        ],
                     ]
                 ],
                 [
@@ -249,19 +227,6 @@
                             'label' => 'Social Media',
                             'permission' => PermissionEnum::READ_SOCIAL_MEDIA
                         ],
-                        [
-                            'order' => 8,
-                            'active' => [
-                                'be.quick-link.index',
-                                'be.quick-link.create',
-                                'be.quick-link.edit'
-                            ],
-                            'exact' => true,
-                            'route' => 'be.quick-link.index',
-                            'icon' => 'bx-link', // quick link
-                            'label' => 'Quick Link',
-                            'permission' => PermissionEnum::READ_QUICK_LINK
-                        ],
                     ]
                 ],
                 [
@@ -270,11 +235,11 @@
                     'children' => [
                         [
                             'order' => 1,
-                            'active' => 'be.contact',
-                            'route' => 'be.review.index',
-                            'icon' => 'bx-phone-call', // contact = telepon
-                            'label' => 'Contact',
-                            'permission' => PermissionEnum::READ_ROLE
+                            'active' => 'be.settings.general',
+                            'route' => 'be.settings.general.index',
+                            'icon' => 'bx-wrench', // general = umum
+                            'label' => 'General',
+                            'permission' => PermissionEnum::UPDATE_SETTING_GENERAL
                         ],
                         [
                             'order' => 2,

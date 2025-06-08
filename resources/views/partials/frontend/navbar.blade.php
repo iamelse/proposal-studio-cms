@@ -20,7 +20,7 @@
     </div>
 
     <!-- WhatsApp Button (Desktop) -->
-    <a href="https://wa.me/6281226831649?text=Hallo%20Kak%2C%20saya%20ingin%20tanya%20terkait%20proposal%2C%20apakah%20bisa%20dibantu%3F"
+    <a href="https://wa.me/{{ $settings['whatsapp_number_with_country_code'] }}?text=Hallo%20Kak%2C%20saya%20ingin%20tanya%20terkait%20proposal%2C%20apakah%20bisa%20dibantu%3F"
        target="_blank"
        class="hidden lg:block border border-[#05408C] px-5 py-3 text-[#05408C] font-medium rounded-full hover:bg-[#05408C] hover:text-white transition-all duration-300">
         Hubungi Kami
@@ -28,7 +28,7 @@
 
     <!-- Mobile Buttons -->
     <div class="lg:hidden flex items-center gap-2">
-        <a href="https://wa.me/6281226831649" target="_blank"
+        <a href="https://wa.me/{{ $settings['whatsapp_number_with_country_code'] }}" target="_blank"
            class="border border-[#05408C] py-2 px-4 text-sm text-[#05408C] font-medium rounded-full hover:bg-[#05408C] hover:text-white transition-all">
             Hubungi Kami
         </a>

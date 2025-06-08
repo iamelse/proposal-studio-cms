@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Web\BackEnd\Home\AboutController;
 use App\Http\Controllers\Web\BackEnd\Home\CallToActionController;
-use App\Http\Controllers\Web\BackEnd\Home\FooterController;
 use App\Http\Controllers\Web\BackEnd\Home\HeroController;
 use App\Http\Controllers\Web\BackEnd\Home\OurServiceController;
 use App\Http\Controllers\Web\BackEnd\Home\ProposalController;
@@ -34,6 +33,3 @@ Route::put('/faq/update', [FAQController::class, 'update'])->name('be.home.faq.u
 
 Route::get('/home/cta', [CallToActionController::class,'index'])->name('be.home.cta.index');
 Route::put('/home/cta/update', [CallToActionController::class,'update'])->name('be.home.cta.update');
-
-Route::get('/home/footer', [FooterController::class,'index'])->name('be.home.footer.index');
-Route::put('/home/footer/update', [FooterController::class,'update'])->name('be.home.footer.update');

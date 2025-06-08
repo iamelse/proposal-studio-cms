@@ -16,11 +16,11 @@
                     <h2 class="font-semibold text-base md:text-lg text-white">Jam Kerja</h2>
                     <div class="flex gap-3 mt-3 lg:mt-6 items-center">
                         <i class='bx bx-time-five text-white text-2xl'></i>
-                        <p class="text-white text-sm md:text-lg font-light">08.00 WIB - 17.00 WIB</p>
+                        <p class="text-white text-sm md:text-lg font-light">{{ $settings['working_hours'] }}</p>
                     </div>
                     <div class="flex gap-3 mt-3 lg:mt-6 items-center">
                         <i class='bx bx-calendar text-white text-2xl'></i>
-                        <p class="text-white text-sm md:text-lg font-light">Sabtu, Minggu, dan Tanggal Merah Libur</p>
+                        <p class="text-white text-sm md:text-lg font-light">{{ $settings['off_days'] }}</p>
                     </div>
                 </div>
 
@@ -28,11 +28,11 @@
                     <h2 class="font-semibold text-base md:text-lg text-white">Kontak Kami</h2>
                     <div class="flex gap-3 mt-3 lg:mt-6 items-center">
                         <i class='bx bxl-whatsapp text-white text-2xl'></i>
-                        <p class="text-white text-sm md:text-lg font-light">Whatsapp : 0812-2683-1649</p>
+                        <p class="text-white text-sm md:text-lg font-light">Whatsapp : {{ $settings['whatsapp'] }}</p>
                     </div>
                     <div class="flex gap-3 mt-3 lg:mt-6 items-center">
                         <i class='bx bx-envelope text-white text-2xl'></i>
-                        <p class="text-white text-sm md:text-lg font-light">contactproposalstudio@gmail.com</p>
+                        <p class="text-white text-sm md:text-lg font-light">{{ $settings['email'] }}</p>
                     </div>
                 </div>
 

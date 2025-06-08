@@ -38,12 +38,12 @@ class DatabaseSeeder extends Seeder
 
         $this->call(SectionSeeder::class);
         $this->call(SocialMediaSeeder::class);
-        $this->call(QuickLinkSeeder::class);
         $this->call(WhyUsSeeder::class);
         $this->call(ServiceSeeder::class);
         $this->call(ProposalSeeder::class);
         $this->call(EventSeeder::class);
         $this->call(ReviewSeeder::class);
         $this->call(FAQSeeder::class);
+        $this->call(SettingSeeder::class);
     }
 }

@@ -21,21 +21,13 @@ enum RoleEnum: string
                 PermissionEnum::UPDATE_HOME_REVIEW,
                 PermissionEnum::UPDATE_HOME_FAQ,
                 PermissionEnum::UPDATE_HOME_CTA,
-                PermissionEnum::UPDATE_HOME_FOOTER,
 
-                PermissionEnum::UPDATE_ABOUT,
-
-                PermissionEnum::UPDATE_RESUME,
+                PermissionEnum::UPDATE_SETTING_GENERAL,
 
                 PermissionEnum::CREATE_SOCIAL_MEDIA,
                 PermissionEnum::READ_SOCIAL_MEDIA,
                 PermissionEnum::UPDATE_SOCIAL_MEDIA,
                 PermissionEnum::DELETE_SOCIAL_MEDIA,
-
-                PermissionEnum::CREATE_QUICK_LINK,
-                PermissionEnum::READ_QUICK_LINK,
-                PermissionEnum::UPDATE_QUICK_LINK,
-                PermissionEnum::DELETE_QUICK_LINK,
 
                 PermissionEnum::CREATE_FEATURE,
                 PermissionEnum::READ_FEATURE,
