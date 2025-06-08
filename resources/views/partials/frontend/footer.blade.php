@@ -39,15 +39,11 @@
                 <div class="mt-8 lg:mt-16">
                     <h2 class="font-semibold text-base md:text-lg text-white">Sosial Media</h2>
                     <div class="flex gap-3 mt-3 md:mt-6">
-                        <a href="https://instagram.com/proposalstudio" target="_blank" rel="noopener noreferrer" class="text-white hover:text-secondary transition text-3xl">
-                            <i class='bx bxl-instagram'></i>
-                        </a>
-                        <a href="https://www.facebook.com/profile.php?id=100087161541087&mibextid=2JQ9oc" target="_blank" rel="noopener noreferrer" class="text-white hover:text-secondary transition text-3xl">
-                            <i class='bx bxl-facebook'></i>
-                        </a>
-                        <a href="https://www.tiktok.com/@proposalstudio?_t=8jgdem8gV3Y&_r=1" target="_blank" rel="noopener noreferrer" class="text-white hover:text-secondary transition text-3xl">
-                            <i class='bx bxl-tiktok'></i>
-                        </a>
+                        @foreach($socialMedia as $item)
+                            <a href="{{ $item->url }}" target="_blank" rel="noopener noreferrer" class="text-white hover:text-secondary transition text-3xl">
+                                <i class='bx {{ $item->icon }}'></i>
+                            </a>
+                        @endforeach
                     </div>
                 </div>
             </div>
