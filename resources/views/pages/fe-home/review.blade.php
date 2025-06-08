@@ -40,7 +40,7 @@
                             $content = json_decode($review->content ?? '{}', true);
                         @endphp
 
-                            <!-- Review Title -->
+                        <!-- Review Title -->
                         <div class="mb-4">
                             <!-- Label -->
                             <label for="description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">

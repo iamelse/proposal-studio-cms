@@ -88,7 +88,12 @@ class SectionSeeder extends Seeder
                     'subtitle' => '',
                 ])
             ],
-            ['name' => 'cta', 'content' => json_encode(['title' => "Let's Collaborate and Build Something Amazing!", 'description' => "I’m open to exciting projects and opportunities in web development, Laravel, and beyond. Let’s create something impactful together. "])],
+            [
+                'name' => 'cta',
+                'content' => json_encode([
+                    'title' => '<span style="color:rgb(255,255,255);">Konsultasikan secara </span><span style="color:rgb(202,84,25);">GRATIS</span><span style="color:rgb(255,255,255);"> proposal Anda dan segera realisasikan tujuan Anda Bersama Kami</span>',
+                ])
+            ],
             ['name' => 'footer', 'content' => json_encode(['title' => 'About Me', 'description' => "Passionate web developer specializing in Laravel, Vue.js, and modern web technologies. Let's build something amazing together!"])],
             ['name' => 'about-page.about', 'content' => ''],
             ['name' => 'resume-page.resume', 'content' => ''],

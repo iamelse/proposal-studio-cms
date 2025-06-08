@@ -346,20 +346,16 @@
 @endsection
 
 @section('cta')
+    @php
+        $content = json_decode($callToAction->content);
+    @endphp
     <div class="md:mx-20 mx-5 mt-14 md:mt-[100px] md:mb-16 mb-8">
         <div class="bg-brandPrimary rounded-2xl md:rounded-[40px] p-8 md:p-16">
             <div class="lg:flex lg:items-center lg:justify-between lg:gap-20">
                 <!-- Teks di kiri -->
                 <div class="text-center lg:text-left">
                     <h1 class="text-4xl text-white font-semibold hidden lg:block">
-                        Konsultasikan secara
-                        <span class="text-brandSecondary font-bold"> GRATIS </span>
-                        proposal Anda <br> dan segera realisasikan tujuan Anda Bersama Kami
-                    </h1>
-                    <h1 class="text-lg text-white font-semibold block lg:hidden mt-6">
-                        Konsultasikan secara
-                        <span class="text-brandSecondary"> GRATIS </span>
-                        proposal Anda <br> dan segera realisasikan tujuan Anda Bersama Kami
+                        {!! $content->title !!}
                     </h1>
                 </div>
 
