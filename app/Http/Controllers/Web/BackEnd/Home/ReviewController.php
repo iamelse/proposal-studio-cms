@@ -16,6 +16,8 @@ class ReviewController extends Controller
 {
     public function index(): View
     {
+        Gate::authorize(PermissionEnum::UPDATE_HOME_REVIEW->value);
+
         $review = Section::where('name', 'review')->firstOrFail();
 
         return view('pages.fe-home.review', [

@@ -16,6 +16,8 @@ class GeneralSettingController extends Controller
 {
     public function index(): View
     {
+        Gate::authorize(PermissionEnum::UPDATE_SETTING_GENERAL->value);
+
         $setting = Setting::pluck('value', 'key');
 
         return view('pages.settings.general.index', [

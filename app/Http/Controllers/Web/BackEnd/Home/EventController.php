@@ -16,6 +16,8 @@ class EventController extends Controller
 {
     public function index(): View
     {
+        Gate::authorize(PermissionEnum::UPDATE_HOME_EVENT->value);
+
         $event = Section::where('name', 'event')->firstOrFail();
 
         return view('pages.fe-home.event', [

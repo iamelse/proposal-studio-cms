@@ -16,6 +16,8 @@ class ProposalController extends Controller
 {
     public function index(): View
     {
+        Gate::authorize(PermissionEnum::UPDATE_HOME_PROPOSAL->value);
+
         $proposal = Section::where('name', 'proposal')->firstOrFail();
 
         return view('pages.fe-home.proposal', [

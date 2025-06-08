@@ -16,6 +16,8 @@ class OurServiceController extends Controller
 {
     public function index(): View
     {
+        Gate::authorize(PermissionEnum::UPDATE_HOME_OUR_SERVICE->value);
+
         $ourService = Section::where('name', 'services')->firstOrFail();
 
         return view('pages.fe-home.our-service', [

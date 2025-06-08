@@ -16,6 +16,8 @@ class FAQController extends Controller
 {
     public function index(): View
     {
+        Gate::authorize(PermissionEnum::UPDATE_HOME_FAQ->value);
+
         $faq = Section::where('name', 'faq')->firstOrFail();
 
         return view('pages.fe-home.faq', [
