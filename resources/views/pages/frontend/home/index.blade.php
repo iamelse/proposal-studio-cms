@@ -354,27 +354,27 @@
             <div class="lg:flex lg:items-center lg:justify-between lg:gap-20">
                 <!-- Teks di kiri -->
                 <div class="text-center lg:text-left">
-                    <h1 class="text-4xl text-white font-semibold hidden lg:block">
+                    <h1 class="text-2xl lg:text-4xl text-white font-semibold">
                         {!! $content->title !!}
                     </h1>
                 </div>
 
                 <!-- Tombol di kanan -->
-                <a href="https://wa.me/{{ $settings['whatsapp_number_with_country_code'] }}?text={{ urlencode('Hallo Kak, saya ingin tanya terkait proposal, apakah bisa dibantu?') }}"
-                   class="flex-shrink-0 mt-6 lg:mt-0"
-                >
-                    <button
-                        class="flex gap-2 items-center justify-center px-4 py-2 bg-brandPrimary border border-white rounded-full
-                               md:px-8 md:py-4 md:gap-4
-                               hover:bg-brandPrimary/50 ease-in-out duration-200 focus:ring-4 focus:ring-blue-300 focus:text-white hover:text-white
-                               text-white whitespace-nowrap text-sm md:text-xl"
-                    >
-                        Konsultasi Gratis
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 md:w-6 md:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                        </svg>
-                    </button>
-                </a>
+                <div class="flex justify-center lg:justify-end mt-6 lg:mt-0">
+                    <a href="https://wa.me/{{ $settings['whatsapp_number_with_country_code'] }}?text={{ urlencode('Hallo Kak, saya ingin tanya terkait proposal, apakah bisa dibantu?') }}">
+                        <button
+                            class="flex gap-2 items-center justify-center px-4 py-2 bg-brandPrimary border border-white rounded-full
+                                   lg:px-8 lg:py-4 lg:gap-4
+                                   hover:bg-brandPrimary/50 ease-in-out duration-200 focus:ring-4 focus:ring-blue-300 focus:text-white hover:text-white
+                                   text-white whitespace-nowrap text-sm lg:text-xl"
+                        >
+                            Konsultasi Gratis
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 lg:w-6 lg:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                            </svg>
+                        </button>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
