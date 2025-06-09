@@ -180,3 +180,32 @@ if (!function_exists('getEventListImagePath')) {
         return $placeholderUrl;
     }
 }
+
+if (!function_exists('getPostCoverImagePath')) {
+    function getPostCoverImagePath($post)
+    {
+        $disk = env('FILESYSTEM_DISK');
+        $appUrl = rtrim(env('APP_URL'), '/');
+        $publicHtmlPath = base_path('../public_html');
+        $placeholderUrl = 'https://picsum.photos/1200/600?random=' . $post->id;
+
+        if (!$post || !$post->cover) {
+            return $placeholderUrl;
+        }
+
+        if ($disk === FileSystemDiskEnum::PUBLIC->value) {
+            if (Storage::disk('public')->exists($post->cover)) {
+                return asset('storage/' . $post->cover);
+            }
+        } elseif ($disk === FileSystemDiskEnum::PUBLIC_UPLOADS->value) {
+            $filePath = $post->cover;
+            $fullPath = $publicHtmlPath . '/' . $filePath;
+
+            if (file_exists($fullPath)) {
+                return $appUrl . '/' . $filePath;
+            }
+        }
+
+        return $placeholderUrl;
+    }
+}

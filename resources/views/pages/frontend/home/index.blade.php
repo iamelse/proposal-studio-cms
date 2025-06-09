@@ -161,7 +161,7 @@
     @php
         $content = json_decode($proposal->content);
     @endphp
-    <div id="proposal" class="mx-5 my-14 md:mx-10">
+    <section id="proposal" class="mx-5 my-14 md:mx-10">
         <h2 class="text-baseBlack text-2xl md:text-4xl tracking-tight font-bold text-center">
             {!! $content->title !!}
         </h2>
@@ -197,14 +197,14 @@
                 <i class='bx bx-right-arrow-alt text-lg'></i>
             </button>
         </div>
-    </div>
+    </section>
 @endsection
 
 @section('events')
     @php
         $content = json_decode($event->content);
     @endphp
-    <div id="event" class="mx-5 my-14 md:mx-10 bg-cover bg-center" style="background-image: url('https://raw.githubusercontent.com/vikifsyh/proposal-studio/main/public/bg2.png')">
+    <section id="event" class="mx-5 my-14 md:mx-10 bg-cover bg-center" style="background-image: url('https://raw.githubusercontent.com/vikifsyh/proposal-studio/main/public/bg2.png')">
         <h2 class="text-baseBlack text-2xl md:text-4xl tracking-tight font-bold text-center">
             {!! $content->title !!}
         </h2>
@@ -243,7 +243,7 @@
                 <i class='bx bx-right-arrow-alt text-lg'></i>
             </button>
         </div>
-    </div>
+    </section>
 @endsection
 
 @section('reviews')
