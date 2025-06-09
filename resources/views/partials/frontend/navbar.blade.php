@@ -1,8 +1,9 @@
 <nav id="navbar"
-     class="px-5 lg:px-20 lg:py-4 border py-2.5 flex justify-between items-center fixed top-0 w-full z-50 bg-white transition-colors duration-300">
+     class="px-5 lg:px-20 lg:py-4 py-2.5 flex justify-between items-center fixed top-0 w-full z-50
+            bg-white/30 backdrop-blur-md backdrop-saturate-150 shadow-[0_1px_1px_rgba(0,0,0,0.1)] transition-colors duration-300">
     <!-- Logo (Desktop) -->
     <div class="hidden md:block">
-        <img src="{{ asset('assets/images/logo.svg') }}" alt="Logo" class="h-15 w-auto" />
+        <img src="{{ asset('assets/images/logo.svg') }}" alt="Logo" class="h-16 w-auto" />
     </div>
     <!-- Logo (Mobile) -->
     <div class="block md:hidden">
@@ -11,7 +12,7 @@
 
     <!-- Navigation Links -->
     <div class="hidden lg:flex items-center gap-6 font-medium text-base lg:text-lg text-[#1f2328]">
-        <a href="#home" class="hover:text-[#05408C] hover:underline underline-offset-4">Beranda</a>
+        <a href="{{ url('/') }}" class="hover:text-[#05408C] hover:underline underline-offset-4">Beranda</a>
         <a href="#about" class="hover:text-[#05408C] hover:underline underline-offset-4">Tentang Kami</a>
         <a href="#service" class="hover:text-[#05408C] hover:underline underline-offset-4">Layanan Kami</a>
         <a href="#proposal" class="hover:text-[#05408C] hover:underline underline-offset-4">Klien</a>
@@ -46,7 +47,7 @@
 <div id="mobileMenu"
      class="fixed top-[64px] left-0 right-0 z-40 bg-white border-t border-gray-200 transform -translate-y-[130%] transition-transform duration-500 ease-in-out lg:hidden">
     <div class="flex flex-col p-5 gap-6">
-        <a href="#home" class="text-base font-medium hover:text-[#05408C]">Beranda</a>
+        <a href="{{ url('/') }}" class="text-base font-medium hover:text-[#05408C]">Beranda</a>
         <a href="#about" class="text-base font-medium hover:text-[#05408C]">Tentang Kami</a>
         <a href="#service" class="text-base font-medium hover:text-[#05408C]">Layanan Kami</a>
         <a href="#proposal" class="text-base font-medium hover:text-[#05408C]">Klien</a>
