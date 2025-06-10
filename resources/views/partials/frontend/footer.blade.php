@@ -40,7 +40,11 @@
                     <h2 class="font-semibold text-base md:text-lg text-white">Sosial Media</h2>
                     <div class="flex gap-3 mt-3 md:mt-6">
                         @foreach($socialMedia as $item)
-                            <a href="{{ $item->url }}" target="_blank" rel="noopener noreferrer" class="text-white hover:text-secondary transition text-3xl">
+                            <a href="{{ $item->url }}"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="text-white hover:text-secondary transition text-3xl"
+                               aria-label="{{ $item->name }}">
                                 <i class='bx {{ $item->icon }}'></i>
                             </a>
                         @endforeach
