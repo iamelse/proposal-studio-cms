@@ -32,7 +32,7 @@ class HomeController extends Controller
         $faqs = FAQ::limit(20)->orderBy('created_at', 'desc')->get();
 
         return view('pages.frontend.home.index', [
-            'title' => 'Home',
+            'title' => 'Jasa Pembuatan Proposal Profesional - Proposal Studio',
             'hero' => $hero,
             'whyUsList' => $whyUsList,
             'about' => $about,

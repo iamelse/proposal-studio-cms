@@ -1,6 +1,53 @@
-@extends('layouts.frontend.post')
+@extends('layouts.frontend.posts')
 
 @section('content')
+    @push('meta')
+        <title>{{ $title ?? 'Daftar Artikel - ' . env('APP_NAME') }}</title>
+        <meta name="description" content="Baca kumpulan artikel terbaru seputar berbagai topik menarik yang dikurasi secara informatif dan inspiratif.">
+        <meta name="keywords" content="artikel terbaru, blog, berita, informasi, edukasi, inspirasi">
+        <link rel="canonical" href="{{ url()->current() }}" />
+
+        <!-- Open Graph -->
+        <meta property="og:title" content="{{ $title ?? 'Daftar Artikel - ' . env('APP_NAME') }}" />
+        <meta property="og:description" content="Jelajahi artikel-artikel pilihan kami yang menarik dan penuh informasi." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="{{ url()->current() }}" />
+        <meta property="og:image" content="{{ asset('assets/images/social-share.png') }}" />
+
+        <!-- Twitter Cards -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="{{ $title ?? 'Daftar Artikel - ' . env('APP_NAME') }}">
+        <meta name="twitter:description" content="Jelajahi artikel-artikel pilihan kami yang menarik dan penuh informasi.">
+        <meta name="twitter:image" content="{{ asset('assets/images/social-share.png') }}">
+    @endpush
+
+    @push('meta')
+        <script type="application/ld+json">
+            {
+              "@context": "https://schema.org",
+              "@type": "CollectionPage",
+              "name": "Daftar Artikel",
+              "description": "Kumpulan artikel blog dengan topik menarik dan edukatif.",
+              "url": "{{ url()->current() }}",
+              "mainEntity": [
+                        @foreach($posts as $post)
+                            {
+                              "@type": "BlogPosting",
+                              "headline": "{{ $post->title }}",
+                              "url": "{{ route('fe.post.show', $post->slug) }}",
+                              "datePublished": "{{ $post->published_at }}",
+                              "author": {
+                                "@type": "Person",
+                                "name": "{{ $post->user->name }}"
+                              },
+                              "image": "{{ getPostCoverImagePath($post) }}"
+                            } @if(!$loop->last),@endif
+                        @endforeach
+                        ]
+            }
+        </script>
+    @endpush
+
     @push('styles')
         <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
@@ -91,17 +138,17 @@
                 <div class="w-full">
                     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @forelse($posts as $post)
-                            <div class="border border-gray-200 rounded-3xl p-2.5 bg-white flex flex-col"
+                            <article class="border border-gray-200 rounded-3xl p-2.5 bg-white flex flex-col"
                                  data-aos="zoom-in" data-aos-delay="{{ 200 + ($loop->index * 150) }}">
-                                <img src="{{ getPostCoverImagePath($post) }}" alt="{{ $post->cover }}"
+                                <img src="{{ getPostCoverImagePath($post) }}" alt="{{ $post->seo_title ?? $post->title }}"
                                      class="w-full rounded-2xl aspect-[16/9] object-cover">
                                 <div class="flex flex-col flex-grow p-3">
-                                    <h3 class="text-2xl py-2 font-semibold">
+                                    <h2 class="text-2xl py-2 font-semibold">
                                         <a href="{{ route('fe.post.show', $post->slug) }}"
                                            class="text-gray-900 hover:text-[#05408C] transition">
                                             {{ $post->title }}
                                         </a>
-                                    </h3>
+                                    </h2>
                                     <p class="my-2 text-gray-500 flex-grow">
                                         {{ $post->excerpt }}
                                     </p>
@@ -116,7 +163,7 @@
                                         </a>
                                     </div>
                                 </div>
-                            </div>
+                            </article>
                         @empty
                             <p class="text-center col-span-3 text-gray-500">Tidak ada postingan yang ditemukan.</p>
                         @endforelse

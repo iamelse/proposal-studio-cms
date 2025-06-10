@@ -138,6 +138,27 @@
                             </div>
                         </div>
 
+                        <!-- SEO Keywords -->
+                        <div class="mt-4">
+                            <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                                Keywords
+                            </label>
+                            <div x-data="{ hasError: {{ session('errors') && session('errors')->has('seo_keywords') ? 'true' : 'false' }} }">
+                                <textarea
+                                    id="seo_keywords"
+                                    name="seo_keywords"
+                                    rows="2"
+                                    placeholder="e.g. marketing, design, technology, health"
+                                    :class="hasError
+                                        ? 'border-red-500 dark:border-red-500 focus:ring-2 focus:ring-red-500 dark:focus:ring-red-500'
+                                        : 'border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-500'"
+                                    class="w-full text-sm mt-1 px-4 py-2.5 resize-none">{{ trim(old('seo_keywords') ?? '') }}</textarea>
+                                                        <span class="text-xs mt-1 font-medium text-red-500 dark:text-red-500" x-show="hasError">
+                                    @error('seo_keywords') * {{ $message }} @enderror
+                                </span>
+                            </div>
+                        </div>
+
                         <!-- Body WYSIWYG TipTap-->
                         <label class="mt-4 mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
                             Body <span class="text-error-500">*</span>

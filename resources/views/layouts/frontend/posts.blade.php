@@ -23,7 +23,7 @@
     <!-- Boxicons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
-    <title>{{ $post->seo_title ?? $post->title }}</title>
+    <title>{{ $title ?? env('APP_NAME') }}</title>
 
     @php
         use Illuminate\Support\Facades\App;

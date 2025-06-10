@@ -1,5 +1,140 @@
 @extends('layouts.frontend.app')
 
+@push('meta')
+    <!-- Meta Description -->
+    <meta name="description" content="Temukan solusi terbaik untuk kebutuhan proposal, event, atau jasa konsultasi Anda. Kami siap membantu Anda secara profesional dan cepat.">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ url()->current() }}" />
+
+    <!-- Meta Keywords (opsional & jarang dipakai oleh Google) -->
+    <meta name="keywords" content="jasa pembuatan proposal, konsultasi proposal, event proposal, jasa event, konsultan event">
+
+    <!-- Meta Robots -->
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph (Facebook, LinkedIn, dll) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="{{ $title ?? env('APP_NAME') }}" />
+    <meta property="og:description" content="Temukan solusi terbaik untuk kebutuhan proposal, event, atau jasa konsultasi Anda." />
+    <meta property="og:url" content="{{ url()->current() }}" />
+    <meta property="og:image" content="{{ asset('assets/images/social-share.png') }}" />
+    <meta property="og:site_name" content="{{ env('APP_NAME') }}" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="{{ $title ?? env('APP_NAME') }}" />
+    <meta name="twitter:description" content="Temukan solusi terbaik untuk kebutuhan proposal, event, atau jasa konsultasi Anda." />
+    <meta name="twitter:image" content="{{ asset('assets/images/social-share.png') }}" />
+@endpush
+
+@push('meta')
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "name": "{{ env('APP_NAME') }}",
+          "url": "{{ url('/') }}",
+          "description": "Halaman resmi {{ env('APP_NAME') }} yang menampilkan layanan, klien, acara, testimoni, dan informasi lainnya.",
+          "mainEntity": [
+            {
+              "@type": "Organization",
+              "name": "{{ env('APP_NAME') }}",
+              "url": "{{ url('/') }}",
+              "logo": "{{ asset('path/to/logo.png') }}",
+              "sameAs": [
+                "https://facebook.com/yourpage",
+                "https://instagram.com/yourpage",
+                "https://linkedin.com/company/yourpage"
+              ]
+            },
+            {
+              "@type": "Service",
+              "name": "Layanan Kami",
+              "description": "Berbagai layanan profesional dari {{ env('APP_NAME') }}",
+              "provider": {
+                "@type": "Organization",
+                "name": "{{ env('APP_NAME') }}"
+              }
+            },
+            {
+              "@type": "AboutPage",
+              "name": "Tentang Kami",
+              "description": "Pelajari lebih lanjut tentang {{ env('APP_NAME') }} dan perjalanan kami."
+            },
+            {
+              "@type": "ItemList",
+              "name": "Klien Kami",
+              "itemListElement": [
+                @foreach($proposals as $index => $item)
+                    {
+                      "@type": "ImageObject",
+                      "contentUrl": "{{ getProposalListImagePath($item) }}",
+                  "name": "{{ $item->title }}"
+                }@if(!$loop->last),@endif
+                @endforeach
+                ]
+              },
+              {
+                "@type": "Event",
+                "name": "Acara Kami",
+                "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+                "eventStatus": "https://schema.org/EventScheduled",
+                "location": {
+                  "@type": "Place",
+                  "name": "Lokasi Acara",
+                  "address": {
+                    "@type": "PostalAddress",
+                    "addressCountry": "ID"
+                  }
+                },
+                "startDate": "2025-08-01T18:00",
+                "endDate": "2025-08-01T21:00"
+              },
+              {
+                "@type": "Review",
+                "reviewRating": {
+                  "@type": "Rating",
+                  "ratingValue": "5",
+                  "bestRating": "5"
+                },
+                "author": {
+                  "@type": "Person",
+                  "name": "Klien Puas"
+                },
+                "reviewBody": "Layanan yang sangat profesional dan hasil luar biasa!"
+              },
+              {
+                "@type": "FAQPage",
+                "mainEntity": [
+                  {
+                    "@type": "Question",
+                    "name": "Apa itu {{ env('APP_NAME') }}?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Kami adalah penyedia layanan desain dan proposal profesional."
+                  }
+                },
+                {
+                  "@type": "Question",
+                  "name": "Bagaimana cara memesan layanan?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Hubungi kami melalui kontak di website untuk konsultasi gratis."
+                  }
+                }
+              ]
+            },
+            {
+              "@type": "WebPageElement",
+              "name": "Call To Action",
+              "description": "Hubungi kami sekarang untuk memulai proyek Anda!"
+            }
+          ]
+        }
+    </script>
+@endpush
+
 @section('hero')
     <!-- Hero Section -->
     @php
@@ -27,8 +162,8 @@
             </div>
 
             <div class="mt-10">
-                <a href="https://wa.me/{{ $settings['whatsapp_number_with_country_code'] }}?text=Hallo%20Kak%2C%20saya%20ingin%20tanya%20terkait%20proposal%2C%20apakah%20bisa%20dibantu%3F" target="_blank" rel="noopener noreferrer">
-                    <button class="bg-[#05408C] hover:bg-[#05408C]/80 focus:ring-4 focus:ring-blue-300 ease-in duration-200 rounded-full flex py-4 px-6 md:py-5 md:px-8 gap-2 items-center" aria-label="Konsultasi Gratis melalui WhatsApp">
+                <a href="https://wa.me/{{ $settings['whatsapp_number_with_country_code'] }}?text=Hallo%20Kak%2C%20saya%20ingin%20tanya%20terkait%20proposal%2C%20apakah%20bisa%20dibantu%3F" target="_blank" rel="noopener noreferrer" aria-label="Konsultasi Gratis melalui WhatsApp">
+                    <button class="bg-[#05408C] hover:bg-[#05408C]/80 focus:ring-4 focus:ring-blue-300 ease-in duration-200 rounded-full flex py-4 px-6 md:py-5 md:px-8 gap-2 items-center">
                         <i class='bx bxl-whatsapp text-white text-2xl'></i>
                         <span class="font-medium text-base md:text-lg text-white">Konsultasi Gratis</span>
                     </button>
@@ -51,7 +186,7 @@
                 @foreach ($whyUsList as $feature)
                     <article class="flex-shrink-0 w-full px-8 flex flex-col items-center text-center max-w-full">
                         <figure class="rounded-full bg-white p-5 w-[108px] h-[108px] flex items-center justify-center mx-auto">
-                            <img src="{{ getWhyUsListImagePath($feature) }}" alt="{{ $feature->title }}">
+                            <img src="{{ getWhyUsListImagePath($feature) }}" alt="Keunggulan: {{ $feature->title }}" loading="lazy">
                         </figure>
                         <h3 class="font-medium text-lg text-white mt-4">{{ $feature->title }}</h3>
                     </article>
@@ -60,8 +195,8 @@
 
             <!-- Slider Dots -->
             <div id="feature-dots" class="flex justify-center mt-6 space-x-2">
-                @foreach (range(0, 5) as $i)
-                    <button class="w-3 h-3 rounded-full bg-white opacity-50"></button>
+                @foreach (range(0, count($whyUsList) - 1) as $i)
+                    <button class="w-3 h-3 rounded-full bg-white opacity-50" aria-label="Slide ke {{ $i + 1 }}"></button>
                 @endforeach
             </div>
         </div>
@@ -71,7 +206,7 @@
             @foreach ($whyUsList as $feature)
                 <article class="flex flex-col items-center text-center max-w-[160px]">
                     <figure class="rounded-full bg-white p-5 w-[108px] h-[108px] flex items-center justify-center">
-                        <img src="{{ getWhyUsListImagePath($feature) }}" alt="{{ $feature->title }}">
+                        <img src="{{ getWhyUsListImagePath($feature) }}" alt="Keunggulan: {{ $feature->title }}" loading="lazy">
                     </figure>
                     <h3 class="font-medium text-base sm:text-lg md:text-xl text-white mt-3 break-words">
                         {{ $feature->title }}

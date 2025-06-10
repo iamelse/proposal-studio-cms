@@ -25,7 +25,7 @@ class PostController extends Controller
         )->paginate($request->query('limit') ?? 6);
 
         return view('pages.frontend.post.index', [
-            'title' => 'All Post',
+            'title' => 'Daftar Artikel',
             'postCategories' => $postCategories,
             'posts' => $posts,
         ]);

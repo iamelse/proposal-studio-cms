@@ -1,18 +1,36 @@
 @extends('layouts.frontend.post')
 
+@push('meta')
+    <!-- Meta Desc -->
+    <meta name="description" content="{{ $post->seo_description ?? Str::limit(strip_tags($post->excerpt), 155) }}">
+    <meta name="keywords" content="{{ $post->seo_keywords ?? '' }}">
+    <link rel="canonical" href="{{ url()->current() }}" />
+    <meta property="og:title" content="{{ $post->seo_title ?? $post->title }}" />
+    <meta property="og:description" content="{{ $post->seo_description ?? Str::limit(strip_tags($post->excerpt), 155) }}" />
+    <meta property="og:image" content="{{ getPostCoverImagePath($post) }}" />
+@endpush
+@push('scripts')
+    <!-- Optional: Structured data for search engines -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": "{{ $post->seo_title ?? $post->title }}",
+            "description": "{{ $post->seo_description ?? Str::limit(strip_tags($post->excerpt), 155) }}",
+            "image": "{{ getPostCoverImagePath($post) }}",
+            "author": {
+                "@type": "Person",
+                "name": "{{ $post->user->name }}"
+            },
+            "datePublished": "{{ $post->published_at }}",
+            "mainEntityOfPage": {
+                "@type": "WebPage",
+                "@id": "{{ url()->current() }}"
+            }
+        }
+    </script>
+@endpush
 @section('content')
-    @push('scripts')
-        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                AOS.init({
-                    duration: 1000,
-                    once: true,
-                });
-            });
-        </script>
-    @endpush
-
     <!-- Post Section -->
     <section id="post" class="pt-28 pb-16 bg-white transition-colors">
         <div class="mx-auto max-w-[1030px] px-4 sm:px-8 xl:px-0">
@@ -58,7 +76,7 @@
                 <div class="my-10 aspect-[16/9] overflow-hidden rounded-[20px]">
                     <img
                         src="{{ getPostCoverImagePath($post) }}"
-                        alt="Post cover image"
+                        alt="{{ basename($post->cover) }}"
                         loading="lazy"
                         class="w-full h-full object-cover"
                         style="color: transparent;"

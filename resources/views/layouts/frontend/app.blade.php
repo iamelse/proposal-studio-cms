@@ -52,6 +52,7 @@
 
     @stack('styles')
     @stack('scripts')
+    @stack('meta')
 </head>
 
 <body class="bg-white text-black">

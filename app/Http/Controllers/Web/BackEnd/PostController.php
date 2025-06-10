@@ -91,6 +91,10 @@ class PostController extends Controller
                 $data['cover'] = $imagePath;
             }
 
+            $data['seo_title'] = $request->title;
+            $data['seo_description'] = $request->excerpt;
+            $data['seo_keywords'] = $request->seo_keywords;
+
             if ($data['status'] === 'published') {
                 $data['user_id'] ??= auth()->id();
                 $data['published_at'] ??= now();
@@ -132,13 +136,16 @@ class PostController extends Controller
             $imagePath = $this->_handleImageUpload($request, $post);
 
             $post->update([
-                'title'         => $request->title,
-                'slug'          => $request->slug,
-                'excerpt'       => $request->excerpt,
-                'body'          => $request->body,
-                'status'        => $request->status,
-                'category_id'   => $request->category_id,
-                'user_id'       => $request->status === 'published'
+                'title'             => $request->title,
+                'slug'              => $request->slug,
+                'excerpt'           => $request->excerpt,
+                'body'              => $request->body,
+                'status'            => $request->status,
+                'seo_title'         => $request->title,
+                'seo_description'   => $request->excerpt,
+                'seo_keywords'      => $request->seo_keywords,
+                'category_id'       => $request->category_id,
+                'user_id'           => $request->status === 'published'
                     ? ($request->user_id ?? auth()->id())
                     : $post->user_id,
                 'published_at'  => $request->status === 'published'
