@@ -51,7 +51,7 @@
                             <!-- Image Upload Input -->
                             <div class="mt-4">
                                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="image">
-                                    Upload image <span class="text-error-500">*</span>
+                                    Upload image
                                 </label>
 
                                 <input
