@@ -85,25 +85,25 @@
     </script>
 
     {{-- Review(s) --}}
-    @foreach ($reviews as $review)
+    @foreach ($reviews as $item)
         <script type="application/ld+json">
             {
               "@context": "https://schema.org",
               "@type": "Review",
               "reviewRating": {
                 "@type": "Rating",
-                "ratingValue": "{{ $review->rating }}",
+                "ratingValue": "{{ $item->rating }}",
                 "bestRating": "5"
               },
               "author": {
                 "@type": "Person",
-                "name": "{{ $review->name }}"
+                "name": "{{ $item->name }}"
               },
               "itemReviewed": {
                 "@type": "Organization",
                 "name": "{{ env('APP_NAME') }}"
               },
-              "reviewBody": "{{ addslashes($review->comment) }}"
+              "reviewBody": "{{ addslashes($item->comment) }}"
             }
         </script>
     @endforeach
@@ -114,13 +114,13 @@
           "@context": "https://schema.org",
           "@type": "FAQPage",
           "mainEntity": [
-            @foreach ($faqs as $faq)
+            @foreach ($faqs as $item)
                 {
                   "@type": "Question",
-                  "name": "{{ addslashes(strip_tags($faq->question)) }}",
+                  "name": "{{ addslashes(strip_tags($item->question)) }}",
                   "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "{{ addslashes(strip_tags($faq->answer)) }}"
+                    "text": "{{ addslashes(strip_tags($item->answer)) }}"
                   }
                 }@if(!$loop->last),@endif
             @endforeach
