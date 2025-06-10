@@ -23,7 +23,8 @@ class PostController extends Controller
             sort_order: $request->sort_order ?? 'DESC'
         )->when($request->category, fn($query, $category) =>
             $query->whereHas('category', fn($q) => $q->where('slug', $category))
-        )->paginate($request->query('limit') ?? 6);
+        )->where('status', PostStatus::PUBLISHED->value)
+         ->paginate($request->query('limit') ?? 6);
 
         return view('pages.frontend.post.index', [
             'title' => 'Daftar Artikel',

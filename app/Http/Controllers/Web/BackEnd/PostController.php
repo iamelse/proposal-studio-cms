@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\BackEnd;
 
 use App\Enums\PermissionEnum;
+use App\Enums\PostStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\Post\StorePostRequest;
 use App\Http\Requests\Web\Post\UpdatePostRequest;
@@ -55,6 +56,7 @@ class PostController extends Controller
         $postCategories = PostCategory::all();
 
         $posts = $this->_getFilteredPosts($request);
+        $postStatuses = PostStatus::cases();
 
         return view('pages.post.index', [
             'title' => 'Post',
@@ -62,7 +64,8 @@ class PostController extends Controller
             'allowedFilterFields' => $this->allowedFilterFields,
             'allowedSortFields' => $allowedSortFields,
             'limits' => $limits,
-            'postCategories' => $postCategories
+            'postCategories' => $postCategories,
+            'postStatuses' => $postStatuses,
         ]);
     }
 

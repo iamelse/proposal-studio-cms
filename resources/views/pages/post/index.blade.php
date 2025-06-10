@@ -134,9 +134,12 @@
                                                     <select name="status"
                                                             class="w-full mt-1 px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 focus:ring focus:ring-blue-500">
                                                         <option value="">Show All</option>
-                                                        <option value="published" {{ request('status') == 'published' ? 'selected' : '' }}>Published</option>
-                                                        <option value="draft" {{ request('status') == 'draft' ? 'selected' : '' }}>Draft</option>
-                                                        <option value="archived" {{ request('status') == 'archived' ? 'selected' : '' }}>Archived</option>
+
+                                                        @foreach($postStatuses as $status)
+                                                            <option value="{{ $status->value }}" {{ request('status') === $status->value ? 'selected' : '' }}>
+                                                                {{ $status->name }}
+                                                            </option>
+                                                        @endforeach
                                                     </select>
                                                 </div>
 
@@ -218,6 +221,7 @@
                                         [...document.querySelectorAll('.quick-link-checkbox')].map(cb => cb.value) : []">
                                 </th>
                                 <th class="w-20 px-4 py-3 font-medium">No.</th>
+                                <th class="flex flex-col items-center px-4 py-3 font-medium">Cover</th>
                                 <th class="px-4 py-3 font-medium">Title</th>
                                 <th class="px-4 py-3 font-medium">Category</th>
                                 <th class="px-4 py-3 font-medium">Status</th>
@@ -236,9 +240,16 @@
                                             x-model="selected">
                                     </td>
                                     <td class="w-20 px-4 py-3">{{ $loop->iteration }}</td>
+                                    <td class="px-4 py-3">
+                                        <div class="flex flex-col items-center">
+                                            <div class="p-2 sm:p-3 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center w-32">
+                                                <img class="rounded-lg" src="{{ getPostCoverImagePath($post) }}">
+                                            </div>
+                                        </div>
+                                    </td>
                                     <td class="px-4 py-3">{{ $post->title }}</td>
                                     <td class="px-4 py-3">{{ $post->category->name }}</td>
-                                    <td class="px-4 py-3">{{ $post->status }}</td>
+                                    <td class="px-4 py-3">{{ strtoupper($post->status) }}</td>
                                     <td class="px-4 py-3">{{ $post->formatted_created_at }}</td>
                                     <td class="px-4 py-3">{{ $post->formatted_updated_at }}</td>
                                     <td class="px-4 py-3 text-center relative">
