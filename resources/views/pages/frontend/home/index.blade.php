@@ -43,15 +43,15 @@
               "url": "{{ url('/') }}",
               "logo": "{{ asset('path/to/logo.png') }}",
               "sameAs": [
-                "https://facebook.com/yourpage",
-                "https://instagram.com/yourpage",
-                "https://linkedin.com/company/yourpage"
-              ]
-            },
-            {
-              "@type": "Service",
-              "name": "Layanan Kami",
-              "description": "Berbagai layanan profesional dari {{ env('APP_NAME') }}",
+                @foreach($socialMedia as $item)
+                    "{{ $item->url }}"@if(!$loop->last),@endif
+                @endforeach
+                ]
+              },
+              {
+                "@type": "Service",
+                "name": "Layanan Kami",
+                "description": "Berbagai layanan profesional dari {{ env('APP_NAME') }}",
               "provider": {
                 "@type": "Organization",
                 "name": "{{ env('APP_NAME') }}"
@@ -66,71 +66,65 @@
               "@type": "ItemList",
               "name": "Klien Kami",
               "itemListElement": [
-                @foreach($proposals as $index => $item)
+                @foreach($proposals as $item)
                     {
                       "@type": "ImageObject",
                       "contentUrl": "{{ getProposalListImagePath($item) }}",
-                  "name": "{{ $item->title }}"
-                }@if(!$loop->last),@endif
+                    "name": "{{ $item->title }}"
+                  }@if(!$loop->last),@endif
                 @endforeach
                 ]
               },
               {
-                "@type": "Event",
-                "name": "Acara Kami",
-                "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-                "eventStatus": "https://schema.org/EventScheduled",
-                "location": {
-                  "@type": "Place",
-                  "name": "Lokasi Acara",
-                  "address": {
-                    "@type": "PostalAddress",
-                    "addressCountry": "ID"
-                  }
-                },
-                "startDate": "2025-08-01T18:00",
-                "endDate": "2025-08-01T21:00"
+                "@type": "WebPageElement",
+                "name": "Call To Action",
+                "description": "Hubungi kami sekarang untuk memulai proyek Anda!"
+              }
+            ]
+          }
+    </script>
+
+    {{-- Review(s) --}}
+    @foreach ($reviews as $review)
+        <script type="application/ld+json">
+            {
+              "@context": "https://schema.org",
+              "@type": "Review",
+              "reviewRating": {
+                "@type": "Rating",
+                "ratingValue": "{{ $review->rating }}",
+                "bestRating": "5"
               },
-              {
-                "@type": "Review",
-                "reviewRating": {
-                  "@type": "Rating",
-                  "ratingValue": "5",
-                  "bestRating": "5"
-                },
-                "author": {
-                  "@type": "Person",
-                  "name": "Klien Puas"
-                },
-                "reviewBody": "Layanan yang sangat profesional dan hasil luar biasa!"
+              "author": {
+                "@type": "Person",
+                "name": "{{ $review->name }}"
               },
-              {
-                "@type": "FAQPage",
-                "mainEntity": [
-                  {
-                    "@type": "Question",
-                    "name": "Apa itu {{ env('APP_NAME') }}?",
-                  "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": "Kami adalah penyedia layanan desain dan proposal profesional."
-                  }
-                },
+              "itemReviewed": {
+                "@type": "Organization",
+                "name": "{{ env('APP_NAME') }}"
+              },
+              "reviewBody": "{{ addslashes($review->comment) }}"
+            }
+        </script>
+    @endforeach
+
+    {{-- FAQ --}}
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [
+            @foreach ($faqs as $faq)
                 {
                   "@type": "Question",
-                  "name": "Bagaimana cara memesan layanan?",
+                  "name": "{{ addslashes(strip_tags($faq->question)) }}",
                   "acceptedAnswer": {
                     "@type": "Answer",
-                    "text": "Hubungi kami melalui kontak di website untuk konsultasi gratis."
+                    "text": "{{ addslashes(strip_tags($faq->answer)) }}"
                   }
-                }
-              ]
-            },
-            {
-              "@type": "WebPageElement",
-              "name": "Call To Action",
-              "description": "Hubungi kami sekarang untuk memulai proyek Anda!"
-            }
-          ]
+                }@if(!$loop->last),@endif
+            @endforeach
+            ]
         }
     </script>
 @endpush
