@@ -373,11 +373,11 @@
                 </div>
             </div>
 
-            <!-- Left Arrow -->
-            <button id="event-prev"
+            <!-- Right Arrow -->
+            <button id="event-next"
                     class="hidden lg:flex w-8 h-8 bg-white rounded-full border items-center justify-center hover:bg-gray-100 transition disabled:opacity-50 disabled:cursor-not-allowed">
-                <i class='bx bx-left-arrow-alt text-lg'></i>
-                <span class="sr-only">Acara sebelumnya</span>
+                <i class='bx bx-right-arrow-alt text-lg'></i>
+                <span class="sr-only">Acara selanjutnya</span>
             </button>
         </div>
     </section>
