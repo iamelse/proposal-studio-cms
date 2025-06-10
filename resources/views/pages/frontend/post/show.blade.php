@@ -55,15 +55,15 @@
 
             <!-- Cover Image -->
             <div class="w-full max-w-[1010px] mx-auto">
-                <img
-                    src="{{ getPostCoverImagePath($post) }}"
-                    alt="Post cover image"
-                    loading="lazy"
-                    width="1030"
-                    height="613"
-                    class="my-10 w-full overflow-hidden rounded-[20px]"
-                    style="color: transparent;"
-                />
+                <div class="my-10 aspect-[16/9] overflow-hidden rounded-[20px]">
+                    <img
+                        src="{{ getPostCoverImagePath($post) }}"
+                        alt="Post cover image"
+                        loading="lazy"
+                        class="w-full h-full object-cover"
+                        style="color: transparent;"
+                    />
+                </div>
             </div>
 
             <!-- Body -->

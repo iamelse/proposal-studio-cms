@@ -8,16 +8,22 @@ use App\Http\Requests\Web\Post\StorePostRequest;
 use App\Http\Requests\Web\Post\UpdatePostRequest;
 use App\Models\Post;
 use App\Models\PostCategory;
+use App\Services\ImageManagementService;
+use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class PostController extends Controller
 {
+    public function __construct(
+        protected ImageManagementService $imageManagementService
+    ) {}
+
     protected array $allowedFilterFields = ['title', 'slug', 'body'];
 
     private function _getFilteredPosts(Request $request)
@@ -77,17 +83,20 @@ class PostController extends Controller
         Gate::authorize(PermissionEnum::CREATE_POST->value);
 
         try {
-            $validatedData = $request->validated();
+            $imagePath = $this->_handleImageUpload($request, null);
 
-            if ($validatedData['status'] === 'published') {
-                // Set current user if user_id is missing
-                $validatedData['user_id'] = $validatedData['user_id'] ?? auth()->id();
+            $data = $request->validated();
 
-                // Set current time if published_at is missing
-                $validatedData['published_at'] = $validatedData['published_at'] ?? now();
+            if ($imagePath) {
+                $data['cover'] = $imagePath;
             }
 
-            Post::create($validatedData);
+            if ($data['status'] === 'published') {
+                $data['user_id'] ??= auth()->id();
+                $data['published_at'] ??= now();
+            }
+
+            Post::create($data);
 
             return redirect()->route('be.post.index')
                 ->with('success', 'Post created successfully.');
@@ -120,19 +129,32 @@ class PostController extends Controller
         Gate::authorize(PermissionEnum::UPDATE_POST->value);
 
         try {
-            $validatedData = $request->validated();
+            $imagePath = $this->_handleImageUpload($request, $post);
 
-            $post->update($validatedData);
+            $post->update([
+                'title'         => $request->title,
+                'slug'          => $request->slug,
+                'excerpt'       => $request->excerpt,
+                'body'          => $request->body,
+                'status'        => $request->status,
+                'category_id'   => $request->category_id,
+                'user_id'       => $request->status === 'published'
+                    ? ($request->user_id ?? auth()->id())
+                    : $post->user_id,
+                'published_at'  => $request->status === 'published'
+                    ? ($request->published_at ?? now())
+                    : $post->published_at,
+                'cover'         => $imagePath ?? $post->cover, // fallback to existing cover
+            ]);
 
             return redirect()->route('be.post.edit', $post->slug)
                 ->with('success', 'Post updated successfully.');
+
         } catch (AuthorizationException $authorizationException) {
             Log::error($authorizationException->getMessage());
-
             abort(403, 'This action is unauthorized.');
         } catch (\Exception $exception) {
             Log::error($exception->getMessage());
-
             return redirect()->route('be.post.edit', $post->slug)
                 ->with('error', $exception->getMessage());
         }
@@ -144,6 +166,7 @@ class PostController extends Controller
 
         try {
             $post->delete();
+            $this->imageManagementService->destroyImage($post->cover);
 
             return redirect()
                 ->route('be.post.index')
@@ -169,6 +192,14 @@ class PostController extends Controller
             $postSlugArray = explode(',', $request->input('slugs', ''));
 
             if (!empty($postSlugArray)) {
+                $posts = Post::whereIn('slug', $postSlugArray)->get();
+
+                // Hapus gambar satu per satu
+                foreach ($posts as $post) {
+                    $this->imageManagementService->destroyImage($post->cover);
+                }
+
+                // Hapus semua post setelah gambar berhasil dihapus
                 Post::whereIn('slug', $postSlugArray)->delete();
             }
 
@@ -188,10 +219,31 @@ class PostController extends Controller
         }
     }
 
-    public function generateSlug(Request $request)
+    private function _handleImageUpload($request, $post)
     {
-        $title = $request->query('title');
-        $slug = Str::slug($title);
+        $imagePath = null;
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+
+            $currentImagePath = $post?->cover;
+            $postTitle = $post?->title ?? $request->title;
+
+            $imagePath = $this->imageManagementService->uploadImage($image, [
+                'currentImagePath' => $currentImagePath,
+                'disk' => env('FILESYSTEM_DISK'),
+                'folder' => 'uploads/posts',
+                'postTitle' => $postTitle
+            ]);
+        }
+
+        return $imagePath;
+    }
+
+    public function generateSlug(Request $request): JsonResponse
+    {
+        $slug = SlugService::createSlug(Post::class, 'slug', $request->title);
+
         return response()->json(['slug' => $slug]);
     }
 }

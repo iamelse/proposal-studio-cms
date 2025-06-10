@@ -226,6 +226,6 @@ export default {
     plugins: [
         require('@tailwindcss/forms'),
         require('autoprefixer'),
-        require('@tailwindcss/line-clamp'),
+        // require('@tailwindcss/line-clamp'),
     ],
 }

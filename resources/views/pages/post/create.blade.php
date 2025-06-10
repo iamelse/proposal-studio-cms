@@ -11,64 +11,109 @@
             <!-- Header Section -->
             <div class="flex px-6 flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                    <h1 class="text-2xl font-bold text-gray-800 dark:text-white">Edit Post</h1>
-                    <p class="text-gray-600 dark:text-gray-400">Update your post's title and slug information.</p>
+                    <h1 class="text-2xl font-bold text-gray-800 dark:text-white">New Post</h1>
+                    <p class="text-gray-600 dark:text-gray-400">Fill out the fields below to create a new post.</p>
                 </div>
             </div>
 
             <!-- Form Section -->
             <div class="border-gray-100 p-5 dark:border-gray-800 sm:p-6">
-                <div class="rounded-2xl px-6 pb-8 pt-4 border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]" x-data="{ title: '{{ old('title') ?? '' }}', slug: '{{ old('slug') ?? '' }}' }">
-                    <form id="edit-post-form" action="{{ route('be.post.store') }}" method="POST">
+                <div class="rounded-2xl px-6 pb-8 pt-4 border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]" x-data="slugGenerator('{{ old('title') }}', '{{ old('slug') }}')">
+                    <form id="edit-post-form" action="{{ route('be.post.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
-                        <!-- Post Title -->
+                        <!-- Cover Image Upload -->
+                        <div x-data="{
+                                        preview: null,
+                                        hasError: {{ session('errors') && session('errors')->has('image') ? 'true' : 'false' }}
+                                    }"
+                             class="mt-6 space-y-2"
+                        >
+                            <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                                Image <span class="text-error-500">*</span>
+                            </label>
+
+                            <!-- Image Preview -->
+                            <div class="w-full h-96 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg flex items-center justify-center bg-gray-50 dark:bg-gray-800 overflow-hidden">
+                                <template x-if="preview">
+                                    <img :src="preview" alt="Image Preview" class="object-cover w-full h-full" />
+                                </template>
+                                <template x-if="!preview">
+                                    <span class="text-gray-400 dark:text-gray-500 text-sm">No image selected</span>
+                                </template>
+                            </div>
+
+                            <!-- Image Upload -->
+                            <div class="mt-4">
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="image">
+                                    Upload image <span class="text-error-500">*</span>
+                                </label>
+
+                                <input
+                                    class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                                    aria-describedby="image_help"
+                                    id="image"
+                                    name="image"
+                                    type="file"
+                                    accept="image/*"
+                                    @change="preview = $event.target.files.length ? URL.createObjectURL($event.target.files[0]) : null"
+                                    :class="hasError
+                                        ? 'border-red-500 dark:border-red-500 focus:ring-2 focus:ring-red-500 dark:focus:ring-red-500'
+                                        : 'border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-500'"
+                                    required
+                                >
+
+                                <span class="text-xs mt-1 font-medium text-red-500 dark:text-red-500" x-show="hasError">
+                                    @error('image') * {{ $message }} @enderror
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Title -->
                         <div class="mt-4">
                             <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                                Post Title <span class="text-error-500">*</span>
+                                Title <span class="text-error-500">*</span>
                             </label>
                             <div x-data="{ hasError: {{ session('errors') && session('errors')->has('title') ? 'true' : 'false' }} }">
                                 <input
                                     type="text"
                                     id="title"
                                     name="title"
-                                    value="{{ old('title') ?? '' }}"
                                     x-model="title"
-                                    @input="slug = title.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')"
-                                    placeholder="Enter post category name"
+                                    value="{{ old('title') }}"
+                                    @input.debounce.300ms="updateSlug"
+                                    placeholder="Enter a captivating title for your post"
                                     :class="hasError
-                                    ? 'border-red-500 dark:border-red-500 focus:ring-2 focus:ring-red-500 dark:focus:ring-red-500'
-                                    : 'border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-500'"
-                                    class="h-11 w-full text-sm mt-1 px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 placeholder:text-gray-400 dark:placeholder:text-white/30"
-                                >
+                                    ? 'border-red-500 dark:border-red-500 focus:ring-red-500 focus:border-red-500'
+                                    : 'border-gray-300 dark:border-gray-700 focus:ring-blue-500 focus:border-blue-500'"
+                                    class="h-11 w-full text-sm mt-1 px-4 py-2.5 border rounded-lg bg-white border-gray-300 dark:border-gray-700 dark:bg-gray-900 text-gray-700 dark:text-gray-300 placeholder:text-gray-400 dark:placeholder:text-white/30 focus:ring-2"
+                                    required>
                                 <span class="text-xs mt-1 font-medium text-red-500 dark:text-red-500" x-show="hasError">
-                                    @error('title') * {{ $message }} @enderror
-                                </span>
+                                @error('title') * {{ $message }} @enderror
+                            </span>
                             </div>
                         </div>
 
-                        <!-- Slug (Read-only) -->
-                        <div class="mt-4">
+                        <!-- Slug -->
+                        <div class="mt-4" x-data="{ hasError: {{ session('errors') && session('errors')->has('slug') ? 'true' : 'false' }} }">
                             <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
                                 Slug <span class="text-error-500">*</span>
                             </label>
-                            <div x-data="{ hasError: {{ session('errors') && session('errors')->has('slug') ? 'true' : 'false' }} }">
-                                <input
-                                    type="text"
-                                    id="slug"
-                                    name="slug"
-                                    value="{{ old('slug') ?? '' }}"
-                                    x-model="slug"
-                                    placeholder="Slug is auto generated"
-                                    :class="hasError
-                                    ? 'border-red-500 dark:border-red-500 focus:ring-2 focus:ring-red-500 dark:focus:ring-red-500'
-                                    : 'border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-500'"
-                                    class="h-11 w-full text-sm mt-1 px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 placeholder:text-gray-400 dark:placeholder:text-white/30"
-                                    readonly>
-                                <span class="text-xs mt-1 font-medium text-red-500 dark:text-red-500" x-show="hasError">
-                                @error('slug') * {{ $message }} @enderror
-                            </span>
-                            </div>
+                            <input
+                                type="text"
+                                id="slug"
+                                name="slug"
+                                x-model="slug"
+                                placeholder="Slug will be generated automatically from the title you provided."
+                                :class="hasError
+                                ? 'border-red-500 dark:border-red-500 focus:ring-red-500 focus:border-red-500'
+                                : 'border-gray-300 dark:border-gray-700 focus:ring-blue-500 focus:border-blue-500'"
+                                class="h-11 w-full text-sm mt-1 px-4 py-2.5 border rounded-lg bg-white border-gray-300 dark:border-gray-700 dark:bg-gray-900 text-gray-700 dark:text-gray-300 placeholder:text-gray-400 dark:placeholder:text-white/30 focus:ring-2"
+                                readonly
+                                required>
+                            @error('slug')
+                            <span class="text-xs mt-1 font-medium text-red-500 dark:text-red-500">* {{ $message }}</span>
+                            @enderror
                         </div>
 
                         <!-- Excerpt -->
@@ -537,6 +582,8 @@
                                     :class="hasError ? 'border-red-500 dark:border-red-500 focus:ring-2 focus:ring-red-500 dark:focus:ring-red-500' : 'border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-500'"
                                     class="h-11 w-full text-sm mt-1 px-4 py-2.5"
                                     required>
+
+                                    <option value="" disabled {{ old('status') === null ? 'selected' : '' }}>Select a status</option>
                                     <option value="draft" {{ (old('status') ?? '') === 'draft' ? 'selected' : '' }}>Draft</option>
                                     <option value="published" {{ (old('status') ?? '') === 'published' ? 'selected' : '' }}>Published</option>
                                 </select>
@@ -596,6 +643,41 @@
             });
             @endif
         });
+    </script>
+    <script>
+        function slugGenerator(initialTitle = '', initialSlug = '') {
+            return {
+                title: initialTitle || '',
+                slug: initialSlug || '',
+
+                updateSlug() {
+                    if (this.title.length > 0) {
+                        fetch("{{ route('be.post.generate.slug') }}", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                            },
+                            body: JSON.stringify({ title: this.title })
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                this.slug = data.slug;
+                            })
+                            .catch(error => console.error('Slug generation error:', error));
+                    } else {
+                        this.slug = "";
+                    }
+                },
+
+                previewImage(event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        this.imageUrl = URL.createObjectURL(file);
+                    }
+                },
+            };
+        }
     </script>
     <script src="https://unpkg.com/flowbite@latest/dist/flowbite.min.js"></script>
     <!-- Inject content into JS -->
