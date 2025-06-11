@@ -13,7 +13,7 @@ if (!function_exists('getUserImageProfilePath')) {
         $placeholderUrl = 'https://dummyimage.com/300';
         $avatar = Avatar::create(Auth::user()->name);
         $appUrl = rtrim(env('APP_URL'), '/');
-        $publicHtmlPath = base_path('../proposal-studio.iamelse.my.id');
+        $publicHtmlPath = base_path('../public_html/proposal-studio.iamelse.my.id');
 
         Log::info('getUserImageProfilePath called', [
             'disk' => $disk,
