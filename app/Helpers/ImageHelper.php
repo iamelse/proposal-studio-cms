@@ -244,7 +244,7 @@ if (!function_exists('getLogoImagePath')) {
     {
         $disk = env('FILESYSTEM_DISK');
         $appUrl = rtrim(env('APP_URL'), '/');
-        $publicHtmlPath = base_path('../../proposal-studio.iamelse.my.id');
+        $publicHtmlPath = '/home/iamelsem/public_html/proposal-studio.iamelse.my.id';
         $placeholderUrl = asset('assets/images/logo.svg');
 
         if (!$settings || !$settings['site_logo']) {
