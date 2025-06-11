@@ -69,7 +69,7 @@ class ImageManagementService
         return false;
     }
 
-    protected function generateFileName(UploadedFile $file, string $contextName = ''): string
+    protected function generateFileName(UploadedFile $file, ?string $contextName = null): string
     {
         $name = $contextName
             ? Str::slug($contextName) // SEO slug dari contextName

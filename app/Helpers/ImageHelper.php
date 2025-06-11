@@ -209,3 +209,90 @@ if (!function_exists('getPostCoverImagePath')) {
         return $placeholderUrl;
     }
 }
+
+if (!function_exists('getLogoImagePath')) {
+    function getLogoImagePath($settings)
+    {
+        $disk = env('FILESYSTEM_DISK');
+        $appUrl = rtrim(env('APP_URL'), '/');
+        $publicHtmlPath = base_path('../public_html');
+        $placeholderUrl = asset('assets/images/logo.svg');
+
+        if (!$settings || !$settings['site_logo']) {
+            return $placeholderUrl;
+        }
+
+        if ($disk === FileSystemDiskEnum::PUBLIC->value) {
+            if (Storage::disk('public')->exists($settings['site_logo'])) {
+                return asset('storage/' . $settings['site_logo']);
+            }
+        } elseif ($disk === FileSystemDiskEnum::PUBLIC_UPLOADS->value) {
+            $filePath = $settings['site_logo'];
+            $fullPath = $publicHtmlPath . '/' . $filePath;
+
+            if (file_exists($fullPath)) {
+                return $appUrl . '/' . $filePath;
+            }
+        }
+
+        return $placeholderUrl;
+    }
+}
+
+if (!function_exists('getOgImageHomePath')) {
+    function getOgImageHomePath($settings)
+    {
+        $disk = env('FILESYSTEM_DISK');
+        $appUrl = rtrim(env('APP_URL'), '/');
+        $publicHtmlPath = base_path('../public_html');
+        $placeholderUrl = 'https://picsum.photos/1200/600?random=32';
+
+        if (!$settings || empty($settings['og_image_home'])) {
+            return $placeholderUrl;
+        }
+
+        if ($disk === FileSystemDiskEnum::PUBLIC->value) {
+            if (Storage::disk('public')->exists($settings['og_image_home'])) {
+                return asset('storage/' . $settings['og_image_home']);
+            }
+        } elseif ($disk === FileSystemDiskEnum::PUBLIC_UPLOADS->value) {
+            $filePath = $settings['og_image_home'];
+            $fullPath = $publicHtmlPath . '/' . $filePath;
+
+            if (file_exists($fullPath)) {
+                return $appUrl . '/' . $filePath;
+            }
+        }
+
+        return $placeholderUrl;
+    }
+}
+
+if (!function_exists('getOgImagePostIndexPath')) {
+    function getOgImagePostIndexPath($settings)
+    {
+        $disk = env('FILESYSTEM_DISK');
+        $appUrl = rtrim(env('APP_URL'), '/');
+        $publicHtmlPath = base_path('../public_html');
+        $placeholderUrl = 'https://picsum.photos/1200/600?random=33';
+
+        if (!$settings || empty($settings['og_image_post_index'])) {
+            return $placeholderUrl;
+        }
+
+        if ($disk === FileSystemDiskEnum::PUBLIC->value) {
+            if (Storage::disk('public')->exists($settings['og_image_post_index'])) {
+                return asset('storage/' . $settings['og_image_post_index']);
+            }
+        } elseif ($disk === FileSystemDiskEnum::PUBLIC_UPLOADS->value) {
+            $filePath = $settings['og_image_post_index'];
+            $fullPath = $publicHtmlPath . '/' . $filePath;
+
+            if (file_exists($fullPath)) {
+                return $appUrl . '/' . $filePath;
+            }
+        }
+
+        return $placeholderUrl;
+    }
+}

@@ -8,11 +8,11 @@
             bg-white/30 backdrop-blur-md backdrop-saturate-150 shadow-[0_1px_1px_rgba(0,0,0,0.1)] transition-colors duration-300">
     <!-- Logo (Desktop) -->
     <div class="hidden md:block">
-        <img src="{{ asset('assets/images/logo.svg') }}" alt="Logo" class="h-16 w-auto" />
+        <img src="{{ getLogoImagePath($settings) }}" alt="Logo" class="h-16 w-auto" />
     </div>
     <!-- Logo (Mobile) -->
     <div class="block md:hidden">
-        <img src="{{ asset('assets/images/logo.svg') }}" alt="Logo" class="h-13 w-auto" />
+        <img src="{{ getLogoImagePath($settings) }}" alt="Logo" class="h-13 w-auto" />
     </div>
 
     <!-- Desktop menu -->

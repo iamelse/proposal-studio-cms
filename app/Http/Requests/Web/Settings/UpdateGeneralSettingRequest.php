@@ -26,6 +26,11 @@ class UpdateGeneralSettingRequest extends FormRequest
             'settings.email' => ['required', 'email', 'max:255'],
             'settings.working_hours' => ['required', 'string', 'max:100'],
             'settings.off_days' => ['required', 'string', 'max:255'],
+
+            // Logo & OG Images
+            'settings.site_logo' => ['nullable', 'image', 'max:2048'], // 2MB max
+            'settings.og_image_home' => ['nullable', 'image', 'max:2048'],
+            'settings.og_image_post_index' => ['nullable', 'image', 'max:2048'],
         ];
     }
 }

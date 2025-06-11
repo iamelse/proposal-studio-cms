@@ -70,7 +70,7 @@
              <div class="flex items-center space-x-2 dark:hidden">
                      <img
                          class="h-8 w-auto rounded"
-                         src="{{ asset('assets/images/logo.svg') }}"
+                         src="{{ getLogoImagePath($settings) }}"
                          alt="Logo"
                      />
                      <span class="ps-1 text-xl font-bold text-gray-900 dark:text-white">
@@ -82,7 +82,7 @@
              <div class="flex items-center space-x-2 hidden dark:flex">
                  <img
                      class="h-8 w-auto rounded"
-                     src="{{ asset('assets/images/logo.svg') }}"
+                     src="{{ getLogoImagePath($settings) }}"
                      alt="Logo"
                  />
               <span class="ps-1 text-xl font-bold text-gray-900 dark:text-white">

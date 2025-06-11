@@ -4,10 +4,10 @@
             <div class="flex justify-center items-center">
                 <div class="hidden md:block">
                     {{-- Boxicons Proposal Studio icon substitute: You might want to use a relevant boxicon or your own SVG --}}
-                    <img src="{{ asset('assets/images/logo.svg') }}" alt="logo" />
+                    <img src="{{ getLogoImagePath($settings) }}" alt="Proposal Studio Logo" />
                 </div>
                 <div class="block md:hidden">
-                    <img src="{{ asset('assets/images/logo.svg') }}" alt="logo" />
+                    <img src="{{ getLogoImagePath($settings) }}" alt="Proposal Studio Logo" />
                 </div>
             </div>
 

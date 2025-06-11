@@ -1,13 +1,25 @@
 @extends('layouts.frontend.post')
 
 @push('meta')
-    <!-- Meta Desc -->
+    <!-- Meta Description & Keywords -->
     <meta name="description" content="{{ $post->seo_description ?? Str::limit(strip_tags($post->excerpt), 155) }}">
     <meta name="keywords" content="{{ $post->seo_keywords ?? '' }}">
     <link rel="canonical" href="{{ url()->current() }}" />
+
+    <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="{{ $post->seo_title ?? $post->title }}" />
     <meta property="og:description" content="{{ $post->seo_description ?? Str::limit(strip_tags($post->excerpt), 155) }}" />
     <meta property="og:image" content="{{ getPostCoverImagePath($post) }}" />
+    <meta property="og:url" content="{{ url()->current() }}" />
+    <meta property="og:type" content="article" />
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="{{ $post->seo_title ?? $post->title }}" />
+    <meta name="twitter:description" content="{{ $post->seo_description ?? Str::limit(strip_tags($post->excerpt), 155) }}" />
+    <meta name="twitter:image" content="{{ getPostCoverImagePath($post) }}" />
+    {{-- Optional: Add Twitter handle --}}
+    {{-- <meta name="twitter:site" content="@YourTwitterHandle" /> --}}
 @endpush
 @push('scripts')
     <!-- Optional: Structured data for search engines -->

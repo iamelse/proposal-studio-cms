@@ -1,8 +1,11 @@
 @extends('layouts.frontend.app')
 
 @push('meta')
+    <!-- Meta title -->
+    <title>{{ $settings['home_title'] ?? env('APP_NAME') }}</title>
+
     <!-- Meta Description -->
-    <meta name="description" content="Temukan solusi terbaik untuk kebutuhan proposal, event, atau jasa konsultasi Anda. Kami siap membantu Anda secara profesional dan cepat.">
+    <meta name="description" content="{{ $settings['home_description'] }}">
 
     <!-- Canonical URL -->
     <link rel="canonical" href="{{ url()->current() }}" />
@@ -15,17 +18,17 @@
 
     <!-- Open Graph (Facebook, LinkedIn, dll) -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="{{ $title ?? env('APP_NAME') }}" />
+    <meta property="og:title" content="{{ $settings['home_title'] ?? env('APP_NAME') }}" />
     <meta property="og:description" content="Temukan solusi terbaik untuk kebutuhan proposal, event, atau jasa konsultasi Anda." />
     <meta property="og:url" content="{{ url()->current() }}" />
-    <meta property="og:image" content="{{ asset('assets/images/social-share.png') }}" />
+    <meta property="og:image" content="{{ getOgImageHomePath($settings) }}" />
     <meta property="og:site_name" content="{{ env('APP_NAME') }}" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="{{ $title ?? env('APP_NAME') }}" />
-    <meta name="twitter:description" content="Temukan solusi terbaik untuk kebutuhan proposal, event, atau jasa konsultasi Anda." />
-    <meta name="twitter:image" content="{{ asset('assets/images/social-share.png') }}" />
+    <meta name="twitter:title" content="{{ $settings['home_title'] ?? env('APP_NAME') }}" />
+    <meta name="twitter:description" content="{{ $settings['home_description'] }}" />
+    <meta name="twitter:image" content="{{ getOgImageHomePath($settings) }}" />
 @endpush
 
 @push('meta')
