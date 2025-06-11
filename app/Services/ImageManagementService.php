@@ -12,7 +12,7 @@ class ImageManagementService
 {
     protected function publicUploadsPath($folder = '')
     {
-        return '../public_html/proposal-studio/' . $folder;
+        return '../public_html/' . $folder;
     }
 
     public function uploadImage(UploadedFile $file, array $options = [])
