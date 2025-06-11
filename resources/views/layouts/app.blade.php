@@ -8,7 +8,22 @@
          />
       <meta http-equiv="X-UA-Compatible" content="ie=edge" />
       <title>{{ $title ?? env('APP_NAME') }}</title>
-      <link rel="icon" href="{{ asset('favicon/favicon.ico')  }}">
+
+      <!-- Standard Favicons -->
+      <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/images/favicons/favicon-32x32.png') }}">
+      <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/images/favicons/favicon-32x32.png') }}">
+      <link rel="shortcut icon" href="{{ asset('assets/images/favicons/favicon.ico') }}">
+
+      <!-- Apple Touch Icon -->
+      <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/images/favicons/apple-touch-icon.png') }}">
+
+      <!-- Android Chrome -->
+      <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('assets/images/favicons/android-chrome-192x192.png') }}">
+      <link rel="icon" type="image/png" sizes="512x512" href="{{ asset('assets/images/favicons/android-chrome-512x512.png') }}">
+
+      <!-- Manifest for PWA -->
+      <link rel="manifest" href="{{ asset('assets/images/favicons/site.webmanifest') }}">
+
       <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
       <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
 

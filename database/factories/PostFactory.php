@@ -24,6 +24,7 @@ class PostFactory extends Factory
             'slug' => $this->faker->unique()->slug,
             'excerpt' => $this->faker->paragraphs(1, true),
             'body' => $this->faker->paragraphs(10, true),
+            'views' => $this->faker->numberBetween(0, 1000),
             'post_category_id' => PostCategory::inRandomOrder()->value('id'),
             'user_id' => User::factory(),
             'published_at' => $this->faker->dateTimeBetween('-1 year', 'now'),

@@ -14,11 +14,11 @@
         <div class="flex items-center space-x-2 dark:hidden">
           <img
               class="h-10 w-auto rounded"
-              src="{{ asset('logo/iamelse-logo-1.png') }}"
+              src="{{ getLogoImagePath($settings) }}"
               alt="Logo"
           />
-          <span class="ps-1 text-3xl font-bold text-gray-900 dark:text-white">
-            Iamelse
+          <span class="ps-1 text-2xl font-bold text-gray-900 dark:text-white">
+            Proposal Studio
           </span>
         </div>
 
@@ -26,11 +26,11 @@
         <div class="flex items-center space-x-2 hidden dark:flex">
           <img
               class="h-10 w-auto rounded"
-              src="{{ asset('logo/iamelse-logo-1.png') }}"
+              src="{{ getLogoImagePath($settings) }}"
               alt="Logo"
           />
-          <span class="ps-1 text-3xl font-bold text-gray-900 dark:text-white">
-            Iamelse
+          <span class="ps-1 text-2xl font-bold text-gray-900 dark:text-white">
+            Proposal Studio
           </span>
         </div>
       </span>
@@ -39,7 +39,7 @@
       <img
           class="logo-icon hidden lg:block rounded h-10 w-10"
           :class="{ 'lg:block': sidebarToggle, 'lg:hidden': !sidebarToggle }"
-          src="{{ asset('logo/iamelse-logo-1.png') }}"
+          src="{{ getLogoImagePath($settings) }}"
           alt="Logo"
       />
     </a>
@@ -64,7 +64,7 @@
                             'order' => 1,
                             'active' => 'be.dashboard',
                             'route' => 'be.dashboard.index',
-                            'icon' => 'bx-line-chart',
+                            'icon' => 'bx-home', // dashboard = home icon lebih umum
                             'label' => 'Dashboard',
                             'permission' => PermissionEnum::READ_DASHBOARD
                         ],
@@ -83,7 +83,7 @@
                             ],
                             'exact' => true,
                             'route' => 'be.post.index',
-                            'icon' => 'bx-news',
+                            'icon' => 'bx-news', // sudah oke untuk Posts
                             'label' => 'Posts',
                             'permission' => PermissionEnum::READ_POST
                         ],
@@ -91,7 +91,7 @@
                             'order' => 2,
                             'active' => 'be.post-category',
                             'route' => 'be.post-category.index',
-                            'icon' => 'bx-category',
+                            'icon' => 'bx-category', // sudah tepat untuk Categories
                             'label' => 'Categories',
                             'permission' => PermissionEnum::READ_POST_CATEGORY
                         ],
@@ -105,7 +105,7 @@
                             'order' => 1,
                             'active' => 'be.home.hero',
                             'route' => 'be.home.hero.index',
-                            'icon' => 'bx bx-image',
+                            'icon' => 'bx-image', // hero = gambar
                             'label' => 'Hero',
                             'permission' => PermissionEnum::UPDATE_HOME_HERO
                         ],
@@ -113,88 +113,119 @@
                             'order' => 2,
                             'active' => 'be.home.about',
                             'route' => 'be.home.about.index',
-                            'icon' => 'bx-id-card',
-                            'label' => 'About Me',
+                            'icon' => 'bx-user', // about us biasanya user/profile icon
+                            'label' => 'About Us',
                             'permission' => PermissionEnum::UPDATE_HOME_ABOUT
                         ],
                         [
                             'order' => 3,
-                            'active' => 'be.home.cta',
-                            'route' => 'be.home.cta.index',
-                            'icon' => 'bx-rocket',
-                            'label' => 'Call To Action',
-                            'permission' => PermissionEnum::UPDATE_HOME_CTA
+                            'active' => 'be.home.our-service',
+                            'route' => 'be.home.our-service.index',
+                            'icon' => 'bx-briefcase', // service biasanya icon briefcase
+                            'label' => 'Our Service',
+                            'permission' => PermissionEnum::UPDATE_HOME_OUR_SERVICE
                         ],
                         [
                             'order' => 4,
-                            'active' => 'be.home.footer',
-                            'route' => 'be.home.footer.index',
-                            'icon' => 'bx-dock-bottom',
-                            'label' => 'Footer',
-                            'permission' => PermissionEnum::UPDATE_HOME_FOOTER
+                            'active' => 'be.home.proposal',
+                            'route' => 'be.home.proposal.index',
+                            'icon' => 'bx-file', // proposal = dokumen/file icon
+                            'label' => 'Proposal',
+                            'permission' => PermissionEnum::UPDATE_HOME_PROPOSAL
                         ],
-                    ]
-                ],
-                [
-                    'title' => 'About',
-                    'order' => 4,
-                    'children' => [
                         [
-                            'order' => 1,
-                            'active' => 'be.about',
-                            'route' => 'be.about.index',
-                            'icon' => 'bx-bulb',
-                            'label' => 'About',
-                            'permission' => PermissionEnum::UPDATE_ABOUT
+                            'order' => 5,
+                            'active' => 'be.home.event',
+                            'route' => 'be.home.event.index',
+                            'icon' => 'bx-calendar-event', // event = kalender acara
+                            'label' => 'Event',
+                            'permission' => PermissionEnum::UPDATE_HOME_EVENT
                         ],
-                    ]
-                ],
-                [
-                    'title' => 'Resume',
-                    'order' => 5,
-                    'children' => [
                         [
-                            'order' => 1,
-                            'active' => 'be.resume',
-                            'route' => 'be.resume.index',
-                            'icon' => 'bx-file',
-                            'label' => 'Resume',
-                            'permission' => PermissionEnum::UPDATE_RESUME
+                            'order' => 6,
+                            'active' => 'be.home.review',
+                            'route' => 'be.home.review.index',
+                            'icon' => 'bx-comment-detail', // review = komentar/ulasan
+                            'label' => 'Review',
+                            'permission' => PermissionEnum::UPDATE_HOME_REVIEW
+                        ],
+                        [
+                            'order' => 7,
+                            'active' => 'be.home.faq',
+                            'route' => 'be.home.faq.index',
+                            'icon' => 'bx-help-circle', // FAQ = icon tanda tanya
+                            'label' => 'Frequently Asked Question',
+                            'permission' => PermissionEnum::UPDATE_HOME_FAQ
+                        ],
+                        [
+                            'order' => 7,
+                            'active' => 'be.home.cta',
+                            'route' => 'be.home.cta.index',
+                            'icon' => 'bx-rocket', // call to action cocok
+                            'label' => 'Call To Action',
+                            'permission' => PermissionEnum::UPDATE_HOME_CTA
                         ],
                     ]
                 ],
                 [
                     'title' => 'Master Data',
-                    'order' => 6,
+                    'order' => 5,
                     'children' => [
                         [
                             'order' => 1,
-                            'active' => 'be.social-media',
-                            'route' => 'be.social-media.index',
-                            'icon' => 'bx-group',
-                            'label' => 'Social Media',
-                            'permission' => PermissionEnum::READ_SOCIAL_MEDIA
+                            'active' => 'be.feature',
+                            'route' => 'be.feature.index',
+                            'icon' => 'bx-star', // fitur/feature = star icon
+                            'label' => 'Features',
+                            'permission' => PermissionEnum::READ_FEATURE
                         ],
                         [
                             'order' => 2,
-                            'active' => 'be.skill',
-                            'route' => 'be.skill.index',
-                            'icon' => 'bx-code-alt',
-                            'label' => 'Skill',
-                            'permission' => PermissionEnum::READ_SKILL
+                            'active' => 'be.our-service-list',
+                            'route' => 'be.our-service-list.index',
+                            'icon' => 'bx-briefcase', // service list
+                            'label' => 'Services',
+                            'permission' => PermissionEnum::READ_OUR_SERVICE
                         ],
                         [
                             'order' => 3,
-                            'active' => [
-                                'be.quick-link.index',
-                                'be.quick-link.create',
-                                'be.quick-link.edit'
-                            ],
-                            'exact' => true,
-                            'route' => 'be.quick-link.index',
-                            'icon' => 'bx bx-link',
-                            'label' => 'Quick Link',
-                            'permission' => PermissionEnum::READ_QUICK_LINK
+                            'active' => 'be.proposal',
+                            'route' => 'be.proposal.index',
+                            'icon' => 'bx-file', // proposal list
+                            'label' => 'Proposals',
+                            'permission' => PermissionEnum::READ_PROPOSAL
+                        ],
+                        [
+                            'order' => 4,
+                            'active' => 'be.event',
+                            'route' => 'be.event.index',
+                            'icon' => 'bx-calendar-event', // event list
+                            'label' => 'Events',
+                            'permission' => PermissionEnum::READ_EVENT
+                        ],
+                        [
+                            'order' => 5,
+                            'active' => 'be.review',
+                            'route' => 'be.review.index',
+                            'icon' => 'bx-comment-detail', // review list
+                            'label' => 'Reviews',
+                            'permission' => PermissionEnum::READ_REVIEW
+                        ],
+                        [
+                            'order' => 6,
+                            'active' => 'be.faq',
+                            'route' => 'be.faq.index',
+                            'icon' => 'bx-help-circle', // FAQ = icon tanda tanya
+                            'label' => 'Frequently Asked Questions',
+                            'permission' => PermissionEnum::READ_FAQ
+                        ],
+                        [
+                            'order' => 7,
+                            'active' => 'be.social-media',
+                            'route' => 'be.social-media.index',
+                            'icon' => 'bx-share-alt', // social media = share icon
+                            'label' => 'Social Media',
+                            'permission' => PermissionEnum::READ_SOCIAL_MEDIA
                         ],
                     ]
                 ],
@@ -204,14 +235,22 @@
                     'children' => [
                         [
                             'order' => 1,
+                            'active' => 'be.settings.general',
+                            'route' => 'be.settings.general.index',
+                            'icon' => 'bx-wrench', // general = umum
+                            'label' => 'General',
+                            'permission' => PermissionEnum::UPDATE_SETTING_GENERAL
+                        ],
+                        [
+                            'order' => 2,
                             'active' => 'be.role.and.permission',
                             'route' => 'be.role.and.permission.index',
-                            'icon' => 'bx-lock-open',
+                            'icon' => 'bx-lock-alt', // role & permission = lock icon
                             'label' => 'Role & Permissions',
                             'permission' => PermissionEnum::READ_ROLE
                         ],
                         [
-                            'order' => 2,
+                            'order' => 3,
                             'active' => [
                                 'be.user.index',
                                 'be.user.create',
@@ -219,7 +258,7 @@
                             ],
                             'exact' => true,
                             'route' => 'be.user.index',
-                            'icon' => 'bx bx-user',
+                            'icon' => 'bx-user', // users
                             'label' => 'Users',
                             'permission' => PermissionEnum::READ_USER
                         ],

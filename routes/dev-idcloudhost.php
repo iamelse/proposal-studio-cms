@@ -2,9 +2,6 @@
 
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
-use Carbon\Carbon;
 
 Route::get('/config-clear', function () {
     Artisan::call('config:clear');
@@ -31,7 +28,13 @@ Route::get('/optimize-clear', function () {
 });
 
 Route::get('/refresh-database', function () {
-    Artisan::call('migrate:fresh --seed');
+
+    Artisan::call('session:table');
+
+    Artisan::call('migrate:fresh', [
+        '--seed' => true,
+        '--force' => true
+    ]);
 
     return response()->json([
         'message' => 'Database refreshed successfully!',
@@ -43,6 +46,38 @@ Route::get('/route-cache', function () {
 
     return response()->json([
         'message' => 'Routes cached successfully!',
+    ]);
+});
+
+Route::get('/clear-caches', function () {
+    // Clear config, route, cache
+    Artisan::call('config:clear');
+    Artisan::call('cache:clear');
+    Artisan::call('route:clear');
+    Artisan::call('config:cache');
+    Artisan::call('view:clear');
+    Artisan::call('optimize:clear');
+    Artisan::call('view:cache');
+
+
+    // Clear permission cache
+    Artisan::call('permission:cache-reset');
+
+    return response()->json([
+        'message' => 'Caches cleared and permission cache reset',
+    ]);
+});
+
+Route::get('/debug-permissions', function () {
+    $user = auth()->user();
+    if (!$user) {
+        return response()->json(['error' => 'Not authenticated'], 401);
+    }
+
+    return response()->json([
+        'user' => $user,
+        'roles' => $user->getRoleNames(),
+        'permissions' => $user->getAllPermissions()->pluck('name'),
     ]);
 });
 

@@ -17,9 +17,11 @@ class IsAuth
     public function handle(Request $request, Closure $next): Response
     {
         if (!Auth::check()) {
+            $request->session()->put('url.intended', $request->fullUrl());
+
             return redirect()->route('auth.login')->with('error', 'You must be logged in.');
         }
-        
+
         return $next($request);
     }
 }

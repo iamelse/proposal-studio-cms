@@ -15,27 +15,49 @@ enum RoleEnum: string
 
                 PermissionEnum::UPDATE_HOME_HERO,
                 PermissionEnum::UPDATE_HOME_ABOUT,
+                PermissionEnum::UPDATE_HOME_OUR_SERVICE,
+                PermissionEnum::UPDATE_HOME_PROPOSAL,
+                PermissionEnum::UPDATE_HOME_EVENT,
+                PermissionEnum::UPDATE_HOME_REVIEW,
+                PermissionEnum::UPDATE_HOME_FAQ,
                 PermissionEnum::UPDATE_HOME_CTA,
-                PermissionEnum::UPDATE_HOME_FOOTER,
 
-                PermissionEnum::UPDATE_ABOUT,
-
-                PermissionEnum::UPDATE_RESUME,
+                PermissionEnum::UPDATE_SETTING_GENERAL,
 
                 PermissionEnum::CREATE_SOCIAL_MEDIA,
                 PermissionEnum::READ_SOCIAL_MEDIA,
                 PermissionEnum::UPDATE_SOCIAL_MEDIA,
                 PermissionEnum::DELETE_SOCIAL_MEDIA,
 
-                PermissionEnum::CREATE_QUICK_LINK,
-                PermissionEnum::READ_QUICK_LINK,
-                PermissionEnum::UPDATE_QUICK_LINK,
-                PermissionEnum::DELETE_QUICK_LINK,
+                PermissionEnum::CREATE_FEATURE,
+                PermissionEnum::READ_FEATURE,
+                PermissionEnum::UPDATE_FEATURE,
+                PermissionEnum::DELETE_FEATURE,
 
-                PermissionEnum::CREATE_SKILL,
-                PermissionEnum::READ_SKILL,
-                PermissionEnum::UPDATE_SKILL,
-                PermissionEnum::DELETE_SKILL,
+                PermissionEnum::CREATE_OUR_SERVICE,
+                PermissionEnum::READ_OUR_SERVICE,
+                PermissionEnum::UPDATE_OUR_SERVICE,
+                PermissionEnum::DELETE_OUR_SERVICE,
+
+                PermissionEnum::CREATE_PROPOSAL,
+                PermissionEnum::READ_PROPOSAL,
+                PermissionEnum::UPDATE_PROPOSAL,
+                PermissionEnum::DELETE_PROPOSAL,
+
+                PermissionEnum::CREATE_EVENT,
+                PermissionEnum::READ_EVENT,
+                PermissionEnum::UPDATE_EVENT,
+                PermissionEnum::DELETE_EVENT,
+
+                PermissionEnum::CREATE_REVIEW,
+                PermissionEnum::READ_REVIEW,
+                PermissionEnum::UPDATE_REVIEW,
+                PermissionEnum::DELETE_REVIEW,
+
+                PermissionEnum::CREATE_FAQ,
+                PermissionEnum::READ_FAQ,
+                PermissionEnum::UPDATE_FAQ,
+                PermissionEnum::DELETE_FAQ,
 
                 PermissionEnum::CREATE_USER,
                 PermissionEnum::READ_USER,

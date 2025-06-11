@@ -15,16 +15,9 @@ class SocialMediaSeeder extends Seeder
     public function run(): void
     {
         $socialMedias = [
-            ['name' => 'LinkedIn', 'icon' => 'bx bxl-linkedin', 'url' => 'https://www.linkedin.com/in/iamelse'],
-            ['name' => 'GitHub', 'icon' => 'bx bxl-github', 'url' => 'https://github.com/iamelse'],
-            ['name' => 'Twitter', 'icon' => 'bx bxl-twitter', 'url' => 'https://twitter.com/iamelse'],
-            ['name' => 'Instagram', 'icon' => 'bx bxl-instagram', 'url' => 'https://instagram.com/iamelse'],
-            ['name' => 'Facebook', 'icon' => 'bx bxl-facebook', 'url' => 'https://facebook.com/iamelse'],
-            ['name' => 'YouTube', 'icon' => 'bx bxl-youtube', 'url' => 'https://youtube.com/iamelse'],
-            ['name' => 'Reddit', 'icon' => 'bx bxl-reddit', 'url' => 'https://reddit.com/u/iamelse'],
-            ['name' => 'TikTok', 'icon' => 'bx bxl-tiktok', 'url' => 'https://tiktok.com/@iamelse'],
-            ['name' => 'Snapchat', 'icon' => 'bx bxl-snapchat', 'url' => 'https://snapchat.com/add/iamelse'],
-            ['name' => 'Pinterest', 'icon' => 'bx bxl-pinterest', 'url' => 'https://pinterest.com/iamelse'],
+            ['name' => 'Instagram', 'icon' => 'bx bxl-instagram', 'url' => 'https://www.instagram.com/proposalstudio'],
+            ['name' => 'Facebook', 'icon' => 'bx bxl-facebook', 'url' => 'https://web.facebook.com/people/Proposal-Studio/100087161541087'],
+            ['name' => 'TikTok', 'icon' => 'bx bxl-tiktok', 'url' => 'https://www.tiktok.com/@proposalstudio'],
         ];
 
         foreach ($socialMedias as &$socialMedia) {

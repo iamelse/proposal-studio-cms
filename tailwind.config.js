@@ -209,7 +209,23 @@ export default {
                 14.5: "3.625rem",
                 15: "3.75rem",
             },
+            keyframes: {
+                marquee: {
+                    '0%': { transform: 'translateX(0)' },
+                    '100%': { transform: 'translateX(-50%)' },
+                },
+            },
+            animation: {
+                // Change the duration (e.g., 60s = slower, 20s = faster)
+                marquee: 'marquee 40s linear infinite',
+                'marquee-slow': 'marquee 60s linear infinite',
+                'marquee-fast': 'marquee 40s linear infinite',
+            },
         },
     },
-    plugins: [require("@tailwindcss/forms"), require("autoprefixer")],
+    plugins: [
+        require('@tailwindcss/forms'),
+        require('autoprefixer'),
+        // require('@tailwindcss/line-clamp'),
+    ],
 }

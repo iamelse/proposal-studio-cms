@@ -14,6 +14,7 @@
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
         "laravolt/avatar": "^6.1",
+        "mews/purifier": "^3.4",
         "opcodesio/log-viewer": "^3.15",
         "spatie/laravel-permission": "^6.16",
         "yogameleniawan/search-sort-eloquent": "^1.2"
@@ -30,6 +31,7 @@
     },
     "autoload": {
         "files": [
+            "app/Helpers/CleanHtmlFields.php",
             "app/Helpers/ImageHelper.php",
             "app/Helpers/DateHelper.php",
             "app/Helpers/UserHelper.php"

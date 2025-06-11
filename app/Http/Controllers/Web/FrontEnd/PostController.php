@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web\FrontEnd;
 
+use App\Enums\PostStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
 use App\Models\PostCategory;
@@ -22,10 +23,11 @@ class PostController extends Controller
             sort_order: $request->sort_order ?? 'DESC'
         )->when($request->category, fn($query, $category) =>
             $query->whereHas('category', fn($q) => $q->where('slug', $category))
-        )->paginate($request->query('limit') ?? 6);
+        )->where('status', PostStatus::PUBLISHED->value)
+         ->paginate($request->query('limit') ?? 6);
 
         return view('pages.frontend.post.index', [
-            'title' => 'All Post',
+            'title' => 'Daftar Artikel',
             'postCategories' => $postCategories,
             'posts' => $posts,
         ]);
@@ -33,6 +35,10 @@ class PostController extends Controller
 
     public function show(Post $post)
     {
+        if ($post->status !== PostStatus::PUBLISHED->value) {
+            abort(404);
+        }
+
         return view('pages.frontend.post.show', [
             'title' => $post->title,
             'post' => $post,

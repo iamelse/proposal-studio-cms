@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Web\Home;
 
+use App\Rules\NotEmptyHtml;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateHeroRequest extends FormRequest
@@ -22,8 +23,9 @@ class UpdateHeroRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'content.title' => 'required|string|max:255',
-            'content.description' => 'required|string',
+            'content.title' => ['required', 'string', 'max:255', new NotEmptyHtml],
+            'content.subtitle' => ['required', 'string', 'max:255', new NotEmptyHtml],
+            'content.description' => ['required', 'string', new NotEmptyHtml],
         ];
     }
 
@@ -31,6 +33,7 @@ class UpdateHeroRequest extends FormRequest
     {
         return [
             'content.title' => 'title',
+            'content.subtitle' => 'subtitle',
             'content.description' => 'description'
         ];
     }

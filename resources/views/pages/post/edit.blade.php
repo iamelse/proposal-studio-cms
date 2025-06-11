@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@push('styles')
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+@endpush
+
 @section('content')
     <!-- ===== Main Content Start ===== -->
     <main>
@@ -14,58 +18,106 @@
 
             <!-- Form Section -->
             <div class="border-gray-100 p-5 dark:border-gray-800 sm:p-6">
-                <div class="rounded-2xl px-6 pb-8 pt-4 border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
-                    <form id="edit-post-form" action="{{ route('be.post.update', $post->slug) }}" method="POST" x-data="{ title: '{{ $post->title }}', slug: '{{ $post->slug }}' }">
+                <div class="rounded-2xl px-6 pb-8 pt-4 border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]" x-data="slugGenerator('{{ old('title', $post->title) }}', '{{ old('slug', $post->slug) }}')">
+                    <form id="edit-post-form" action="{{ route('be.post.update', $post->slug) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
-                        <!-- Post Title -->
+                        <!-- Cover Image Upload (Edit) -->
+                        <div x-data="{
+                            preview: null,
+                            initial: '{{ getPostCoverImagePath($post) }}',
+                            hasError: {{ session('errors') && session('errors')->has('image') ? 'true' : 'false' }}
+                        }"
+                             class="mt-6 space-y-2"
+                        >
+                            <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                                Image <span class="text-error-500">*</span>
+                            </label>
+
+                            <!-- Image Preview -->
+                            <div class="w-full aspect-[21/9] border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg flex items-center justify-center bg-gray-50 dark:bg-gray-800 overflow-hidden">
+                                <template x-if="preview">
+                                    <img :src="preview" alt="New Image Preview" class="object-cover w-full h-full" />
+                                </template>
+                                <template x-if="!preview && initial">
+                                    <img :src="initial" alt="Current Image" class="object-cover w-full h-full" />
+                                </template>
+                                <template x-if="!preview && !initial">
+                                    <span class="text-gray-400 dark:text-gray-500 text-sm">No image selected</span>
+                                </template>
+                            </div>
+
+                            <!-- Image Upload Input -->
+                            <div class="mt-4">
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="image">
+                                    Upload image
+                                </label>
+
+                                <input
+                                    class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                                    aria-describedby="image_help"
+                                    id="image"
+                                    name="image"
+                                    type="file"
+                                    accept="image/*"
+                                    @change="preview = $event.target.files.length ? URL.createObjectURL($event.target.files[0]) : null"
+                                    :class="hasError
+                                        ? 'border-red-500 dark:border-red-500 focus:ring-2 focus:ring-red-500 dark:focus:ring-red-500'
+                                        : 'border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-500'"
+                                >
+
+                                <span class="text-xs mt-1 font-medium text-red-500 dark:text-red-500" x-show="hasError">
+                                    @error('image') * {{ $message }} @enderror
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Title -->
                         <div class="mt-4">
                             <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                                Post Title <span class="text-error-500">*</span>
+                                Title <span class="text-error-500">*</span>
                             </label>
                             <div x-data="{ hasError: {{ session('errors') && session('errors')->has('title') ? 'true' : 'false' }} }">
                                 <input
                                     type="text"
                                     id="title"
                                     name="title"
-                                    value="{{ old('title') ?? $post->title }}"
                                     x-model="title"
-                                    @input="slug = title.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')"
-                                    placeholder="Enter post category name"
+                                    value="{{ old('title', $post->title) }}"
+                                    @input.debounce.300ms="updateSlug"
+                                    placeholder="Enter a captivating title for your post"
                                     :class="hasError
-                                    ? 'border-red-500 dark:border-red-500 focus:ring-2 focus:ring-red-500 dark:focus:ring-red-500'
-                                    : 'border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-500'"
-                                    class="h-11 w-full text-sm mt-1 px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 placeholder:text-gray-400 dark:placeholder:text-white/30"
-                                    >
+                                    ? 'border-red-500 dark:border-red-500 focus:ring-red-500 focus:border-red-500'
+                                    : 'border-gray-300 dark:border-gray-700 focus:ring-blue-500 focus:border-blue-500'"
+                                    class="h-11 w-full text-sm mt-1 px-4 py-2.5 border rounded-lg bg-white border-gray-300 dark:border-gray-700 dark:bg-gray-900 text-gray-700 dark:text-gray-300 placeholder:text-gray-400 dark:placeholder:text-white/30 focus:ring-2"
+                                    required>
                                 <span class="text-xs mt-1 font-medium text-red-500 dark:text-red-500" x-show="hasError">
-                                    @error('title') * {{ $message }} @enderror
-                                </span>
+                                @error('title') * {{ $message }} @enderror
+                            </span>
                             </div>
                         </div>
 
-                        <!-- Slug (Read-only) -->
-                        <div class="mt-4">
+                        <!-- Slug -->
+                        <div class="mt-4" x-data="{ hasError: {{ session('errors') && session('errors')->has('slug') ? 'true' : 'false' }} }">
                             <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
                                 Slug <span class="text-error-500">*</span>
                             </label>
-                            <div x-data="{ hasError: {{ session('errors') && session('errors')->has('slug') ? 'true' : 'false' }} }">
-                                <input
-                                    type="text"
-                                    id="slug"
-                                    name="slug"
-                                    value="{{ old('slug') ?? $post->slug }}"
-                                    x-model="slug"
-                                    placeholder="Slug is auto generated"
-                                    :class="hasError
-                                    ? 'border-red-500 dark:border-red-500 focus:ring-2 focus:ring-red-500 dark:focus:ring-red-500'
-                                    : 'border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-500'"
-                                    class="h-11 w-full text-sm mt-1 px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 placeholder:text-gray-400 dark:placeholder:text-white/30"
-                                    readonly>
-                                <span class="text-xs mt-1 font-medium text-red-500 dark:text-red-500" x-show="hasError">
-                                @error('slug') * {{ $message }} @enderror
-                            </span>
-                            </div>
+                            <input
+                                type="text"
+                                id="slug"
+                                name="slug"
+                                x-model="slug"
+                                placeholder="Slug will be generated automatically from the title you provided."
+                                :class="hasError
+                                ? 'border-red-500 dark:border-red-500 focus:ring-red-500 focus:border-red-500'
+                                : 'border-gray-300 dark:border-gray-700 focus:ring-blue-500 focus:border-blue-500'"
+                                class="h-11 w-full text-sm mt-1 px-4 py-2.5 border rounded-lg bg-white border-gray-300 dark:border-gray-700 dark:bg-gray-900 text-gray-700 dark:text-gray-300 placeholder:text-gray-400 dark:placeholder:text-white/30 focus:ring-2"
+                                readonly
+                                required>
+                            @error('slug')
+                            <span class="text-xs mt-1 font-medium text-red-500 dark:text-red-500">* {{ $message }}</span>
+                            @enderror
                         </div>
 
                         <!-- Excerpt -->
@@ -83,14 +135,36 @@
                                 ? 'border-red-500 dark:border-red-500 focus:ring-2 focus:ring-red-500 dark:focus:ring-red-500'
                                 : 'border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-500'"
                                 class="w-full text-sm mt-1 px-4 py-2.5 resize-none"
-                                required>
-                                    {{ old('excerpt') ?? $post->excerpt }}
-                                </textarea>
+                                required>{{ trim(old('excerpt') ?? $post->excerpt) }}</textarea>
                                 <span class="text-xs mt-1 font-medium text-red-500 dark:text-red-500" x-show="hasError">
                                     @error('excerpt') * {{ $message }} @enderror
                                 </span>
                             </div>
                         </div>
+
+                        <!-- SEO Keywords -->
+                        <div class="mt-4">
+                            <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                                Keywords
+                            </label>
+                            <div x-data="{ hasError: {{ session('errors') && session('errors')->has('seo_keywords') ? 'true' : 'false' }} }">
+                                <textarea
+                                    id="seo_keywords"
+                                    name="seo_keywords"
+                                    rows="2"
+                                    placeholder="e.g. marketing, design, technology, health"
+                                    :class="hasError
+                                        ? 'border-red-500 dark:border-red-500 focus:ring-2 focus:ring-red-500 dark:focus:ring-red-500'
+                                        : 'border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-500'"
+                                    class="w-full text-sm mt-1 px-4 py-2.5 resize-none"
+                                >{{ old('seo_keywords', $post->seo_keywords ?? '') }}</textarea>
+
+                                                        <span class="text-xs mt-1 font-medium text-red-500 dark:text-red-500" x-show="hasError">
+                                    @error('seo_keywords') * {{ $message }} @enderror
+                                </span>
+                            </div>
+                        </div>
+
 
                         <!-- Body WYSIWYG TipTap-->
                         <label class="mt-4 mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
@@ -151,16 +225,7 @@
                                             Toggle highlight
                                             <div class="tooltip-arrow" data-popper-arrow></div>
                                         </div>
-                                        <button id="toggleCodeButton" type="button" data-tooltip-target="tooltip-code" class="p-1.5 text-gray-500 rounded-sm cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
-                                            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8 8-4 4 4 4m8 0 4-4-4-4m-2-3-4 14"/>
-                                            </svg>
-                                            <span class="sr-only">Code</span>
-                                        </button>
-                                        <div id="tooltip-code" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
-                                            Format code
-                                            <div class="tooltip-arrow" data-popper-arrow></div>
-                                        </div>
+
                                         <button id="toggleLinkButton" data-tooltip-target="tooltip-link" type="button" class="p-1.5 text-gray-500 rounded-sm cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
                                             <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.213 9.787a3.391 3.391 0 0 0-4.795 0l-3.425 3.426a3.39 3.39 0 0 0 4.795 4.794l.321-.304m-.321-4.49a3.39 3.39 0 0 0 4.795 0l3.424-3.426a3.39 3.39 0 0 0-4.794-4.795l-1.028.961"/>
@@ -505,7 +570,7 @@
                                 <label for="wysiwyg-example" class="sr-only">Publish post</label>
                                 <div id="wysiwyg-example"class="block w-full px-0 text-sm text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"></div>
                             </div>
-                            <textarea id="hidden-textarea" name="body" class="hidden"></textarea>
+                            <textarea id="hidden-textarea" name="body" class="hidden">{{ old('body', $post->body) }}</textarea>
                         </div>
 
                         <!-- Post Category -->
@@ -605,7 +670,46 @@
             @endif
         });
     </script>
+    <script>
+        function slugGenerator(initialTitle = '', initialSlug = '') {
+            return {
+                title: initialTitle || '',
+                slug: initialSlug || '',
+
+                updateSlug() {
+                    if (this.title.length > 0) {
+                        fetch("{{ route('be.post.generate.slug') }}", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                            },
+                            body: JSON.stringify({ title: this.title })
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                this.slug = data.slug;
+                            })
+                            .catch(error => console.error('Slug generation error:', error));
+                    } else {
+                        this.slug = "";
+                    }
+                },
+
+                previewImage(event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        this.imageUrl = URL.createObjectURL(file);
+                    }
+                },
+            };
+        }
+    </script>
     <script src="https://unpkg.com/flowbite@latest/dist/flowbite.min.js"></script>
+    <!-- Inject content into JS -->
+    <script>
+        window.__postBody = {!! json_encode(old('body', $post->body)) !!};
+    </script>
     <script type="module">
         import { Editor } from 'https://esm.sh/@tiptap/core@2.6.6';
         import StarterKit from 'https://esm.sh/@tiptap/starter-kit@2.6.6';
@@ -618,226 +722,240 @@
         import TextStyle from 'https://esm.sh/@tiptap/extension-text-style@2.6.6';
         import FontFamily from 'https://esm.sh/@tiptap/extension-font-family@2.6.6';
         import { Color } from 'https://esm.sh/@tiptap/extension-color@2.6.6';
-        import Bold from 'https://esm.sh/@tiptap/extension-bold@2.6.6'; // Import the Bold extension
 
+        import Paragraph from 'https://esm.sh/@tiptap/extension-paragraph@2.6.6';
+        import BulletList from 'https://esm.sh/@tiptap/extension-bullet-list@2.6.6';
+        import OrderedList from 'https://esm.sh/@tiptap/extension-ordered-list@2.6.6';
+        import ListItem from 'https://esm.sh/@tiptap/extension-list-item@2.6.6';
+        import Blockquote from 'https://esm.sh/@tiptap/extension-blockquote@2.6.6';
+        import Code from 'https://esm.sh/@tiptap/extension-code@2.6.6';
+        import Bold from 'https://esm.sh/@tiptap/extension-bold@2.6.6';
 
-        window.addEventListener('load', function() {
-            if (document.getElementById("wysiwyg-example")) {
+        window.addEventListener('load', function () {
+            const editorElement = document.getElementById("wysiwyg-example");
+            const textarea = document.getElementById("hidden-textarea");
 
-                const FontSizeTextStyle = TextStyle.extend({
-                    addAttributes() {
-                        return {
-                            fontSize: {
-                                default: null,
-                                parseHTML: element => element.style.fontSize,
-                                renderHTML: attributes => {
-                                    if (!attributes.fontSize) {
-                                        return {};
-                                    }
-                                    return { style: 'font-size: ' + attributes.fontSize };
-                                },
+            if (!editorElement || !textarea) return;
+
+            const FontSizeTextStyle = TextStyle.extend({
+                addAttributes() {
+                    return {
+                        fontSize: {
+                            default: null,
+                            parseHTML: element => element.style.fontSize,
+                            renderHTML: attributes => {
+                                if (!attributes.fontSize) return {};
+                                return { style: 'font-size: ' + attributes.fontSize };
                             },
-                        };
-                    },
-                });
-                const CustomBold = Bold.extend({
-                    // Override the renderHTML method
-                    renderHTML({ mark, HTMLAttributes }) {
-                        const { style, ...rest } = HTMLAttributes;
-
-                        // Merge existing styles with font-weight
-                        const newStyle = 'font-weight: bold;' + (style ? ' ' + style : '');
-
-                        return ['span', { ...rest, style: newStyle.trim() }, 0];
-                    },
-                    // Ensure it doesn't exclude other marks
-                    addOptions() {
-                        return {
-                            ...this.parent?.(),
-                            HTMLAttributes: {},
-                        };
-                    },
-                });
-                // tip tap editor setup
-                const editor = new Editor({
-                    element: document.querySelector('#wysiwyg-example'),
-                    extensions: [
-                        StarterKit.configure({
-                            textStyle: false,
-                            bold: false,
-                            marks: {
-                                bold: false,
-                            },
-                        }),
-                        // Include the custom Bold extension
-                        CustomBold,
-                        //TextStyle,
-                        Color,
-                        FontSizeTextStyle,
-                        FontFamily,
-                        Highlight,
-                        Underline,
-                        Link.configure({
-                            openOnClick: false,
-                            autolink: true,
-                            defaultProtocol: 'https',
-                        }),
-                        TextAlign.configure({
-                            types: ['heading', 'paragraph'],
-                        }),
-                        Image,
-                        YouTube,
-                    ],
-                    content: @json($post->body),
-                    editorProps: {
-                        attributes: {
-                            class: 'format lg:format-lg dark:format-invert focus:outline-none format-blue max-w-none',
                         },
-                    }
-                });
+                    };
+                },
+            });
 
-                // Handle form submission
-                const form = document.getElementById('edit-post-form');
-                const textarea = document.getElementById('hidden-textarea');
+            // Custom Extensions with Tailwind Classes
+            const CustomBold = Bold.extend({
+                renderHTML({ HTMLAttributes }) {
+                    return ['strong', { ...HTMLAttributes }, 0];
+                },
+            });
 
-                if (form && textarea) {
-                    form.addEventListener('submit', function () {
-                        textarea.value = editor.getHTML();
-                        console.log("Submitting body content:", textarea.value);
-                    });
+            const CustomParagraph = Paragraph.extend({
+                renderHTML({ HTMLAttributes }) {
+                    return ['p', {
+                        ...HTMLAttributes,
+                        class: `${HTMLAttributes.class || ''} m-0 mb-4 text-base text-gray-600`.trim(),
+                    }, 0];
+                },
+            });
+
+            const CustomBulletList = BulletList.extend({
+                renderHTML({ HTMLAttributes }) {
+                    return ['ul', {
+                        ...HTMLAttributes,
+                        class: `${HTMLAttributes.class || ''} mb-4 text-base text-gray-600 list-disc pl-6`.trim(),
+                    }, 0];
+                },
+            });
+
+            const CustomOrderedList = OrderedList.extend({
+                renderHTML({ HTMLAttributes }) {
+                    return ['ol', {
+                        ...HTMLAttributes,
+                        class: `${HTMLAttributes.class || ''} mb-4 text-base text-gray-600 list-decimal pl-6`.trim(),
+                    }, 0];
+                },
+            });
+
+            const CustomListItem = ListItem.extend({
+                renderHTML({ HTMLAttributes }) {
+                    return ['li', {
+                        ...HTMLAttributes,
+                        class: `${HTMLAttributes.class || ''} text-base text-gray-600`.trim(),
+                    }, 0];
+                },
+            });
+
+            const CustomBlockquote = Blockquote.extend({
+                renderHTML({ HTMLAttributes }) {
+                    return ['blockquote', {
+                        ...HTMLAttributes,
+                        class: `${HTMLAttributes.class || ''} mb-4 border-l-4 border-gray-300 pl-4 italic text-base text-gray-600`.trim(),
+                    }, 0];
+                },
+            });
+
+            const CustomCode = Code.extend({
+                renderHTML({ HTMLAttributes }) {
+                    return ['code', {
+                        ...HTMLAttributes,
+                        class: `${HTMLAttributes.class || ''} text-sm bg-gray-100 text-red-600 font-mono px-1.5 py-0.5 rounded`.trim(),
+                    }, 0];
+                },
+            });
+
+            const CustomLink = Link.extend({
+                addOptions() {
+                    return {
+                        ...this.parent?.(),
+                        openOnClick: false,
+                        autolink: true,
+                        defaultProtocol: 'https',
+                    };
+                },
+                renderHTML({ HTMLAttributes }) {
+                    return ['a', {
+                        ...HTMLAttributes,
+                        class: `${HTMLAttributes.class || ''} text-blue-600 underline hover:text-blue-800 transition`.trim(),
+                    }, 0];
+                },
+            });
+
+            const editor = new Editor({
+                element: editorElement,
+                content: window.__postBody || '',
+                extensions: [
+                    StarterKit.configure({
+                        paragraph: false,
+                        bulletList: false,
+                        orderedList: false,
+                        listItem: false,
+                        textStyle: false,
+                        bold: false,
+                        marks: { bold: false },
+                    }),
+                    CustomBold,
+                    CustomParagraph,
+                    CustomBulletList,
+                    CustomOrderedList,
+                    CustomListItem,
+                    CustomBlockquote,
+                    CustomCode,
+                    CustomLink,
+                    FontSizeTextStyle,
+                    FontFamily,
+                    Color,
+                    Highlight,
+                    Underline,
+                    TextAlign.configure({ types: ['heading', 'paragraph'] }),
+                    Image,
+                    YouTube,
+                ],
+                editorProps: {
+                    attributes: {
+                        class: 'format lg:format-lg dark:format-invert focus:outline-none format-blue max-w-none text-base text-gray-600',
+                    },
+                },
+                onUpdate({ editor }) {
+                    textarea.value = editor.getHTML(); // Sync content on update
+                },
+            });
+
+            // Sync content on form submission
+            document.querySelector('form')?.addEventListener('submit', () => {
+                textarea.value = editor.getHTML();
+            });
+
+            // Button handlers (unchanged from your code)
+            document.getElementById('toggleBoldButton')?.addEventListener('click', () => editor.chain().focus().toggleBold().run());
+            document.getElementById('toggleItalicButton')?.addEventListener('click', () => editor.chain().focus().toggleItalic().run());
+            document.getElementById('toggleUnderlineButton')?.addEventListener('click', () => editor.chain().focus().toggleUnderline().run());
+            document.getElementById('toggleStrikeButton')?.addEventListener('click', () => editor.chain().focus().toggleStrike().run());
+            document.getElementById('toggleHighlightButton')?.addEventListener('click', () => {
+                const isHighlighted = editor.isActive('highlight');
+                editor.chain().focus().toggleHighlight({ color: isHighlighted ? undefined : '#ffc078' }).run();
+            });
+            document.getElementById('toggleLinkButton')?.addEventListener('click', () => {
+                const url = window.prompt('Enter URL:', 'https://flowbite.com');
+                editor.chain().focus().toggleLink({ href: url }).run();
+            });
+            document.getElementById('removeLinkButton')?.addEventListener('click', () => editor.chain().focus().unsetLink().run());
+            document.getElementById('toggleCodeButton')?.addEventListener('click', () => editor.chain().focus().toggleCode().run());
+
+            document.getElementById('toggleLeftAlignButton')?.addEventListener('click', () => editor.chain().focus().setTextAlign('left').run());
+            document.getElementById('toggleCenterAlignButton')?.addEventListener('click', () => editor.chain().focus().setTextAlign('center').run());
+            document.getElementById('toggleRightAlignButton')?.addEventListener('click', () => editor.chain().focus().setTextAlign('right').run());
+            document.getElementById('toggleListButton')?.addEventListener('click', () => editor.chain().focus().toggleBulletList().run());
+            document.getElementById('toggleOrderedListButton')?.addEventListener('click', () => editor.chain().focus().toggleOrderedList().run());
+            document.getElementById('toggleBlockquoteButton')?.addEventListener('click', () => editor.chain().focus().toggleBlockquote().run());
+            document.getElementById('toggleHRButton')?.addEventListener('click', () => editor.chain().focus().setHorizontalRule().run());
+
+            document.getElementById('addImageButton')?.addEventListener('click', () => {
+                const url = window.prompt('Enter image URL:', 'https://placehold.co/600x400');
+                if (url) editor.chain().focus().setImage({ src: url }).run();
+            });
+
+            document.getElementById('addVideoButton')?.addEventListener('click', () => {
+                const url = window.prompt('Enter YouTube URL:', 'https://www.youtube.com/watch?v=KaLxCiilHns');
+                if (url) {
+                    editor.commands.setYoutubeVideo({ src: url, width: 640, height: 480 });
                 }
+            });
 
-                // set up custom event listeners for the buttons
-                document.getElementById('toggleBoldButton').addEventListener('click', () => editor.chain().focus().toggleBold().run());
-                document.getElementById('toggleItalicButton').addEventListener('click', () => editor.chain().focus().toggleItalic().run());
-                document.getElementById('toggleUnderlineButton').addEventListener('click', () => editor.chain().focus().toggleUnderline().run());
-                document.getElementById('toggleStrikeButton').addEventListener('click', () => editor.chain().focus().toggleStrike().run());
-                document.getElementById('toggleHighlightButton').addEventListener('click', () => {
-                    const isHighlighted = editor.isActive('highlight');
-                    // when using toggleHighlight(), judge if is is already highlighted.
-                    editor.chain().focus().toggleHighlight({
-                        color: isHighlighted ? undefined : '#ffc078' // if is already highlighted，unset the highlight color
-                    }).run();
-                });
+            const typographyDropdown = FlowbiteInstances.getInstance('Dropdown', 'typographyDropdown');
+            document.getElementById('toggleParagraphButton')?.addEventListener('click', () => {
+                editor.chain().focus().setParagraph().run();
+                typographyDropdown.hide();
+            });
 
-                document.getElementById('toggleLinkButton').addEventListener('click', () => {
-                    const url = window.prompt('Enter image URL:', 'https://flowbite.com');
-                    editor.chain().focus().toggleLink({ href: url }).run();
-                });
-                document.getElementById('removeLinkButton').addEventListener('click', () => {
-                    editor.chain().focus().unsetLink().run()
-                });
-                document.getElementById('toggleCodeButton').addEventListener('click', () => {
-                    editor.chain().focus().toggleCode().run();
-                })
-
-                document.getElementById('toggleLeftAlignButton').addEventListener('click', () => {
-                    editor.chain().focus().setTextAlign('left').run();
-                });
-                document.getElementById('toggleCenterAlignButton').addEventListener('click', () => {
-                    editor.chain().focus().setTextAlign('center').run();
-                });
-                document.getElementById('toggleRightAlignButton').addEventListener('click', () => {
-                    editor.chain().focus().setTextAlign('right').run();
-                });
-                document.getElementById('toggleListButton').addEventListener('click', () => {
-                    editor.chain().focus().toggleBulletList().run();
-                });
-                document.getElementById('toggleOrderedListButton').addEventListener('click', () => {
-                    editor.chain().focus().toggleOrderedList().run();
-                });
-                document.getElementById('toggleBlockquoteButton').addEventListener('click', () => {
-                    editor.chain().focus().toggleBlockquote().run();
-                });
-                document.getElementById('toggleHRButton').addEventListener('click', () => {
-                    editor.chain().focus().setHorizontalRule().run();
-                });
-                document.getElementById('addImageButton').addEventListener('click', () => {
-                    const url = window.prompt('Enter image URL:', 'https://placehold.co/600x400');
-                    if (url) {
-                        editor.chain().focus().setImage({ src: url }).run();
-                    }
-                });
-                document.getElementById('addVideoButton').addEventListener('click', () => {
-                    const url = window.prompt('Enter YouTube URL:', 'https://www.youtube.com/watch?v=KaLxCiilHns');
-                    if (url) {
-                        editor.commands.setYoutubeVideo({
-                            src: url,
-                            width: 640,
-                            height: 480,
-                        })
-                    }
-                });
-
-                // typography dropdown
-                const typographyDropdown = FlowbiteInstances.getInstance('Dropdown', 'typographyDropdown');
-
-                document.getElementById('toggleParagraphButton').addEventListener('click', () => {
-                    editor.chain().focus().setParagraph().run();
+            document.querySelectorAll('[data-heading-level]').forEach((button) => {
+                button.addEventListener('click', () => {
+                    const level = button.getAttribute('data-heading-level');
+                    editor.chain().focus().toggleHeading({ level: parseInt(level) }).run();
                     typographyDropdown.hide();
                 });
+            });
 
-                document.querySelectorAll('[data-heading-level]').forEach((button) => {
-                    button.addEventListener('click', () => {
-                        const level = button.getAttribute('data-heading-level');
-                        editor.chain().focus().toggleHeading({ level: parseInt(level) }).run()
-                        typographyDropdown.hide();
-                    });
+            const textSizeDropdown = FlowbiteInstances.getInstance('Dropdown', 'textSizeDropdown');
+            document.querySelectorAll('[data-text-size]').forEach((button) => {
+                button.addEventListener('click', () => {
+                    const fontSize = button.getAttribute('data-text-size');
+                    editor.chain().focus().setMark('textStyle', { fontSize }).run();
+                    textSizeDropdown.hide();
                 });
+            });
 
-                const textSizeDropdown = FlowbiteInstances.getInstance('Dropdown', 'textSizeDropdown');
+            const colorPicker = document.getElementById('color');
+            colorPicker?.addEventListener('input', (e) => {
+                editor.chain().focus().setColor(e.target.value).run();
+            });
 
-                // Loop through all elements with the data-text-size attribute
-                document.querySelectorAll('[data-text-size]').forEach((button) => {
-                    button.addEventListener('click', () => {
-                        const fontSize = button.getAttribute('data-text-size');
-
-                        // Apply the selected font size via pixels using the TipTap editor chain
-                        editor.chain().focus().setMark('textStyle', { fontSize }).run();
-
-                        // Hide the dropdown after selection
-                        textSizeDropdown.hide();
-                    });
-                });
-
-                // Listen for color picker changes
-                const colorPicker = document.getElementById('color');
-                colorPicker.addEventListener('input', (event) => {
-                    const selectedColor = event.target.value;
-
-                    // Apply the selected color to the selected text
+            document.querySelectorAll('[data-hex-color]').forEach((button) => {
+                button.addEventListener('click', () => {
+                    const selectedColor = button.getAttribute('data-hex-color');
                     editor.chain().focus().setColor(selectedColor).run();
-                })
-
-                document.querySelectorAll('[data-hex-color]').forEach((button) => {
-                    button.addEventListener('click', () => {
-                        const selectedColor = button.getAttribute('data-hex-color');
-
-                        // Apply the selected color to the selected text
-                        editor.chain().focus().setColor(selectedColor).run();
-                    });
                 });
+            });
 
-                document.getElementById('reset-color').addEventListener('click', () => {
-                    editor.commands.unsetColor();
-                })
+            document.getElementById('reset-color')?.addEventListener('click', () => editor.commands.unsetColor());
 
-                const fontFamilyDropdown = FlowbiteInstances.getInstance('Dropdown', 'fontFamilyDropdown');
-
-                // Loop through all elements with the data-font-family attribute
-                document.querySelectorAll('[data-font-family]').forEach((button) => {
-                    button.addEventListener('click', () => {
-                        const fontFamily = button.getAttribute('data-font-family');
-
-                        // Apply the selected font size via pixels using the TipTap editor chain
-                        editor.chain().focus().setFontFamily(fontFamily).run();
-
-                        // Hide the dropdown after selection
-                        fontFamilyDropdown.hide();
-                    });
+            const fontFamilyDropdown = FlowbiteInstances.getInstance('Dropdown', 'fontFamilyDropdown');
+            document.querySelectorAll('[data-font-family]').forEach((button) => {
+                button.addEventListener('click', () => {
+                    const fontFamily = button.getAttribute('data-font-family');
+                    editor.chain().focus().setFontFamily(fontFamily).run();
+                    fontFamilyDropdown.hide();
                 });
-            }
+            });
         });
     </script>
-
 @endsection

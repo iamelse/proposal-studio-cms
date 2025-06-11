@@ -70,11 +70,11 @@
              <div class="flex items-center space-x-2 dark:hidden">
                      <img
                          class="h-8 w-auto rounded"
-                         src="{{ asset('logo/iamelse-logo-1.png') }}"
+                         src="{{ getLogoImagePath($settings) }}"
                          alt="Logo"
                      />
-                     <span class="ps-1 text-2xl font-bold text-gray-900 dark:text-white">
-                Iamelse
+                     <span class="ps-1 text-xl font-bold text-gray-900 dark:text-white">
+                Proposal Studio
               </span>
              </div>
 
@@ -82,11 +82,11 @@
              <div class="flex items-center space-x-2 hidden dark:flex">
                  <img
                      class="h-8 w-auto rounded"
-                     src="{{ asset('logo/iamelse-logo-1.png') }}"
+                     src="{{ getLogoImagePath($settings) }}"
                      alt="Logo"
                  />
-              <span class="ps-1 text-2xl font-bold text-gray-900 dark:text-white">
-                Iamelse
+              <span class="ps-1 text-xl font-bold text-gray-900 dark:text-white">
+                Proposal Studio
               </span>
              </div>
          </a>
@@ -168,12 +168,15 @@
                @click.prevent="dropdownOpen = ! dropdownOpen"
                >
                <span class="mr-3 h-11 w-11 overflow-hidden rounded-full">
-               <img src="{{ getUserImageProfilePath(Auth::user()) }}" alt="User" />
+                    <img src="{{ getUserImageProfilePath(Auth::user()) }}" alt="User" />
                </span>
-               <span class="mr-1 block text-theme-sm font-medium">
-                  {{ Auth::user()->name }}
-               </span>
-               <svg
+
+                <span class="mr-1 flex flex-col text-theme-sm font-medium">
+                    <span>{{ Auth::user()->name }}</span>
+                    <span class="text-xs text-gray-500 dark:text-gray-400">{{ Auth::user()->roles->first()->name }}</span>
+                </span>
+
+                <svg
                   :class="dropdownOpen && 'rotate-180'"
                   class="stroke-gray-500 dark:stroke-gray-400"
                   width="18"

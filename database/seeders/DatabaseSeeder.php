@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()->create([
-            'name' => 'Admin User',
+            'name' => 'Mufida Rahma',
             'username' => 'admin',
             'email' => 'test@example.com',
             'email_verified_at' => now(),
@@ -37,8 +37,13 @@ class DatabaseSeeder extends Seeder
         Post::factory()->count(50)->create();
 
         $this->call(SectionSeeder::class);
-        $this->call(SkillSeeder::class);
         $this->call(SocialMediaSeeder::class);
-        $this->call(QuickLinkSeeder::class);
+        $this->call(WhyUsSeeder::class);
+        $this->call(ServiceSeeder::class);
+        $this->call(ProposalSeeder::class);
+        $this->call(EventSeeder::class);
+        $this->call(ReviewSeeder::class);
+        $this->call(FAQSeeder::class);
+        $this->call(SettingSeeder::class);
     }
 }

@@ -20,7 +20,8 @@
     <!-- Manifest for PWA -->
     <link rel="manifest" href="{{ asset('assets/images/favicons/site.webmanifest') }}">
 
-    <title>{{ $title ?? env('APP_NAME') }}</title>
+    <!-- Boxicons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
     @php
         use Illuminate\Support\Facades\App;
@@ -49,6 +50,7 @@
 
     @stack('styles')
     @stack('scripts')
+    @stack('meta')
 </head>
 
 <body class="bg-white text-black">
@@ -59,6 +61,14 @@
 @yield('hero')
 @yield('features')
 @yield('about')
+@yield('services')
+@yield('clients')
+@yield('events')
+@yield('reviews')
+@yield('faqs')
+@yield('cta')
+
+@include('partials.frontend.footer')
 
 <script>
     const hamburger = document.getElementById("hamburgerBtn");
@@ -133,6 +143,95 @@
     // Start autoplay
     updateDots();
     autoSlide = setInterval(slideNext, 2000);
+</script>
+<script>
+    const clientCarousel = document.getElementById('clientCarousel');
+    const clientPrevBtn = document.getElementById('client-prev');
+    const clientNextBtn = document.getElementById('client-next');
+
+    function updateButtons() {
+        const spacer = clientCarousel.querySelector('div:last-child');
+        const spacerWidth = spacer ? spacer.offsetWidth : 0;
+
+        const maxScrollLeft = clientCarousel.scrollWidth - clientCarousel.clientWidth - spacerWidth;
+        const currentScroll = clientCarousel.scrollLeft;
+
+        clientPrevBtn.disabled = currentScroll <= 0;
+        clientNextBtn.disabled = currentScroll >= maxScrollLeft - 1;
+    }
+
+    function getCardWidth() {
+        const firstCard = clientCarousel.querySelector('.flex-shrink-0');
+        if (!firstCard) return 0;
+        const style = window.getComputedStyle(firstCard);
+        const margin = parseFloat(style.marginLeft) + parseFloat(style.marginRight);
+        return firstCard.offsetWidth + margin;
+    }
+
+    clientPrevBtn.addEventListener('click', () => {
+        clientCarousel.scrollBy({ left: -getCardWidth(), behavior: 'smooth' });
+    });
+
+    clientNextBtn.addEventListener('click', () => {
+        clientCarousel.scrollBy({ left: getCardWidth(), behavior: 'smooth' });
+    });
+
+    clientCarousel.addEventListener('scroll', updateButtons);
+    window.addEventListener('load', updateButtons);
+    window.addEventListener('resize', updateButtons);
+</script>
+<script>
+    const eventCarousel = document.getElementById('eventCarousel');
+    const eventPrevBtn = document.getElementById('event-prev')
+    const eventNextBtn = document.getElementById('event-next');
+
+    function updateButtons() {
+        const maxScrollLeft = eventCarousel.scrollWidth - eventCarousel.clientWidth;
+        eventPrevBtn.disabled = eventCarousel.scrollLeft <= 0;
+        eventNextBtn.disabled = eventCarousel.scrollLeft >= maxScrollLeft - 1;
+    }
+
+    function getCardWidth() {
+        // Get width of first visible card including margin
+        const firstCard = eventCarousel.querySelector('div');
+        const style = window.getComputedStyle(firstCard);
+        const margin = parseFloat(style.marginLeft) + parseFloat(style.marginRight);
+        return firstCard.offsetWidth + margin;
+    }
+
+    eventPrevBtn.addEventListener('click', () => {
+        eventCarousel.scrollBy({ left: -getCardWidth(), behavior: 'smooth' });
+    });
+
+    eventNextBtn.addEventListener('click', () => {
+        eventCarousel.scrollBy({ left: getCardWidth(), behavior: 'smooth' });
+    });
+
+    eventCarousel.addEventListener('scroll', updateButtons);
+    window.addEventListener('load', updateButtons);
+    window.addEventListener('resize', updateButtons);
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.faq-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                const contentId = button.getAttribute('data-target');
+                const content = document.getElementById(contentId);
+                const isOpen = button.getAttribute('aria-expanded') === 'true';
+                const icon = button.querySelector('i.bx');
+
+                if (isOpen) {
+                    content.classList.add('hidden');
+                    button.setAttribute('aria-expanded', 'false');
+                    icon.classList.remove('rotate-180');
+                } else {
+                    content.classList.remove('hidden');
+                    button.setAttribute('aria-expanded', 'true');
+                    icon.classList.add('rotate-180');
+                }
+            });
+        });
+    });
 </script>
 </body>
 

@@ -18,7 +18,7 @@ class HeroController extends Controller
     public function index(): View
     {
         Gate::authorize(PermissionEnum::UPDATE_HOME_HERO->value);
-        
+
         $hero = Section::where('name', 'hero')->firstOrFail();
 
         return view('pages.fe-home.hero', [
@@ -30,26 +30,44 @@ class HeroController extends Controller
     public function update(UpdateHeroRequest $request, Section $section)
     {
         try {
+            // Authorization check
             Gate::authorize(PermissionEnum::UPDATE_HOME_HERO->value);
 
+            // Validate and get content input
+            $validated = $request->validated();
+            $content = $validated['content'];
+
+            // Define purifier rules per field
+            $rules = [
+                'title'    => ['HTML.Allowed' => 'span[style]'],  // Only <span> with style attribute
+                'description' => ['HTML.Allowed' => 'span[style]'],
+            ];
+
+            // Sanitize content fields according to rules
+            $cleanedContent = cleanHtmlFields($content, $rules);
+
+            // Find the section named 'hero' (override injected $section if needed)
             $section = Section::where('name', 'hero')->firstOrFail();
 
-            $section->content = json_encode($request->validated()['content']);
+            // Store sanitized JSON content
+            $section->content = json_encode($cleanedContent);
             $section->save();
-    
+
             return redirect()->back()->with('success', 'Hero section updated successfully.');
-        } catch (AuthorizationException $authorizationException) {
-            Log::error($authorizationException->getMessage());
+
+        } catch (AuthorizationException $authEx) {
+            Log::error('Unauthorized action: ' . $authEx->getMessage());
             abort(403, 'This action is unauthorized.');
-        } catch (Exception $e) {
+
+        } catch (Exception $ex) {
             Log::error('Failed to update Hero section', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
+                'error'        => $ex->getMessage(),
+                'trace'        => $ex->getTraceAsString(),
                 'request_data' => $request->all(),
-                'user_id' => Auth::user()->id,
+                'user_id'      => Auth::id(),
             ]);
 
-            return redirect()->back()->with('error', 'Failed to update Hero section. ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Failed to update Hero section. ' . $ex->getMessage());
         }
     }
 }

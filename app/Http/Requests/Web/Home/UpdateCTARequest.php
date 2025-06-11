@@ -22,8 +22,7 @@ class UpdateCTARequest extends FormRequest
     public function rules(): array
     {
         return [
-            'content.title' => 'required|string|max:255',
-            'content.description' => 'required|string',
+            'content.title' => 'required|string|max:255'
         ];
     }
 
