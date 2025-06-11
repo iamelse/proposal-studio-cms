@@ -181,30 +181,59 @@ if (!function_exists('getEventListImagePath')) {
     }
 }
 
+use Illuminate\Support\Facades\Log;
+
 if (!function_exists('getPostCoverImagePath')) {
     function getPostCoverImagePath($post)
     {
         $disk = env('FILESYSTEM_DISK');
         $appUrl = rtrim(env('APP_URL'), '/');
         $publicHtmlPath = base_path('../../proposal-studio.iamelse.my.id');
-        $placeholderUrl = 'https://picsum.photos/1200/600?random=' . $post->id;
+        $placeholderUrl = 'https://picsum.photos/1200/600?random=' . ($post->id ?? 'null');
+
+        Log::info('getPostCoverImagePath called', [
+            'disk' => $disk,
+            'post_id' => $post->id ?? null,
+            'post_cover' => $post->cover ?? null,
+        ]);
 
         if (!$post || !$post->cover) {
+            Log::warning('Post or cover is missing, returning placeholder', [
+                'post' => $post
+            ]);
             return $placeholderUrl;
         }
 
         if ($disk === FileSystemDiskEnum::PUBLIC->value) {
             if (Storage::disk('public')->exists($post->cover)) {
+                Log::info('Post cover found in public disk', [
+                    'path' => $post->cover
+                ]);
                 return asset('storage/' . $post->cover);
+            } else {
+                Log::warning('Post cover not found in public disk', [
+                    'path' => $post->cover
+                ]);
             }
         } elseif ($disk === FileSystemDiskEnum::IDCLOUDHOST->value) {
             $filePath = $post->cover;
             $fullPath = $publicHtmlPath . '/' . $filePath;
 
             if (file_exists($fullPath)) {
+                Log::info('Post cover found in IDCLOUDHOST path', [
+                    'full_path' => $fullPath
+                ]);
                 return $appUrl . '/' . $filePath;
+            } else {
+                Log::warning('Post cover not found in IDCLOUDHOST path', [
+                    'full_path' => $fullPath
+                ]);
             }
         }
+
+        Log::info('Returning placeholder image for post cover', [
+            'placeholder_url' => $placeholderUrl
+        ]);
 
         return $placeholderUrl;
     }
