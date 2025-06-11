@@ -42,19 +42,40 @@
         </a>
     </div>
 
-    <!-- WhatsApp Button (Desktop) -->
-    <a href="https://wa.me/{{ $settings['whatsapp_number_with_country_code'] }}?text=Hallo%20Kak%2C%20saya%20ingin%20tanya%20terkait%20proposal%2C%20apakah%20bisa%20dibantu%3F"
-       target="_blank"
-       class="hidden lg:block border border-[#05408C] px-5 py-3 text-[#05408C] font-medium rounded-full hover:bg-[#05408C] hover:text-white transition-all duration-300">
-        Hubungi Kami
-    </a>
+    @guest
+        <!-- WhatsApp Button (Only for guests / not logged in) -->
+        <a href="https://wa.me/{{ $settings['whatsapp_number_with_country_code'] }}?text={{ urlencode('Hallo Kak, saya ingin tanya terkait proposal, apakah bisa dibantu?') }}"
+           target="_blank"
+           class="hidden lg:block border border-[#05408C] px-5 py-3 text-[#05408C] font-medium rounded-full hover:bg-[#05408C] hover:text-white transition-all duration-300">
+            Hubungi Kami
+        </a>
+    @endguest
+
+    @auth
+        <!-- Dashboard Shortcut Button (Only for logged-in users) -->
+        <a href="{{ route('be.dashboard.index') }}"
+           target="_blank"
+           class="hidden lg:block border border-green-600 px-5 py-3 text-green-600 font-medium rounded-full hover:bg-green-600 hover:text-white transition-all duration-300">
+            Dashboard
+        </a>
+    @endauth
 
     <!-- Mobile Buttons -->
     <div class="lg:hidden flex items-center gap-2">
-        <a href="https://wa.me/{{ $settings['whatsapp_number_with_country_code'] }}" target="_blank"
-           class="border border-[#05408C] py-2 px-4 text-sm text-[#05408C] font-medium rounded-full hover:bg-[#05408C] hover:text-white transition-all">
-            Hubungi Kami
-        </a>
+        @guest
+            <a href="https://wa.me/{{ $settings['whatsapp_number_with_country_code'] }}?text={{ urlencode('Hallo Kak, saya ingin tanya terkait proposal, apakah bisa dibantu?') }}"
+               target="_blank"
+               class="border border-[#05408C] py-2 px-4 text-sm text-[#05408C] font-medium rounded-full hover:bg-[#05408C] hover:text-white transition-all">
+                Hubungi Kami
+            </a>
+        @endguest
+
+        @auth
+            <a href="{{ route('be.dashboard.index') }}"
+               class="border border-green-600 py-2 px-4 text-sm text-green-600 font-medium rounded-full hover:bg-green-600 hover:text-white transition-all">
+                Dashboard
+            </a>
+        @endauth
 
         <!-- Hamburger Button -->
         <button id="hamburgerBtn" class="flex flex-col gap-[5px] z-50">
