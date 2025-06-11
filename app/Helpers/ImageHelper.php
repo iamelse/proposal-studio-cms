@@ -13,32 +13,39 @@ if (!function_exists('getUserImageProfilePath')) {
         $placeholderUrl = 'https://dummyimage.com/300';
         $avatar = Avatar::create(Auth::user()->name);
         $appUrl = rtrim(env('APP_URL'), '/');
-
-        $relativePath = $user->image ?? '';
-        $publicHtmlBaseUrl = 'https://proposal-studio.iamelse.my.id'; // URL
-        $publicHtmlPath = base_path('../public_html/proposal-studio.iamelse.my.id'); // Filesystem path
-        $fullPath = $publicHtmlPath . '/' . $relativePath;
+        $publicHtmlPath = base_path('../../public_html/proposal-studio.iamelse.my.id');
 
         Log::info('getUserImageProfilePath called', [
             'disk' => $disk,
             'user_id' => $user->id ?? null,
-            'user_image' => $relativePath,
-            'full_path' => $fullPath,
+            'user_image' => $user->image ?? null,
         ]);
 
         if ($disk === FileSystemDiskEnum::PUBLIC->value) {
-            if ($relativePath && Storage::disk('public')->exists($relativePath)) {
-                Log::info('Image found in public disk', ['path' => $relativePath]);
-                return asset('storage/' . $relativePath);
+            if ($user->image && Storage::disk('public')->exists($user->image)) {
+                Log::info('Image found in public disk', [
+                    'path' => $user->image
+                ]);
+                return asset('storage/' . $user->image);
             } else {
-                Log::warning('Image not found in public disk', ['path' => $relativePath]);
+                Log::warning('Image not found in public disk', [
+                    'path' => $user->image
+                ]);
             }
-        } elseif ($disk === FileSystemDiskEnum::IDCLOUDHOST->value) {
-            if ($relativePath && file_exists($fullPath)) {
-                Log::info('Image found in IDCLOUDHOST path', ['url' => $publicHtmlBaseUrl . '/' . $relativePath]);
-                return $publicHtmlBaseUrl . '/' . $relativePath;
+        }
+        elseif ($disk === FileSystemDiskEnum::IDCLOUDHOST->value) {
+            $filePath = $user->image;
+            $fullPath = $publicHtmlPath . '/' . $filePath;
+
+            if ($user->image && file_exists($fullPath)) {
+                Log::info('Image found in IDCLOUDHOST path', [
+                    'full_path' => $fullPath
+                ]);
+                return $appUrl . '/' . $filePath;
             } else {
-                Log::warning('Image not found in IDCLOUDHOST path', ['full_path' => $fullPath]);
+                Log::warning('Image not found in IDCLOUDHOST path', [
+                    'full_path' => $fullPath
+                ]);
             }
         }
 
