@@ -4,8 +4,6 @@ use App\Enums\FileSystemDiskEnum;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
-use Illuminate\Support\Facades\Log;
-
 if (!function_exists('getUserImageProfilePath')) {
     function getUserImageProfilePath($user)
     {
@@ -15,41 +13,19 @@ if (!function_exists('getUserImageProfilePath')) {
         $appUrl = rtrim(env('APP_URL'), '/');
         $publicHtmlPath = base_path('../../public_html/proposal-studio.iamelse.my.id');
 
-        Log::info('getUserImageProfilePath called', [
-            'disk' => $disk,
-            'user_id' => $user->id ?? null,
-            'user_image' => $user->image ?? null,
-        ]);
-
         if ($disk === FileSystemDiskEnum::PUBLIC->value) {
             if ($user->image && Storage::disk('public')->exists($user->image)) {
-                Log::info('Image found in public disk', [
-                    'path' => $user->image
-                ]);
                 return asset('storage/' . $user->image);
-            } else {
-                Log::warning('Image not found in public disk', [
-                    'path' => $user->image
-                ]);
             }
-        }
-        elseif ($disk === FileSystemDiskEnum::IDCLOUDHOST->value) {
+        } elseif ($disk === FileSystemDiskEnum::IDCLOUDHOST->value) {
             $filePath = $user->image;
             $fullPath = $publicHtmlPath . '/' . $filePath;
 
             if ($user->image && file_exists($fullPath)) {
-                Log::info('Image found in IDCLOUDHOST path', [
-                    'full_path' => $fullPath
-                ]);
                 return $appUrl . '/' . $filePath;
-            } else {
-                Log::warning('Image not found in IDCLOUDHOST path', [
-                    'full_path' => $fullPath
-                ]);
             }
         }
 
-        Log::info('Returning avatar fallback image as base64');
         return $avatar->toBase64();
     }
 }
@@ -61,7 +37,7 @@ if (!function_exists('getAuthorPostImagePath')) {
         $placeholderUrl = 'https://dummyimage.com/300';
         $avatar = Avatar::create($user->name ?? $user->full_name ?? 'User');
         $appUrl = rtrim(env('APP_URL'), '/');
-        $publicHtmlPath = base_path('../proposal-studio.iamelse.my.id');
+        $publicHtmlPath = base_path('../../proposal-studio.iamelse.my.id');
 
         if ($disk === FileSystemDiskEnum::PUBLIC->value) {
             if ($user->image && Storage::disk('public')->exists($user->image)) {
@@ -86,7 +62,7 @@ if (!function_exists('getWhyUsListImagePath')) {
         $disk = env('FILESYSTEM_DISK');
         $placeholderUrl = 'https://dummyimage.com/300';
         $appUrl = rtrim(env('APP_URL'), '/');
-        $publicHtmlPath = base_path('../proposal-studio.iamelse.my.id');
+        $publicHtmlPath = base_path('../../proposal-studio.iamelse.my.id');
 
         if ($disk === FileSystemDiskEnum::PUBLIC->value) {
             if ($feature->image && Storage::disk('public')->exists($feature->image)) {
@@ -111,7 +87,7 @@ if (!function_exists('getAboutUsImageSection')) {
         $disk = env('FILESYSTEM_DISK');
         $placeholderUrl = 'https://dummyimage.com/300';
         $appUrl = rtrim(env('APP_URL'), '/');
-        $publicHtmlPath = base_path('../proposal-studio.iamelse.my.id');
+        $publicHtmlPath = base_path('../../proposal-studio.iamelse.my.id');
 
         $image = is_array($content) ? ($content['image'] ?? null) : ($content->image ?? null);
 
@@ -136,7 +112,7 @@ if (!function_exists('getServiceListImagePath')) {
         $disk = env('FILESYSTEM_DISK');
         $placeholderUrl = 'https://dummyimage.com/300';
         $appUrl = rtrim(env('APP_URL'), '/');
-        $publicHtmlPath = base_path('../proposal-studio.iamelse.my.id');
+        $publicHtmlPath = base_path('../../proposal-studio.iamelse.my.id');
 
         if ($disk === FileSystemDiskEnum::PUBLIC->value) {
             if ($service->image && Storage::disk('public')->exists($service->image)) {
@@ -161,7 +137,7 @@ if (!function_exists('getProposalListImagePath')) {
         $disk = env('FILESYSTEM_DISK');
         $placeholderUrl = 'https://dummyimage.com/400x600';
         $appUrl = rtrim(env('APP_URL'), '/');
-        $publicHtmlPath = base_path('../proposal-studio.iamelse.my.id');
+        $publicHtmlPath = base_path('../../proposal-studio.iamelse.my.id');
 
         if ($disk === FileSystemDiskEnum::PUBLIC->value) {
             if ($proposal->image && Storage::disk('public')->exists($proposal->image)) {
@@ -186,7 +162,7 @@ if (!function_exists('getEventListImagePath')) {
         $disk = env('FILESYSTEM_DISK');
         $placeholderUrl = 'https://dummyimage.com/400x600';
         $appUrl = rtrim(env('APP_URL'), '/');
-        $publicHtmlPath = base_path('../proposal-studio.iamelse.my.id');
+        $publicHtmlPath = base_path('../../proposal-studio.iamelse.my.id');
 
         if ($disk === FileSystemDiskEnum::PUBLIC->value) {
             if ($event->image && Storage::disk('public')->exists($event->image)) {
@@ -210,7 +186,7 @@ if (!function_exists('getPostCoverImagePath')) {
     {
         $disk = env('FILESYSTEM_DISK');
         $appUrl = rtrim(env('APP_URL'), '/');
-        $publicHtmlPath = base_path('../proposal-studio.iamelse.my.id');
+        $publicHtmlPath = base_path('../../proposal-studio.iamelse.my.id');
         $placeholderUrl = 'https://picsum.photos/1200/600?random=' . $post->id;
 
         if (!$post || !$post->cover) {
@@ -239,7 +215,7 @@ if (!function_exists('getLogoImagePath')) {
     {
         $disk = env('FILESYSTEM_DISK');
         $appUrl = rtrim(env('APP_URL'), '/');
-        $publicHtmlPath = base_path('../proposal-studio.iamelse.my.id');
+        $publicHtmlPath = base_path('../../proposal-studio.iamelse.my.id');
         $placeholderUrl = asset('assets/images/logo.svg');
 
         if (!$settings || !$settings['site_logo']) {
@@ -268,7 +244,7 @@ if (!function_exists('getOgImageHomePath')) {
     {
         $disk = env('FILESYSTEM_DISK');
         $appUrl = rtrim(env('APP_URL'), '/');
-        $publicHtmlPath = base_path('../proposal-studio.iamelse.my.id');
+        $publicHtmlPath = base_path('../../proposal-studio.iamelse.my.id');
         $placeholderUrl = 'https://picsum.photos/1200/600?random=32';
 
         if (!$settings || empty($settings['og_image_home'])) {
@@ -297,7 +273,7 @@ if (!function_exists('getOgImagePostIndexPath')) {
     {
         $disk = env('FILESYSTEM_DISK');
         $appUrl = rtrim(env('APP_URL'), '/');
-        $publicHtmlPath = base_path('../proposal-studio.iamelse.my.id');
+        $publicHtmlPath = base_path('../../proposal-studio.iamelse.my.id');
         $placeholderUrl = 'https://picsum.photos/1200/600?random=33';
 
         if (!$settings || empty($settings['og_image_post_index'])) {
