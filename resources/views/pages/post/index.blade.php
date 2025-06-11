@@ -225,8 +225,11 @@
                                 <th class="px-4 py-3 font-medium">Title</th>
                                 <th class="px-4 py-3 font-medium">Category</th>
                                 <th class="px-4 py-3 font-medium">Status</th>
+                                <th class="px-4 py-3 font-medium">Published At</th>
                                 <th class="px-4 py-3 font-medium">Created At</th>
                                 <th class="px-4 py-3 font-medium">Updated At</th>
+                                <th class="px-4 py-3 font-medium">Created By</th>
+                                <th class="px-4 py-3 font-medium">Updated By</th>
                                 <th class="px-4 py-3 font-medium text-center">Actions</th>
                             </tr>
                             </thead>
@@ -242,7 +245,7 @@
                                     <td class="w-20 px-4 py-3">{{ $loop->iteration }}</td>
                                     <td class="px-4 py-3">
                                         <div class="flex flex-col items-center">
-                                            <div class="p-2 sm:p-3 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center w-32">
+                                            <div class="p-2 sm:p-3 flex items-center justify-center w-32">
                                                 <img class="rounded-lg" src="{{ getPostCoverImagePath($post) }}">
                                             </div>
                                         </div>
@@ -250,8 +253,11 @@
                                     <td class="px-4 py-3">{{ $post->title }}</td>
                                     <td class="px-4 py-3">{{ $post->category->name }}</td>
                                     <td class="px-4 py-3">{{ strtoupper($post->status) }}</td>
+                                    <td class="px-4 py-3">{{ $post->published_at }}</td>
                                     <td class="px-4 py-3">{{ $post->formatted_created_at }}</td>
                                     <td class="px-4 py-3">{{ $post->formatted_updated_at }}</td>
+                                    <td class="px-4 py-3">{{ $post->created_by_name }}</td>
+                                    <td class="px-4 py-3">{{ $post->updated_by_name }}</td>
                                     <td class="px-4 py-3 text-center relative">
                                         <div x-cloak x-data="{ openDropDown: false }" class="inline-block">
                                             <button @click="openDropDown = !openDropDown"

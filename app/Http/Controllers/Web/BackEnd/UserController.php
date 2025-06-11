@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\BackEnd;
 
 use App\Enums\PermissionEnum;
+use App\Enums\RoleEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\User\StoreUserRequest;
 use App\Http\Requests\Web\User\UpdateUserRequest;
@@ -112,6 +113,10 @@ class UserController extends Controller
     {
         Gate::authorize(PermissionEnum::UPDATE_USER->value);
 
+        if ($user->hasRole(RoleEnum::MASTER->value)) {
+            abort(403, 'Cannot edit a user with MASTER role.');
+        }
+
         $roles = Role::orderBy('name', 'ASC')->get();
 
         return view('pages.user.edit', [
@@ -124,6 +129,10 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, User $user): RedirectResponse
     {
         Gate::authorize(PermissionEnum::UPDATE_USER->value);
+
+        if ($user->hasRole(RoleEnum::MASTER->value)) {
+            abort(403, 'Cannot update a user with MASTER role.');
+        }
 
         try {
             DB::transaction(function () use ($request, $user) {
@@ -161,9 +170,13 @@ class UserController extends Controller
      */
     public function destroy(User $user): RedirectResponse
     {
-        try {
-            Gate::authorize(PermissionEnum::DELETE_USER->value);
+        Gate::authorize(PermissionEnum::DELETE_USER->value);
 
+        if ($user->hasRole(RoleEnum::MASTER->value)) {
+            abort(403, 'Cannot delete a user with MASTER role.');
+        }
+
+        try {
             $user->delete();
 
             return redirect()
@@ -190,12 +203,21 @@ class UserController extends Controller
      */
     public function massDestroy(Request $request, User $user): RedirectResponse
     {
+        Gate::authorize(PermissionEnum::DELETE_USER->value);
+
         try {
-            Gate::authorize(PermissionEnum::DELETE_USER->value);
 
             $userUsernamesArray = explode(',', $request->input('usernames', ''));
 
             if (!empty($userUsernamesArray)) {
+                $users = User::whereIn('username', $userUsernamesArray)->get();
+
+                foreach ($users as $u) {
+                    if ($u->hasRole(RoleEnum::MASTER->value)) {
+                        abort(403, "Cannot delete user '{$u->username}' with MASTER role.");
+                    }
+                }
+
                 User::whereIn('username', $userUsernamesArray)->delete();
             }
 

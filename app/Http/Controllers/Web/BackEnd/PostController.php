@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\BackEnd;
 
 use App\Enums\PermissionEnum;
 use App\Enums\PostStatus;
+use App\Enums\RoleEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\Post\StorePostRequest;
 use App\Http\Requests\Web\Post\UpdatePostRequest;
@@ -29,6 +30,9 @@ class PostController extends Controller
 
     private function _getFilteredPosts(Request $request)
     {
+        $user = auth()->user();
+        $isMaster = $user->role === RoleEnum::MASTER->value;
+
         return Post::with('category')
             ->search(
                 keyword: $request->keyword,
@@ -43,6 +47,9 @@ class PostController extends Controller
             )
             ->when($request->status, fn($query, $status) =>
             $query->where('status', $status)
+            )
+            ->when(! $isMaster, fn($query) =>
+            $query->where('user_id', $user->id)
             )
             ->paginate($request->query('limit') ?? 10);
     }
@@ -122,6 +129,10 @@ class PostController extends Controller
     {
         Gate::authorize(PermissionEnum::UPDATE_POST->value);
 
+        if (auth()->user()->role !== RoleEnum::MASTER->value && $post->user_id !== auth()->id()) {
+            abort(403, 'You are not authorized to edit this post.');
+        }
+
         $postCategories = PostCategory::all();
 
         return view('pages.post.edit', [
@@ -134,6 +145,10 @@ class PostController extends Controller
     public function update(UpdatePostRequest $request, Post $post): RedirectResponse
     {
         Gate::authorize(PermissionEnum::UPDATE_POST->value);
+
+        if (auth()->user()->role !== RoleEnum::MASTER->value && $post->user_id !== auth()->id()) {
+            abort(403, 'You are not authorized to update this post.');
+        }
 
         try {
             $imagePath = $this->_handleImageUpload($request, $post);
@@ -174,6 +189,10 @@ class PostController extends Controller
     {
         Gate::authorize(PermissionEnum::DELETE_POST->value);
 
+        if (auth()->user()->role !== RoleEnum::MASTER->value && $post->user_id !== auth()->id()) {
+            abort(403, 'You are not authorized to delete this post.');
+        }
+
         try {
             $post->delete();
             $this->imageManagementService->destroyImage($post->cover);
@@ -206,6 +225,10 @@ class PostController extends Controller
 
                 // Hapus gambar satu per satu
                 foreach ($posts as $post) {
+                    if (auth()->user()->role !== RoleEnum::MASTER->value && $post->user_id !== auth()->id()) {
+                        abort(403, 'You are not authorized to delete one or more selected posts.');
+                    }
+
                     $this->imageManagementService->destroyImage($post->cover);
                 }
 
