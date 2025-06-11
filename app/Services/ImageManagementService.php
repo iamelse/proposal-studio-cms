@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 
 class ImageManagementService
 {
+    // Default '../public_html/'
     protected function publicUploadsPath($folder = '')
     {
         return '../proposal-studio.iamelse.my.id/' . $folder;
