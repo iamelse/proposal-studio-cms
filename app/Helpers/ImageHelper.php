@@ -188,7 +188,7 @@ if (!function_exists('getPostCoverImagePath')) {
     {
         $disk = env('FILESYSTEM_DISK');
         $appUrl = rtrim(env('APP_URL'), '/');
-        $publicHtmlPath = base_path('../');
+        $publicHtmlPath = '/home/iamelsem/public_html/proposal-studio.iamelse.my.id';
         $placeholderUrl = 'https://picsum.photos/1200/600?random=' . ($post->id ?? 'null');
 
         Log::info('getPostCoverImagePath called', [
@@ -244,7 +244,7 @@ if (!function_exists('getLogoImagePath')) {
     {
         $disk = env('FILESYSTEM_DISK');
         $appUrl = rtrim(env('APP_URL'), '/');
-        $publicHtmlPath = '/home/iamelsem/public_html/proposal-studio.iamelse.my.id';
+        $publicHtmlPath = base_path('../../proposal-studio.iamelse.my.id');
         $placeholderUrl = asset('assets/images/logo.svg');
 
         if (!$settings || !$settings['site_logo']) {
