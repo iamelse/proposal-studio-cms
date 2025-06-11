@@ -18,7 +18,7 @@ if (!function_exists('getUserImageProfilePath')) {
                 return asset('storage/' . $user->image);
             }
         }
-        elseif ($disk === FileSystemDiskEnum::PUBLIC_UPLOADS->value) {
+        elseif ($disk === FileSystemDiskEnum::IDCLOUDHOST->value) {
             $filePath = $user->image;
             $fullPath = $publicHtmlPath . '/' . $filePath;
             if ($user->image && file_exists($fullPath)) {
@@ -44,7 +44,7 @@ if (!function_exists('getAuthorPostImagePath')) {
                 return asset('storage/' . $user->image);
             }
         }
-        elseif ($disk === FileSystemDiskEnum::PUBLIC_UPLOADS->value) {
+        elseif ($disk === FileSystemDiskEnum::IDCLOUDHOST->value) {
             $filePath = $user->image;
             $fullPath = $publicHtmlPath . '/' . $filePath;
             if ($user->image && file_exists($fullPath)) {
@@ -69,7 +69,7 @@ if (!function_exists('getWhyUsListImagePath')) {
                 return asset('storage/' . $feature->image);
             }
         }
-        elseif ($disk === FileSystemDiskEnum::PUBLIC_UPLOADS->value) {
+        elseif ($disk === FileSystemDiskEnum::IDCLOUDHOST->value) {
             $filePath = $feature->image;
             $fullPath = $publicHtmlPath . '/' . $filePath;
             if ($feature->image && file_exists($fullPath)) {
@@ -95,7 +95,7 @@ if (!function_exists('getAboutUsImageSection')) {
             if ($image && Storage::disk('public')->exists($image)) {
                 return asset('storage/' . $image);
             }
-        } elseif ($disk === FileSystemDiskEnum::PUBLIC_UPLOADS->value) {
+        } elseif ($disk === FileSystemDiskEnum::IDCLOUDHOST->value) {
             $fullPath = $publicHtmlPath . '/' . $image;
             if ($image && file_exists($fullPath)) {
                 return $appUrl . '/' . $image;
@@ -119,7 +119,7 @@ if (!function_exists('getServiceListImagePath')) {
                 return asset('storage/' . $service->image);
             }
         }
-        elseif ($disk === FileSystemDiskEnum::PUBLIC_UPLOADS->value) {
+        elseif ($disk === FileSystemDiskEnum::IDCLOUDHOST->value) {
             $filePath = $service->image;
             $fullPath = $publicHtmlPath . '/' . $filePath;
             if ($service->image && file_exists($fullPath)) {
@@ -144,7 +144,7 @@ if (!function_exists('getProposalListImagePath')) {
                 return asset('storage/' . $proposal->image);
             }
         }
-        elseif ($disk === FileSystemDiskEnum::PUBLIC_UPLOADS->value) {
+        elseif ($disk === FileSystemDiskEnum::IDCLOUDHOST->value) {
             $filePath = $proposal->image;
             $fullPath = $publicHtmlPath . '/' . $filePath;
             if ($proposal->image && file_exists($fullPath)) {
@@ -169,7 +169,7 @@ if (!function_exists('getEventListImagePath')) {
                 return asset('storage/' . $event->image);
             }
         }
-        elseif ($disk === FileSystemDiskEnum::PUBLIC_UPLOADS->value) {
+        elseif ($disk === FileSystemDiskEnum::IDCLOUDHOST->value) {
             $filePath = $event->image;
             $fullPath = $publicHtmlPath . '/' . $filePath;
             if ($event->image && file_exists($fullPath)) {
@@ -197,7 +197,7 @@ if (!function_exists('getPostCoverImagePath')) {
             if (Storage::disk('public')->exists($post->cover)) {
                 return asset('storage/' . $post->cover);
             }
-        } elseif ($disk === FileSystemDiskEnum::PUBLIC_UPLOADS->value) {
+        } elseif ($disk === FileSystemDiskEnum::IDCLOUDHOST->value) {
             $filePath = $post->cover;
             $fullPath = $publicHtmlPath . '/' . $filePath;
 
@@ -226,7 +226,7 @@ if (!function_exists('getLogoImagePath')) {
             if (Storage::disk('public')->exists($settings['site_logo'])) {
                 return asset('storage/' . $settings['site_logo']);
             }
-        } elseif ($disk === FileSystemDiskEnum::PUBLIC_UPLOADS->value) {
+        } elseif ($disk === FileSystemDiskEnum::IDCLOUDHOST->value) {
             $filePath = $settings['site_logo'];
             $fullPath = $publicHtmlPath . '/' . $filePath;
 
@@ -255,7 +255,7 @@ if (!function_exists('getOgImageHomePath')) {
             if (Storage::disk('public')->exists($settings['og_image_home'])) {
                 return asset('storage/' . $settings['og_image_home']);
             }
-        } elseif ($disk === FileSystemDiskEnum::PUBLIC_UPLOADS->value) {
+        } elseif ($disk === FileSystemDiskEnum::IDCLOUDHOST->value) {
             $filePath = $settings['og_image_home'];
             $fullPath = $publicHtmlPath . '/' . $filePath;
 
@@ -284,7 +284,7 @@ if (!function_exists('getOgImagePostIndexPath')) {
             if (Storage::disk('public')->exists($settings['og_image_post_index'])) {
                 return asset('storage/' . $settings['og_image_post_index']);
             }
-        } elseif ($disk === FileSystemDiskEnum::PUBLIC_UPLOADS->value) {
+        } elseif ($disk === FileSystemDiskEnum::IDCLOUDHOST->value) {
             $filePath = $settings['og_image_post_index'];
             $fullPath = $publicHtmlPath . '/' . $filePath;
 
