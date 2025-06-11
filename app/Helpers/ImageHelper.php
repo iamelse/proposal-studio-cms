@@ -4,6 +4,8 @@ use App\Enums\FileSystemDiskEnum;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
+use Illuminate\Support\Facades\Log;
+
 if (!function_exists('getUserImageProfilePath')) {
     function getUserImageProfilePath($user)
     {
@@ -13,19 +15,41 @@ if (!function_exists('getUserImageProfilePath')) {
         $appUrl = rtrim(env('APP_URL'), '/');
         $publicHtmlPath = base_path('../proposal-studio.iamelse.my.id');
 
+        Log::info('getUserImageProfilePath called', [
+            'disk' => $disk,
+            'user_id' => $user->id ?? null,
+            'user_image' => $user->image ?? null,
+        ]);
+
         if ($disk === FileSystemDiskEnum::PUBLIC->value) {
             if ($user->image && Storage::disk('public')->exists($user->image)) {
+                Log::info('Image found in public disk', [
+                    'path' => $user->image
+                ]);
                 return asset('storage/' . $user->image);
+            } else {
+                Log::warning('Image not found in public disk', [
+                    'path' => $user->image
+                ]);
             }
         }
         elseif ($disk === FileSystemDiskEnum::IDCLOUDHOST->value) {
             $filePath = $user->image;
             $fullPath = $publicHtmlPath . '/' . $filePath;
+
             if ($user->image && file_exists($fullPath)) {
+                Log::info('Image found in IDCLOUDHOST path', [
+                    'full_path' => $fullPath
+                ]);
                 return $appUrl . '/' . $filePath;
+            } else {
+                Log::warning('Image not found in IDCLOUDHOST path', [
+                    'full_path' => $fullPath
+                ]);
             }
         }
 
+        Log::info('Returning avatar fallback image as base64');
         return $avatar->toBase64();
     }
 }
