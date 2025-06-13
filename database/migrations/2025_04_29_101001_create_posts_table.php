@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('slug')->nullable()->unique();
             $table->text('excerpt')->nullable();
             $table->longText('body')->nullable();
-            $table->unsignedBigInteger('views')->default(0);
             $table->unsignedBigInteger('post_category_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();

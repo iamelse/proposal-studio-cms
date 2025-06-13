@@ -6,6 +6,8 @@ use App\Enums\PostStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
 use App\Models\PostCategory;
+use App\Models\PostViewStatistic;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -38,6 +40,16 @@ class PostController extends Controller
         if ($post->status !== PostStatus::PUBLISHED->value) {
             abort(404);
         }
+
+        $today = Carbon::today()->toDateString();
+
+        $stat = PostViewStatistic::firstOrCreate(
+            ['post_id' => $post->id, 'date' => $today],
+            ['views' => 0]
+        );
+
+        $stat->increment('views');
+
 
         return view('pages.frontend.post.show', [
             'title' => $post->title,
