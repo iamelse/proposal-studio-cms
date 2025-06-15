@@ -638,35 +638,35 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             @if(session('success'))
-            Swal.fire({
-                toast: true,
-                position: "top-end",
-                icon: "success",
-                title: "{{ session('success') }}",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                customClass: {
-                    popup: 'bg-white dark:bg-gray-800 shadow-lg',
-                    title: 'font-normal text-base text-gray-800 dark:text-gray-200'
-                }
-            });
+                Swal.fire({
+                    toast: true,
+                    position: "top-end",
+                    icon: "success",
+                    title: "{{ session('success') }}",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    customClass: {
+                        popup: 'bg-white dark:bg-gray-800 shadow-lg',
+                        title: 'font-normal text-base text-gray-800 dark:text-gray-200'
+                    }
+                });
             @endif
 
-            @if(session('error'))
-            Swal.fire({
-                toast: true,
-                position: "top-end",
-                icon: "error",
-                title: "{{ session('error') }}",
-                showConfirmButton: false,
-                timer: 4000,
-                timerProgressBar: true,
-                customClass: {
-                    popup: 'bg-white dark:bg-gray-800 shadow-lg',
-                    title: 'font-normal text-base text-gray-800 dark:text-gray-200'
-                }
-            });
+            @if($errors->any() || session('error'))
+                Swal.fire({
+                    toast: true,
+                    position: "top-end",
+                    icon: "error",
+                    title: "{{ session('error') ?? 'Something went wrong. Please check the form and try again.' }}",
+                    showConfirmButton: false,
+                    timer: 4000,
+                    timerProgressBar: true,
+                    customClass: {
+                        popup: 'bg-white dark:bg-gray-800 shadow-lg',
+                        title: 'font-normal text-base text-gray-800 dark:text-gray-200'
+                    }
+                });
             @endif
         });
     </script>
