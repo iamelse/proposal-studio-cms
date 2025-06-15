@@ -17,7 +17,7 @@
             </div>
 
             <!-- Summary Cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-6">
                 <!-- Draft Posts -->
                 <div class="rounded-2xl px-6 pb-8 pt-4 border border-blue-100 bg-blue-50 dark:border-blue-800 dark:bg-blue-900/10">
                     <div class="flex items-center justify-between mb-4">
@@ -44,10 +44,7 @@
                     </div>
                     <p class="text-4xl font-bold text-purple-800 dark:text-purple-200">{{ $dashboard['totalCount'] }}</p>
                 </div>
-            </div>
 
-            <!-- Insight Cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-6">
                 <!-- Posts This Month -->
                 <div class="rounded-2xl px-6 pb-8 pt-4 border border-yellow-100 bg-yellow-50 dark:border-yellow-800 dark:bg-yellow-900/10">
                     <div class="flex items-center justify-between mb-4">
@@ -55,29 +52,6 @@
                         <i class='bx bx-calendar text-2xl text-yellow-500'></i>
                     </div>
                     <p class="text-4xl font-bold text-yellow-800 dark:text-yellow-200">{{ $dashboard['postsThisMonth'] }}</p>
-                </div>
-
-                <!-- Total Views -->
-                <div class="rounded-2xl px-6 pb-8 pt-4 border border-cyan-100 bg-cyan-50 dark:border-cyan-800 dark:bg-cyan-900/10">
-                    <div class="flex items-center justify-between mb-4">
-                        <h2 class="text-lg font-semibold text-cyan-700 dark:text-cyan-300">Total Views</h2>
-                        <i class='bx bx-show text-2xl text-cyan-500'></i>
-                    </div>
-                    <p class="text-4xl font-bold text-cyan-800 dark:text-cyan-200">{{ number_format($dashboard['totalViews']) }}</p>
-                </div>
-
-                <!-- Top Viewed Post -->
-                <div class="rounded-2xl px-6 pb-6 pt-4 border border-pink-100 bg-pink-50 dark:border-pink-800 dark:bg-pink-900/10">
-                    <div class="flex items-center justify-between mb-4">
-                        <h2 class="text-lg font-semibold text-pink-700 dark:text-pink-300">Top Viewed Post</h2>
-                        <i class='bx bx-star text-2xl text-pink-500'></i>
-                    </div>
-                    @if ($dashboard['mostViewedPost'])
-                        <p class="text-base font-semibold text-pink-800 dark:text-pink-200 truncate">{{ $dashboard['mostViewedPost']->title }}</p>
-                        <p class="text-sm text-pink-600 dark:text-pink-400">{{ number_format($dashboard['mostViewedPost']->total_views) }} views</p>
-                    @else
-                        <p class="text-gray-500 dark:text-gray-400">No data</p>
-                    @endif
                 </div>
             </div>
 
