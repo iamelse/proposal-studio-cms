@@ -46,7 +46,15 @@
 </div>
 <!-- SIDEBAR HEADER -->
 <div
-   class="flex flex-col overflow-y-auto duration-300 ease-linear no-scrollbar"
+    id="sidebar-scroll-container"
+    x-init="
+      $nextTick(() => {
+         const activeItem = $el.querySelector('.menu-item-active');
+         if (activeItem) {
+            $el.scrollTop = activeItem.offsetTop - $el.clientHeight / 2;
+         }
+      })"
+     class="flex flex-col overflow-y-auto duration-300 ease-linear no-scrollbar"
 >
    <!-- Sidebar Menu -->
    <nav>
