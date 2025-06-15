@@ -419,8 +419,8 @@
             <div class="absolute top-0 left-0 w-32 h-full z-10 bg-gradient-to-r from-white to-transparent pointer-events-none"></div>
             <div class="absolute top-0 right-0 w-32 h-full z-10 bg-gradient-to-l from-white to-transparent pointer-events-none"></div>
 
-            <!-- Marquee track -->
-            <div class="flex w-max gap-5 animate-marquee-fast">
+            <!-- Marquee track (JS animated) -->
+            <div id="marquee-track" class="flex w-max gap-5 flex-nowrap will-change-transform">
                 @foreach ($reviews as $review)
                     <figure class="w-[400px] h-[240px] rounded-[20px] px-8 py-7 border border-slate-200 bg-white flex-shrink-0">
                         <figcaption class="flex gap-5 items-center">

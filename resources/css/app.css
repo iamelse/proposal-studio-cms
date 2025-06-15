@@ -86,15 +86,6 @@
 }
 
 @layer utilities {
-    @keyframes marquee {
-        0% { transform: translateX(0%); }
-        100% { transform: translateX(-50%); } /* Because we doubled the items */
-    }
-
-    .animate-marquee {
-        animation: marquee 120s linear infinite;
-    }
-
     /* Chrome, Safari and Opera */
     .no-scrollbar::-webkit-scrollbar {
         display: none;

@@ -233,6 +233,34 @@
         });
     });
 </script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const track = document.getElementById('marquee-track');
+        const wrapper = track.parentElement;
+
+        // Duplikasi isi track
+        track.innerHTML += track.innerHTML;
+
+        let position = 0;
+        let speed = 1; // Semakin kecil = semakin lambat
+        let trackWidth = track.scrollWidth / 2;
+
+        function animate() {
+            position -= speed;
+            if (Math.abs(position) >= trackWidth) {
+                position = 0; // reset ke awal
+            }
+            track.style.transform = `translateX(${position}px)`;
+            requestAnimationFrame(animate);
+        }
+
+        // Optimasi performa
+        track.style.willChange = "transform";
+        track.style.backfaceVisibility = "hidden";
+
+        animate();
+    });
+</script>
 </body>
 
 </html>

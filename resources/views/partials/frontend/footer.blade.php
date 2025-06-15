@@ -28,7 +28,7 @@
                     <h2 class="font-semibold text-base md:text-lg text-white">Kontak Kami</h2>
                     <div class="flex gap-3 mt-3 lg:mt-6 items-center">
                         <i class='bx bxl-whatsapp text-white text-2xl'></i>
-                        <p class="text-white text-sm md:text-lg font-light">Whatsapp : {{ $settings['whatsapp'] }}</p>
+                        <p class="text-white text-sm md:text-lg font-light">Whatsapp: {{ $settings['whatsapp'] }}</p>
                     </div>
                     <div class="flex gap-3 mt-3 lg:mt-6 items-center">
                         <i class='bx bx-envelope text-white text-2xl'></i>
