@@ -102,8 +102,8 @@
                                     ? 'border-red-500 dark:border-red-500 focus:ring-2 focus:ring-red-500 dark:focus:ring-red-500'
                                     : 'border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-500'"
                             >
-                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="image_help">
-                                SVG, PNG, JPG or GIF (MAX. 800x400px).
+                            <p class="mt-1 text-xs font-medium text-gray-500 dark:text-gray-300" id="image_help">
+                                Accepted formats: <span class="font-semibold text-gray-700 dark:text-gray-200">JPG, PNG, SVG</span>, or any valid image file. Max size: <span class="font-semibold text-gray-700 dark:text-gray-200">2MB</span>.
                             </p>
                             <span class="text-xs mt-1 font-medium text-red-500 dark:text-red-500" x-show="hasError">
                                 @error('image') * {{ $message }} @enderror

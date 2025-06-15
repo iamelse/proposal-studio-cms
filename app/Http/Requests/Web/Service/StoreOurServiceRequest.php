@@ -25,7 +25,7 @@ class StoreOurServiceRequest extends FormRequest
             'title' => 'required|max:255',
             'description' => 'required|string',
             'slug' =>'required|max:255|unique:proposals,slug',
-            'image' => 'nullable|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
+            'image' => 'nullable|image|max:2048',
         ];
     }
 }
