@@ -119,6 +119,21 @@ class OurServiceListController extends Controller
         }
     }
 
+    public function massUpdate(Request $request)
+    {
+        $orders = $request->input('orders');
+
+        foreach ($orders as $slug => $order) {
+            $service = Service::where('slug', $slug)->first();
+            if ($service) {
+                $service->order = $order;
+                $service->save();
+            }
+        }
+
+        return redirect()->route('be.our-service-list.index')->with('success', 'Orders updated successfully.');
+    }
+
     public function destroy(Service $service): RedirectResponse
     {
         try {
