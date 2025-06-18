@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('title')->nullable();
             $table->text('description')->nullable();
             $table->string('image')->nullable();
+            $table->integer('order')->nullable();
             $table->timestamps();
         });
     }

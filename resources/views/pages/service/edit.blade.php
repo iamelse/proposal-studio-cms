@@ -63,6 +63,30 @@
                         @enderror
                     </div>
 
+                    <!-- Order -->
+                    <div class="mt-4">
+                        <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                            Order <span class="text-error-500">*</span>
+                        </label>
+                        <div x-data="{ hasError: {{ session('errors') && session('errors')->has('order') ? 'true' : 'false' }} }">
+                            <input
+                                type="number"
+                                id="order"
+                                name="order"
+                                min="1"
+                                value="{{ old('order', $service->order) }}"
+                                placeholder="e.g., 1, 2, 3..."
+                                :class="hasError
+                                    ? 'border-red-500 dark:border-red-500 focus:ring-red-500 focus:border-red-500'
+                                    : 'border-gray-300 dark:border-gray-700 focus:ring-blue-500 focus:border-blue-500'"
+                                class="h-11 w-full text-sm mt-1 px-4 py-2.5 border rounded-lg bg-white border-gray-300 dark:border-gray-700 dark:bg-gray-900 text-gray-700 dark:text-gray-300 placeholder:text-gray-400 dark:placeholder:text-white/30 focus:ring-2"
+                                required>
+                            <span class="text-xs mt-1 font-medium text-red-500 dark:text-red-500" x-show="hasError">
+                                @error('order') * {{ $message }} @enderror
+                            </span>
+                        </div>
+                    </div>
+
                     <!-- Description -->
                     <div class="mt-4">
                         <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">

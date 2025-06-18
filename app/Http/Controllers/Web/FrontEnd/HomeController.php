@@ -20,7 +20,7 @@ class HomeController extends Controller
         $whyUsList = WhyUs::all();
         $about = Section::where('name', 'about')->firstOrFail();
         $ourService = Section::where('name', 'services')->firstOrFail();
-        $services = Service::all();
+        $services = Service::orderBy('order')->get();
         $callToAction = Section::where('name','cta')->firstOrFail();
         $proposal = Section::where('name', 'proposal')->firstOrFail();
         $proposals = Proposal::limit(20)->orderBy('created_at', 'desc')->get();

@@ -190,6 +190,7 @@
                             <th class="w-20 px-4 py-3 font-medium">No.</th>
                             <th class="flex flex-col items-center px-4 py-3 font-medium">Icon</th>
                             <th class="w-20 px-4 py-3 font-medium">Title</th>
+                            <th class="w-20 px-4 py-3 font-medium">Order</th>
                             <th class="px-4 py-3 font-medium">Created At</th>
                             <th class="px-4 py-3 font-medium">Updated At</th>
                             <th class="px-4 py-3 font-medium text-center">Actions</th>
@@ -214,6 +215,7 @@
                                 </div>
                             </td>
                             <td class="w-20 px-4 py-3">{{ $service->title }}</td>
+                            <td class="w-20 px-4 py-3">{{ $service->order }}</td>
                             <td class="px-4 py-3">{{ $service->formatted_created_at }}</td>
                             <td class="px-4 py-3">{{ $service->formatted_updated_at }}</td>
                             <td class="px-4 py-3 text-center relative">
