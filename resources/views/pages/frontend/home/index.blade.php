@@ -221,7 +221,7 @@
     @endphp
     <section id="about" class="flex flex-col items-center justify-between lg:flex-row mx-5 lg:mx-20 my-16 md:my-[100px]">
         <div class="max-w-xl">
-            <h2 class="text-baseBlack text-2xl md:text-4xl tracking-tight mb-4 font-bold">
+            <h2 class="text-baseBlack text-2xl text-center md:text-start md:text-4xl tracking-tight mb-4 font-bold">
                 {!! $content->title !!}
             </h2>
             <p class="mt-6 text-base md:text-lg text-baseBlack">
@@ -251,8 +251,8 @@
             </div>
 
         </div>
-        <figure class="max-w-xl mt-5 lg:mt-0">
-            <img class="object-cover w-full h-full rounded-lg" src="{{ getAboutUsImageSection($content) }}" alt="Foto Profil Proposal Studio">
+        <figure class="max-w-2xl mt-5 lg:mt-0 aspect-[16/9] overflow-hidden rounded-lg">
+            <img class="object-cover w-full h-full" src="{{ getAboutUsImageSection($content) }}" alt="Foto Profil Proposal Studio">
         </figure>
     </section>
 @endsection

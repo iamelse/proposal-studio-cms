@@ -85,7 +85,7 @@ if (!function_exists('getAboutUsImageSection')) {
     function getAboutUsImageSection($content)
     {
         $disk = env('FILESYSTEM_DISK');
-        $placeholderUrl = 'https://dummyimage.com/300';
+        $placeholderUrl = 'https://dummyimage.com/1080x1920';
         $appUrl = rtrim(env('APP_URL'), '/');
         $publicHtmlPath = '/home/iamelsem/public_html/proposal-studio.iamelse.my.id';
 

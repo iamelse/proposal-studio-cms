@@ -42,12 +42,14 @@
                             }">
 
                             <!-- Preview Image -->
-                            <div x-show="previewUrl" class="my-2 w-full max-w-md aspect-square rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700">
-                                <img
-                                    :src="previewUrl"
-                                    class="w-full h-full object-cover"
-                                    alt="Image Preview"
-                                >
+                            <div class="flex justify-center">
+                                <div x-show="previewUrl" class="my-2 w-full max-w-2xl aspect-[16/9] rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700">
+                                    <img
+                                        :src="previewUrl"
+                                        class="w-full h-full object-cover"
+                                        alt="Image Preview"
+                                    >
+                                </div>
                             </div>
 
                             <input
