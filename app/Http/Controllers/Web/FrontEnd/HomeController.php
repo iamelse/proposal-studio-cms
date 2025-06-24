@@ -72,18 +72,24 @@ class HomeController extends Controller
         $cookieKey = 'daily_visitor_tracked';
         $today = Carbon::today()->toDateString();
 
-        // Jika sudah dihitung hari ini, abaikan
+        // Cek cookie agar tidak dihitung dua kali dalam sehari
         if (Cookie::has($cookieKey) && Cookie::get($cookieKey) === $today) {
             return;
         }
 
-        // Update atau buat statistik hari ini
-        VisitorStatistic::updateOrCreate(
-            ['date' => $today],
-            ['visitors' => DB::raw('visitors + 1')]
-        );
+        // Cek apakah statistik untuk hari ini sudah ada
+        $stat = VisitorStatistic::where('date', $today)->first();
 
-        // Simpan cookie 1 hari (1440 menit)
-        Cookie::queue($cookieKey, $today, 1440);
+        if ($stat) {
+            $stat->increment('visitors');
+        } else {
+            VisitorStatistic::create([
+                'date' => $today,
+                'visitors' => 1,
+            ]);
+        }
+
+        // Set cookie agar tidak dihitung lagi hari ini
+        Cookie::queue($cookieKey, $today, 1440); // 1 hari
     }
 }

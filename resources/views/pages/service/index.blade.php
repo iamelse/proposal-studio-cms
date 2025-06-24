@@ -322,7 +322,11 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="10" class="text-center py-4 text-gray-400">No data available.</td>
+                            <td colspan="8" class="h-[500px]">
+                                <div class="flex items-center justify-center h-full text-gray-400">
+                                    No data available.
+                                </div>
+                            </td>
                         </tr>
                         @endforelse
                     </tbody>
