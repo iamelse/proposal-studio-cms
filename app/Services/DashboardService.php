@@ -6,6 +6,7 @@ use App\Enums\RoleEnum;
 use App\Models\Post;
 use App\Models\PostViewStatistic;
 use App\Enums\PostStatus;
+use App\Models\VisitorStatistic;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -16,39 +17,71 @@ class DashboardService
     public function getDashboardData(Authenticatable $user, string $range = '7d'): array
     {
         $isMaster = $user->role === RoleEnum::MASTER->value;
-        $query = Post::query();
+        $postQuery = Post::query();
 
         if (! $isMaster) {
-            $query->where('user_id', $user->id);
+            $postQuery->where('user_id', $user->id);
         }
 
-        $viewsByDay = $this->getHistoricalViews($user, $isMaster, $range);
-        $viewSummary = $this->getViewSummary($user, $isMaster, $range);
-        $totalViews = $this->getTotalViews($query, $isMaster);
-        $mostViewedPost = $this->getMostViewedPost($query, $isMaster);
+        // Post statistics
+        $postViewsByDay = $this->getPostViewHistory($user, $isMaster, $range);
+        $postViewSummary = $this->summarizePostViews($user, $isMaster, $range);
+        $totalPostViews = $this->calculateTotalPostViews($postQuery, $isMaster);
+        $mostViewedPost = $this->getTopViewedPost($postQuery, $isMaster);
+
+        // Website visitor statistics
+        $websiteVisitorStats = $this->getWebsiteVisitorHistory($range);
+        $websiteVisitorSummary = $this->summarizeWebVisitors($user, $isMaster, $range);
 
         return [
             'title' => 'Dashboard',
             'isMaster' => $isMaster,
-            'draftCount' => (clone $query)->where('status', PostStatus::DRAFT)->count(),
-            'publishedCount' => (clone $query)->where('status', PostStatus::PUBLISHED)->count(),
-            'totalCount' => (clone $query)->count(),
-            'recentPosts' => (clone $query)->latest()->take(5)->get(),
-            'postsThisMonth' => (clone $query)->whereMonth('created_at', now()->month)->whereYear('created_at', now()->year)->count(),
-            'totalViews' => $totalViews,
+
+            // Post stats
+            'draftCount' => (clone $postQuery)->where('status', PostStatus::DRAFT)->count(),
+            'publishedCount' => (clone $postQuery)->where('status', PostStatus::PUBLISHED)->count(),
+            'totalCount' => (clone $postQuery)->count(),
+            'recentPosts' => (clone $postQuery)->latest()->take(5)->get(),
+            'postsThisMonth' => (clone $postQuery)
+                ->whereMonth('created_at', now()->month)
+                ->whereYear('created_at', now()->year)
+                ->count(),
+            'totalViews' => $totalPostViews,
             'mostViewedPost' => $mostViewedPost,
-            'postsHistoricalViewsJson' => json_encode($viewsByDay),
-            'viewSummary' => $viewSummary,
+            'postsHistoricalViewsJson' => json_encode($postViewsByDay),
+            'postViewSummary' => $postViewSummary,
+
+            // Website stats
+            'webVisitorStatsJson' => json_encode($websiteVisitorStats),
+            'websiteVisitorSummary' => $websiteVisitorSummary,
         ];
     }
 
-    private function getTotalViews($postQuery, bool $isMaster): int
+    /**
+     * Calculate the total number of views across all related posts.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $postQuery The query builder instance for filtered posts.
+     * @param bool $isMaster Whether the user is a master (admin) with access to all posts.
+     * @return int Total number of views across the filtered posts.
+     *
+     * Used for post view statistics.
+     */
+    private function calculateTotalPostViews($postQuery, bool $isMaster): int
     {
         $postIds = (clone $postQuery)->pluck('id');
         return PostViewStatistic::whereIn('post_id', $postIds)->sum('views');
     }
 
-    private function getMostViewedPost($postQuery, bool $isMaster): ?Post
+    /**
+     * Retrieve the most viewed post based on total view count.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $postQuery The query builder for posts.
+     * @param bool $isMaster Whether the user is a master (admin).
+     * @return \App\Models\Post|null The most viewed post, or null if none exists.
+     *
+     * Used for identifying the top-performing post.
+     */
+    private function getTopViewedPost($postQuery, bool $isMaster): ?Post
     {
         $postIds = (clone $postQuery)->pluck('id');
 
@@ -61,9 +94,16 @@ class DashboardService
     }
 
     /**
-     * Get historical post views based on dynamic range (e.g. 7d, 30d, 2m).
+     * Generate historical view data for posts over a given date range.
+     *
+     * @param \Illuminate\Contracts\Auth\Authenticatable $user The currently authenticated user.
+     * @param bool $isMaster Whether the user is a master (admin).
+     * @param string $range The time range string (e.g., '7d', '30d', '2m').
+     * @return array List of data points with formatted date (x) and view count (y).
+     *
+     * Used to display historical post views in chart format.
      */
-    private function getHistoricalViews(Authenticatable $user, bool $isMaster, string $range = '7d'): array
+    private function getPostViewHistory(Authenticatable $user, bool $isMaster, string $range = '7d'): array
     {
         [$fromDate, $intervalType] = $this->resolveDateRange($range);
 
@@ -77,22 +117,12 @@ class DashboardService
             $query->whereIn('post_id', $postIds);
         }
 
-        $rawViews = $query
-            ->groupBy('date')
-            ->orderBy('date')
-            ->get();
-
+        $rawViews = $query->groupBy('date')->orderBy('date')->get();
         $dateRange = $this->generateDateRange($fromDate, now(), $intervalType);
 
-        return $dateRange->map(function ($date) use ($rawViews, $intervalType) {
-            $isToday = $date->isToday();
-            $label = $isToday
-                ? 'Today'
-                : ($intervalType === 'day' ? $date->format('D') : $date->format('M Y'));
-
-            $match = $rawViews->first(function ($item) use ($date) {
-                return Carbon::parse($item->date)->format('Y-m-d') === $date->format('Y-m-d');
-            });
+        return $dateRange->map(function ($date) use ($rawViews) {
+            $label = $date->translatedFormat('d M Y');
+            $match = $rawViews->first(fn($item) => Carbon::parse($item->date)->format('Y-m-d') === $date->format('Y-m-d'));
 
             return [
                 'x' => $label,
@@ -101,7 +131,17 @@ class DashboardService
         })->all();
     }
 
-    private function getViewSummary(Authenticatable $user, bool $isMaster, string $range = '7d'): array
+    /**
+     * Generate a summary of post view statistics including total, average, and peak day.
+     *
+     * @param \Illuminate\Contracts\Auth\Authenticatable $user The authenticated user.
+     * @param bool $isMaster Whether the user is a master (admin).
+     * @param string $range Time range string like '7d', '30d', etc.
+     * @return array Summary including total views, average per day, and peak view day.
+     *
+     * Useful for showing high-level metrics about post performance.
+     */
+    private function summarizePostViews(Authenticatable $user, bool $isMaster, string $range = '7d'): array
     {
         [$fromDate, $intervalType] = $this->resolveDateRange($range);
 
@@ -124,11 +164,82 @@ class DashboardService
         $avgViews = $days > 0 ? round($totalViews / $days) : 0;
 
         $peakDay = $data->sortByDesc('total_views')->first()?->date;
-        $peakDayLabel = $peakDay ? Carbon::parse($peakDay)->translatedFormat('l') : '-';
+        $peakDayLabel = $peakDay ? Carbon::parse($peakDay)->translatedFormat('l, d M Y') : '-';
 
         return [
             'totalViews' => $totalViews,
             'avgViews' => $avgViews,
+            'peakDay' => $peakDayLabel,
+        ];
+    }
+
+    /**
+     * Generate historical website visitor data for a given date range.
+     *
+     * @param string $range The time range string (default is '7d').
+     * @return array Array of daily visitor data points with date (x) and total visitors (y).
+     *
+     * Used to build the chart of website visitor trends.
+     */
+    private function getWebsiteVisitorHistory(string $range = '7d'): array
+    {
+        [$fromDate, $intervalType] = $this->resolveDateRange($range);
+
+        $rawData = VisitorStatistic::where('date', '>=', $fromDate->toDateString())
+            ->orderBy('date')
+            ->get(['date', 'visitors']);
+
+        $dateRange = $this->generateDateRange($fromDate, now(), $intervalType);
+
+        return $dateRange->map(function ($date) use ($rawData) {
+            $match = $rawData->first(function ($item) use ($date) {
+                return $item->date === $date->format('Y-m-d');
+            });
+
+            return [
+                'x' => $date->translatedFormat('d M Y'), // e.g., "24 Jun"
+                'y' => $match ? $match->visitors : 0,
+            ];
+        })->all();
+    }
+
+    /**
+     * Generate a summary of web visitor statistics including total, average, and peak day.
+     *
+     * @param \Illuminate\Contracts\Auth\Authenticatable $user The authenticated user.
+     * @param bool $isMaster Whether the user is a master (admin).
+     * @param string $range Time range string like '7d', '30d', etc.
+     * @return array Summary including total visitors, average per day, and peak visitor day.
+     *
+     * Useful for showing high-level metrics about site traffic.
+     */
+    private function summarizeWebVisitors(Authenticatable $user, bool $isMaster, string $range = '7d'): array
+    {
+        [$fromDate, $intervalType] = $this->resolveDateRange($range);
+
+        $query = VisitorStatistic::select(
+            'date',
+            DB::raw('SUM(visitors) as total_visitors')
+        )->where('date', '>=', $fromDate->toDateString());
+
+        if (! $isMaster) {
+            $query->where('user_id', $user->id);
+        }
+
+        $data = $query->groupBy('date')->orderBy('date')->get();
+
+        $totalVisitors = $data->sum('total_visitors');
+        $dateRange = $this->generateDateRange($fromDate, now(), $intervalType);
+        $days = $dateRange->count();
+
+        $avgVisitors = $days > 0 ? round($totalVisitors / $days) : 0;
+
+        $peakDay = $data->sortByDesc('total_visitors')->first()?->date;
+        $peakDayLabel = $peakDay ? Carbon::parse($peakDay)->translatedFormat('l, d M Y') : '-';
+
+        return [
+            'totalVisitors' => $totalVisitors,
+            'avgVisitors' => $avgVisitors,
             'peakDay' => $peakDayLabel,
         ];
     }

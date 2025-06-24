@@ -9,13 +9,29 @@ use App\Models\Proposal;
 use App\Models\Review;
 use App\Models\Section;
 use App\Models\Service;
+use App\Models\VisitorStatistic;
 use App\Models\WhyUs;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class HomeController extends Controller
 {
     public function index(): View
     {
+        // Tambah visitor ke statistik harian
+        $date = Carbon::today()->toDateString();
+
+        $stat = VisitorStatistic::where('date', $date)->first();
+        if ($stat) {
+            $stat->increment('visitors');
+        } else {
+            VisitorStatistic::create([
+                'date' => $date,
+                'visitors' => 1,
+            ]);
+        }
+
         $hero = Section::where('name', 'hero')->firstOrFail();
         $whyUsList = WhyUs::all();
         $about = Section::where('name', 'about')->firstOrFail();

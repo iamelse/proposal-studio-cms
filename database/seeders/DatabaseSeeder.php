@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
         User::factory()->count(100)->create();
         PostCategory::factory()->count(5)->create();
         // Post::factory()->count(50)->create();
+        /**
         Post::factory()
             ->count(50)
             ->create()
@@ -50,6 +51,7 @@ class DatabaseSeeder extends Seeder
                     ]);
                 }
             });
+         **/
 
         $this->call(SectionSeeder::class);
         $this->call(SocialMediaSeeder::class);
@@ -60,5 +62,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ReviewSeeder::class);
         $this->call(FAQSeeder::class);
         $this->call(SettingSeeder::class);
+        // $this->call(VisitorStatisticSeeder::class);
     }
 }
