@@ -1,6 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
+    @php
+        use App\Enums\RoleEnum;
+
+        $rangeLabels   = ['7d' => 'Last 7 days', '30d' => 'Last 30 days', '90d' => 'Last 90 days'];
+        $selectedRange = $range ?? request('range', '7d');
+        $rangeDays     = (int) preg_replace('/\D/', '', $selectedRange);   // 7, 30, 90 …
+        $isMaster      = auth()->user()->roles->first()?->name === RoleEnum::MASTER->value;
+    @endphp
     <main>
         <div class="p-4 mx-auto max-w-screen-2xl md:p-6 space-y-10">
 
@@ -11,7 +19,7 @@
                         {{ getGreeting() }}, {{ getFirstName(Auth::user()->name) }}
                     </h1>
                     <p class="text-gray-600 dark:text-gray-400">
-                        {{ $dashboard['isMaster'] ? 'You have full access to all posts.' : 'These are your personal post stats.' }}
+                        {{ $dashboard['isMaster'] ? 'Dashboard shows complete data across the system.' : 'Dashboard shows stats based on your own activity.' }}
                     </p>
                 </div>
             </div>
@@ -55,7 +63,7 @@
                 </div>
             </div>
 
-            <div class="flex justify-end gap-6 px-6">
+            <div class="flex justify-end gap-2 px-6">
                 <!-- Reset Filter Button -->
                 <a href="{{ route('be.dashboard.index') }}"
                    class="flex items-center gap-2 h-[42px] px-4 py-2.5 rounded-lg border border-gray-400 bg-gray-100 text-gray-700 font-medium transition-all hover:bg-gray-200 hover:border-gray-500 focus:ring focus:ring-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700">
@@ -125,93 +133,119 @@
                 </div>
             </div>
 
-            <!-- Summary Cards -->
-            <div class="gap-6 px-6">
-                @php
-                    $rangeLabels = ['7d' => 'Last 7 days', '30d' => 'Last 30 days', '90d' => 'Last 90 days'];
-                    $selectedRange = $range ?? request('range', '7d');
-                @endphp
+            <div class="grid grid-cols-1 gap-6 px-6 mt-6">
 
-                <div class="w-full bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6">
-                    <!-- Post View Summary Header -->
-                    <div class="flex justify-between pb-4 mb-4 border-b border-gray-200 dark:border-gray-700">
-                        <div class="flex items-center">
-                            <div class="w-12 h-12 rounded-lg bg-gray-100 dark:bg-gray-700 flex items-center justify-center me-3">
-                                <!-- Boxicon icon -->
-                                <i class='bx bx-bar-chart-alt-2 text-2xl text-gray-500 dark:text-gray-400'></i>
-                            </div>
-                            <div>
-                                <h5 class="leading-none text-2xl font-bold text-gray-900 dark:text-white pb-1">
-                                    {{ number_format($dashboard['postViewSummary']['totalViews']) }}
-                                </h5>
-                                <p class="text-sm font-normal text-gray-500 dark:text-gray-400">
-                                    Total post views ({{ $rangeLabels[$selectedRange] ?? 'Last 7 days' }})
-                                </p>
+                {{-- === CARD 1: Website Visitors (MASTER only) === --}}
+                @if($isMaster)
+                    <div class="bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6">
+                        <div class="flex justify-between pb-4 mb-4 border-b border-gray-200 dark:border-gray-700">
+                            <div class="flex items-center">
+                                <div class="w-12 h-12 rounded-lg bg-gray-100 dark:bg-gray-700 flex items-center justify-center me-3">
+                                    <i class='bx bx-user text-2xl text-gray-500 dark:text-gray-400'></i>
+                                </div>
+                                <div>
+                                    <h5 class="text-2xl font-bold text-gray-900 dark:text-white leading-none pb-1">
+                                        {{ number_format($dashboard['websiteVisitorSummary']['totalVisitors']) }}
+                                    </h5>
+                                    <p class="text-sm font-normal text-gray-500 dark:text-gray-400">
+                                        Website visitors ({{ $rangeLabels[$selectedRange] ?? 'Last 7 days' }})
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Post View Summary Grid -->
-                    <div class="grid grid-cols-2">
-                        <dl class="flex items-center">
-                            <dt class="text-gray-500 dark:text-gray-400 text-sm font-normal me-1">Avg. daily views:</dt>
-                            <dd class="text-gray-900 text-sm dark:text-white font-semibold">
-                                {{ number_format($dashboard['postViewSummary']['avgViews']) }}
-                            </dd>
-                        </dl>
-                        <dl class="flex items-center justify-end">
-                            <dt class="text-gray-500 dark:text-gray-400 text-sm font-normal me-1">Peak day:</dt>
-                            <dd class="text-gray-900 text-sm dark:text-white font-semibold">
-                                {{ $dashboard['postViewSummary']['peakDay'] }}
-                            </dd>
-                        </dl>
-                    </div>
-
-                    <!-- Post View Chart -->
-                    <div id="post-view-chart"></div>
-                </div>
-            </div>
-
-            <!-- Website Visitor Summary Card -->
-            <div class="gap-6 px-6">
-                <div class="w-full mt-6 bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6">
-                    <!-- Header -->
-                    <div class="flex justify-between pb-4 mb-4 border-b border-gray-200 dark:border-gray-700">
-                        <div class="flex items-center">
-                            <div class="w-12 h-12 rounded-lg bg-gray-100 dark:bg-gray-700 flex items-center justify-center me-3">
-                                <!-- Boxicon -->
-                                <i class='bx bx-user text-2xl text-gray-500 dark:text-gray-400'></i>
-                            </div>
-                            <div>
-                                <h5 class="leading-none text-2xl font-bold text-gray-900 dark:text-white pb-1">
-                                    {{ number_format($dashboard['websiteVisitorSummary']['totalVisitors']) }}
-                                </h5>
-                                <p class="text-sm font-normal text-gray-500 dark:text-gray-400">
-                                    Website visitors ({{ $rangeLabels[$selectedRange] ?? 'Last 7 days' }})
-                                </p>
-                            </div>
+                        <div class="grid grid-cols-2 text-sm">
+                            <dl class="flex items-center">
+                                <dt class="text-gray-500 dark:text-gray-400 me-1">Avg. daily visitors:</dt>
+                                <dd class="text-gray-900 dark:text-white font-semibold">
+                                    {{ number_format($dashboard['websiteVisitorSummary']['avgVisitors']) }}
+                                </dd>
+                            </dl>
+                            <dl class="flex items-center justify-end">
+                                <dt class="text-gray-500 dark:text-gray-400 me-1">Peak day:</dt>
+                                <dd class="text-gray-900 dark:text-white font-semibold">
+                                    {{ $dashboard['websiteVisitorSummary']['peakDay'] }}
+                                </dd>
+                            </dl>
                         </div>
+                        <div id="visitor-chart" class="pt-4"></div>
                     </div>
+                @endif
 
-                    <!-- Grid Summary -->
-                    <div class="grid grid-cols-2">
-                        <dl class="flex items-center">
-                            <dt class="text-gray-500 dark:text-gray-400 text-sm font-normal me-1">Avg. daily visitors:</dt>
-                            <dd class="text-gray-900 text-sm dark:text-white font-semibold">
-                                {{ number_format($dashboard['websiteVisitorSummary']['avgVisitors']) }}
-                            </dd>
-                        </dl>
-                        <dl class="flex items-center justify-end">
-                            <dt class="text-gray-500 dark:text-gray-400 text-sm font-normal me-1">Peak day:</dt>
-                            <dd class="text-gray-900 text-sm dark:text-white font-semibold">
-                                {{ $dashboard['websiteVisitorSummary']['peakDay'] }}
-                            </dd>
-                        </dl>
+                {{-- === CARD 2 & 3 === --}}
+                @if($isMaster)
+                    <div class="grid grid-cols-1 {{ $rangeDays < 30 ? 'md:grid-cols-2' : '' }} gap-6">
+                        @endif
+
+                        {{-- === Post View Card (selalu tampil) === --}}
+                        <div class="bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6">
+                            <div class="flex justify-between pb-4 mb-4 border-b border-gray-200 dark:border-gray-700">
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 rounded-lg bg-gray-100 dark:bg-gray-700 flex items-center justify-center me-3">
+                                        <i class='bx bx-bar-chart-alt-2 text-2xl text-gray-500 dark:text-gray-400'></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-2xl font-bold text-gray-900 dark:text-white leading-none pb-1">
+                                            {{ number_format($dashboard['postViewSummary']['totalViews']) }}
+                                        </h5>
+                                        <p class="text-sm font-normal text-gray-500 dark:text-gray-400">
+                                            Total post views ({{ $rangeLabels[$selectedRange] ?? 'Last 7 days' }})
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 text-sm">
+                                <dl class="flex items-center">
+                                    <dt class="text-gray-500 dark:text-gray-400 me-1">Avg. daily views:</dt>
+                                    <dd class="text-gray-900 dark:text-white font-semibold">
+                                        {{ number_format($dashboard['postViewSummary']['avgViews']) }}
+                                    </dd>
+                                </dl>
+                                <dl class="flex items-center justify-end">
+                                    <dt class="text-gray-500 dark:text-gray-400 me-1">Peak day:</dt>
+                                    <dd class="text-gray-900 dark:text-white font-semibold">
+                                        {{ $dashboard['postViewSummary']['peakDay'] }}
+                                    </dd>
+                                </dl>
+                            </div>
+                            <div id="post-view-chart" class="pt-4"></div>
+                        </div>
+
+                        {{-- === WhatsApp Card (MASTER only) === --}}
+                        @if($isMaster)
+                            <div class="bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6">
+                                <div class="flex justify-between pb-4 mb-4 border-b border-gray-200 dark:border-gray-700">
+                                    <div class="flex items-center">
+                                        <div class="w-12 h-12 rounded-lg bg-gray-100 dark:bg-gray-700 flex items-center justify-center me-3">
+                                            <i class='bx bxl-whatsapp text-2xl text-gray-500 dark:text-gray-400'></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="text-2xl font-bold text-gray-900 dark:text-white leading-none pb-1">
+                                                {{ number_format($dashboard['whatsappClickSummary']['totalClicks']) }}
+                                            </h5>
+                                            <p class="text-sm font-normal text-gray-500 dark:text-gray-400">
+                                                WhatsApp clicks ({{ $rangeLabels[$selectedRange] ?? 'Last 7 days' }})
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2 text-sm">
+                                    <dl class="flex items-center">
+                                        <dt class="text-gray-500 dark:text-gray-400 me-1">Avg. daily clicks:</dt>
+                                        <dd class="text-gray-900 dark:text-white font-semibold">
+                                            {{ number_format($dashboard['whatsappClickSummary']['avgClicks']) }}
+                                        </dd>
+                                    </dl>
+                                    <dl class="flex items-center justify-end">
+                                        <dt class="text-gray-500 dark:text-gray-400 me-1">Peak day:</dt>
+                                        <dd class="text-gray-900 dark:text-white font-semibold">
+                                            {{ $dashboard['whatsappClickSummary']['peakDay'] }}
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div id="wa-click-chart" class="pt-4"></div>
+                            </div>
                     </div>
-
-                    <!-- Chart -->
-                    <div id="visitor-chart" class="pt-4"></div>
-                </div>
+                @endif
             </div>
 
             <!-- Recent Posts -->
@@ -377,7 +411,13 @@
                 data: {!! $dashboard['webVisitorStatsJson'] !!},
                 colors: { today: '#F59E0B', other: '#10B981' },
                 seriesName: 'Visitors',
-            }
+            },
+            {
+                elementId: 'wa-click-chart',
+                data: {!! $dashboard['whatsappClickStatsJson'] !!}, // array [['x' => '24 Jun 2025', 'y' => 17], ...]
+                colors: { today: '#EF4444', other: '#3B82F6' },     // merah utk “Today”, biru utk lainnya
+                seriesName: 'WhatsApp Clicks',
+            },
         ];
 
         chartConfigs.forEach(config => {

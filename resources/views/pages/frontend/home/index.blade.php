@@ -159,7 +159,7 @@
             </div>
 
             <div class="mt-10">
-                <a href="https://wa.me/{{ $settings['whatsapp_number_with_country_code'] }}?text=Hallo%20Kak%2C%20saya%20ingin%20tanya%20terkait%20proposal%2C%20apakah%20bisa%20dibantu%3F" target="_blank" rel="noopener noreferrer" aria-label="Konsultasi Gratis melalui WhatsApp">
+                <a href="{{ route('wa.redirect') }}" target="_blank" rel="noopener noreferrer" aria-label="Konsultasi Gratis melalui WhatsApp">
                     <button class="bg-[#05408C] hover:bg-[#05408C]/80 focus:ring-4 focus:ring-blue-300 ease-in duration-200 rounded-full flex py-4 px-6 md:py-5 md:px-8 gap-2 items-center">
                         <i class='bx bxl-whatsapp text-white text-2xl'></i>
                         <span class="font-medium text-base md:text-lg text-white">Konsultasi Gratis</span>
@@ -507,7 +507,7 @@
 
                 <!-- Tombol di kanan -->
                 <div class="flex justify-center lg:justify-end mt-6 lg:mt-0">
-                    <a href="https://wa.me/{{ $settings['whatsapp_number_with_country_code'] }}?text={{ urlencode('Hallo Kak, saya ingin tanya terkait proposal, apakah bisa dibantu?') }}">
+                    <a href="{{ route('wa.redirect') }}">
                         <button
                             class="flex gap-2 items-center justify-center px-4 py-2 bg-brandPrimary border border-white rounded-full
                                    lg:px-8 lg:py-4 lg:gap-4

@@ -44,7 +44,7 @@
 
     @guest
         <!-- WhatsApp Button (Only for guests / not logged in) -->
-        <a href="https://wa.me/{{ $settings['whatsapp_number_with_country_code'] }}?text={{ urlencode('Hallo Kak, saya ingin tanya terkait proposal, apakah bisa dibantu?') }}"
+        <a href="{{ route('wa.redirect') }}"
            target="_blank"
            class="hidden lg:block border border-[#05408C] px-5 py-3 text-[#05408C] font-medium rounded-full hover:bg-[#05408C] hover:text-white transition-all duration-300">
             Hubungi Kami
@@ -63,7 +63,7 @@
     <!-- Mobile Buttons -->
     <div class="lg:hidden flex items-center gap-2">
         @guest
-            <a href="https://wa.me/{{ $settings['whatsapp_number_with_country_code'] }}?text={{ urlencode('Hallo Kak, saya ingin tanya terkait proposal, apakah bisa dibantu?') }}"
+            <a href="{{ route('wa.redirect') }}"
                target="_blank"
                class="border border-[#05408C] py-2 px-4 text-sm text-[#05408C] font-medium rounded-full hover:bg-[#05408C] hover:text-white transition-all">
                 Hubungi Kami

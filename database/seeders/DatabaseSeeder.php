@@ -18,23 +18,29 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Mufida Rahma',
-            'username' => 'admin',
-            'email' => 'test@example.com',
-            'email_verified_at' => now(),
-        ]);
-
         $this->call(PermissionSeeder::class);
 
-        $user = User::find(1);
-        $user->assignRole(RoleEnum::MASTER->value);
+        // Create Master user
+        $master = User::factory()->create([
+            'name' => 'Master',
+            'username' => 'master',
+            'email' => 'master@example.com',
+            'email_verified_at' => now(),
+        ]);
+        $master->assignRole(RoleEnum::MASTER->value);
 
-        Role::factory()->count(100)->create();
-        User::factory()->count(100)->create();
-        PostCategory::factory()->count(5)->create();
+        // Create Author user
+        $author = User::factory()->create([
+            'name' => 'Author',
+            'username' => 'author',
+            'email' => 'author@example.com',
+            'email_verified_at' => now(),
+        ]);
+        $author->assignRole(RoleEnum::AUTHOR->value);
+
+        // Role::factory()->count(100)->create();
+        // User::factory()->count(100)->create();
+        // PostCategory::factory()->count(5)->create();
         // Post::factory()->count(50)->create();
         /**
         Post::factory()

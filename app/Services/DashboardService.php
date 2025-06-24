@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\PostViewStatistic;
 use App\Enums\PostStatus;
 use App\Models\VisitorStatistic;
+use App\Models\WhatsappClickStatistic;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -31,7 +32,10 @@ class DashboardService
 
         // Website visitor statistics
         $websiteVisitorStats = $this->getWebsiteVisitorHistory($range);
-        $websiteVisitorSummary = $this->summarizeWebVisitors($user, $isMaster, $range);
+        $websiteVisitorSummary = $this->summarizeWebVisitors($user, $range);
+
+        $whatsappClickStats = $this->getWhatsappClickHistory($range);
+        $whatsappClickSummary = $this->summarizeWhatsappClicks($user, $isMaster);
 
         return [
             'title' => 'Dashboard',
@@ -54,6 +58,9 @@ class DashboardService
             // Website stats
             'webVisitorStatsJson' => json_encode($websiteVisitorStats),
             'websiteVisitorSummary' => $websiteVisitorSummary,
+
+            'whatsappClickStatsJson' => json_encode($whatsappClickStats),
+            'whatsappClickSummary' => $whatsappClickSummary,
         ];
     }
 
@@ -241,6 +248,69 @@ class DashboardService
             'totalVisitors' => $totalVisitors,
             'avgVisitors' => $avgVisitors,
             'peakDay' => $peakDayLabel,
+        ];
+    }
+
+    /**
+     * Retrieve historical WhatsApp click data per day for trend graph.
+     *
+     * @param string $range Time range ('7d', '30d', etc.)
+     * @param int|null $buttonId (optional) if you want data per button
+     * @return array Format: [['x' => '24 Jun 2025', 'y' => 17], ...]
+     */
+    private function getWhatsappClickHistory(string $range = '7d'): array
+    {
+        [$fromDate, $intervalType] = $this->resolveDateRange($range);
+
+        $rawData = WhatsappClickStatistic::where('date', '>=', $fromDate->toDateString())
+            ->orderBy('date')
+            ->get(['date', 'clicks']);
+
+        $dateRange = $this->generateDateRange($fromDate, now(), $intervalType);
+
+        return $dateRange->map(function ($date) use ($rawData) {
+            $match = $rawData->first(fn ($item) => $item->date === $date->format('Y-m-d'));
+
+            return [
+                'x' => $date->translatedFormat('d M Y'),
+                'y' => $match ? $match->clicks : 0,
+            ];
+        })->all();
+    }
+
+    /**
+     * Generate a summary of WhatsApp clicks: total, daily average, and peak day.
+     *
+     * @param string $range Time range ('7d', '30d', etc.)
+     * @param int|null $buttonId (optional) if you want data per button
+     * @return array ['totalClicks' => 120, 'avgClicks' => 17, 'peakDay' => 'Monday, 23 Jun 2025']
+     */
+    private function summarizeWhatsappClicks(string $range = '7d'): array
+    {
+        [$fromDate, $intervalType] = $this->resolveDateRange($range);
+
+        $query = WhatsappClickStatistic::select(
+            'date',
+            DB::raw('SUM(clicks) as total_clicks')
+        )->where('date', '>=', $fromDate->toDateString());
+
+        $data = $query->groupBy('date')->orderBy('date')->get();
+
+        $totalClicks = $data->sum('total_clicks');
+
+        $dateRange = $this->generateDateRange($fromDate, now(), $intervalType);
+        $days = $dateRange->count();
+        $avgClicks = $days > 0 ? round($totalClicks / $days) : 0;
+
+        $peakDay = $data->sortByDesc('total_clicks')->first()?->date;
+        $peakLabel = $peakDay
+            ? Carbon::parse($peakDay)->translatedFormat('l, d M Y')
+            : '-';
+
+        return [
+            'totalClicks' => $totalClicks,
+            'avgClicks'   => $avgClicks,
+            'peakDay'     => $peakLabel,
         ];
     }
 

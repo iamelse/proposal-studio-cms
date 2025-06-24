@@ -8,7 +8,7 @@
       :class="sidebarToggle ? 'justify-center' : 'justify-between'"
       class="flex items-center gap-2 pt-8 sidebar-header pb-7"
    >
-    <a href="{{ route('be.dashboard.index') }}">
+    <a class="hidden lg:block" href="{{ route('be.dashboard.index') }}"> <!-- default no class -->
       <span class="logo" :class="sidebarToggle ? 'hidden' : ''">
         <!-- Light mode logo -->
         <div class="flex items-center space-x-2 dark:hidden">
