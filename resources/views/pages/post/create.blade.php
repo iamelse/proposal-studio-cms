@@ -415,6 +415,16 @@
                                             Align right
                                             <div class="tooltip-arrow" data-popper-arrow></div>
                                         </div>
+                                        <button id="toggleJustifyAlignButton" type="button" data-tooltip-target="tooltip-justify-align" class="p-1.5 text-gray-500 rounded-sm cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
+                                            </svg>
+                                            <span class="sr-only">Align justify</span>
+                                        </button>
+                                        <div id="tooltip-justify-align" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
+                                            Align justify
+                                            <div class="tooltip-arrow" data-popper-arrow></div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-2 pt-2 flex-wrap">
@@ -889,6 +899,7 @@
             document.getElementById('toggleLeftAlignButton')?.addEventListener('click', () => editor.chain().focus().setTextAlign('left').run());
             document.getElementById('toggleCenterAlignButton')?.addEventListener('click', () => editor.chain().focus().setTextAlign('center').run());
             document.getElementById('toggleRightAlignButton')?.addEventListener('click', () => editor.chain().focus().setTextAlign('right').run());
+            document.getElementById('toggleJustifyAlignButton')?.addEventListener('click', () => editor.chain().focus().setTextAlign('justify').run());
             document.getElementById('toggleListButton')?.addEventListener('click', () => editor.chain().focus().toggleBulletList().run());
             document.getElementById('toggleOrderedListButton')?.addEventListener('click', () => editor.chain().focus().toggleOrderedList().run());
             document.getElementById('toggleBlockquoteButton')?.addEventListener('click', () => editor.chain().focus().toggleBlockquote().run());
