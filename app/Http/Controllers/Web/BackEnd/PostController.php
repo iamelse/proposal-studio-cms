@@ -33,7 +33,8 @@ class PostController extends Controller
         $user = auth()->user();
         $isMaster = $user->role === RoleEnum::MASTER->value;
 
-        return Post::with('category')
+        return Post::with(['category'])
+            ->withSum('viewStats', 'views')
             ->search(
                 keyword: $request->keyword,
                 columns: $this->allowedFilterFields,
@@ -51,7 +52,8 @@ class PostController extends Controller
             ->when(! $isMaster, fn($query) =>
             $query->where('user_id', $user->id)
             )
-            ->paginate($request->query('limit') ?? 10);
+            ->paginate($request->query('limit') ?? 10)
+            ->appends($request->query());
     }
 
     public function index(Request $request): View

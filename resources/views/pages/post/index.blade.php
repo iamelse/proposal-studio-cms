@@ -225,6 +225,7 @@
                                 <th class="px-4 py-3 font-medium">Title</th>
                                 <th class="px-4 py-3 font-medium">Category</th>
                                 <th class="px-4 py-3 font-medium">Status</th>
+                                <th class="px-4 py-3 font-medium">Views</th>
                                 <th class="px-4 py-3 font-medium">Published At</th>
                                 <th class="px-4 py-3 font-medium">Created At</th>
                                 <th class="px-4 py-3 font-medium">Updated At</th>
@@ -252,7 +253,17 @@
                                     </td>
                                     <td class="px-4 py-3">{{ $post->title }}</td>
                                     <td class="px-4 py-3">{{ $post->category->name }}</td>
-                                    <td class="px-4 py-3">{{ strtoupper($post->status) }}</td>
+
+                                    @php
+                                        $status = App\Enums\PostStatus::from($post->status);
+                                    @endphp
+
+                                    <td class="px-4 py-3">
+                                        <span class="text-xs font-medium px-2.5 py-0.5 rounded {{ $status->badgeColor() }}">
+                                            {{ $status->label() }}
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-3">{{ $post->view_stats_sum_views }}</td>
                                     <td class="px-4 py-3">{{ $post->published_at }}</td>
                                     <td class="px-4 py-3">{{ $post->formatted_created_at }}</td>
                                     <td class="px-4 py-3">{{ $post->formatted_updated_at }}</td>
