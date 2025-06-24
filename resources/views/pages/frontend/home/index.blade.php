@@ -239,14 +239,20 @@
                         <div class="hidden md:block w-px h-10 bg-gray-300"></div>
                     @endif
 
-                    <div class="text-center">
-                        <h3 class="text-baseBlack font-semibold text-xl md:text-2xl lg:text-3xl">
-                            {{ $stat->value ?? '' }}{{ $stat->suffix ?? '' }}
-                        </h3>
-                        <p class="text-baseBlack font-normal text-base md:text-xl">
-                            {{ $stat->title ?? '' }}
-                        </p>
-                    </div>
+                        @php
+                            $value = $stat->value ?? '';
+                            $suffix = $stat->suffix ?? '';
+                            $formattedValue = preg_match('/^[A-Za-z]/', $suffix) ? $value . ' ' . $suffix : $value . $suffix;
+                        @endphp
+
+                        <div class="text-center">
+                            <h3 class="text-baseBlack font-semibold text-xl md:text-2xl lg:text-3xl">
+                                {{ $formattedValue }}
+                            </h3>
+                            <p class="text-baseBlack font-normal text-base md:text-xl">
+                                {{ $stat->title ?? '' }}
+                            </p>
+                        </div>
                 @endforeach
             </div>
 
@@ -414,7 +420,7 @@
             </h2>
         </div>
 
-        <div class="relative overflow-hidden mt-8 md:mt-16">
+        <div class="relative overflow-hidden mt-8 md:mt-16 pb-1">
             <!-- Fade effect sides -->
             <div class="absolute top-0 left-0 w-32 h-full z-10 bg-gradient-to-r from-white to-transparent pointer-events-none"></div>
             <div class="absolute top-0 right-0 w-32 h-full z-10 bg-gradient-to-l from-white to-transparent pointer-events-none"></div>
@@ -422,7 +428,7 @@
             <!-- Marquee track (JS animated) -->
             <div id="marquee-track" class="flex w-max gap-5 flex-nowrap will-change-transform">
                 @foreach ($reviews as $review)
-                    <figure class="w-[400px] h-[240px] rounded-[20px] px-8 py-7 border border-slate-200 bg-white flex-shrink-0">
+                    <figure class="w-[400px] h-auto rounded-[20px] px-8 py-7 border border-slate-200 bg-white flex-shrink-0">
                         <figcaption class="flex gap-5 items-center">
                             <div class="w-14 h-14 rounded-full overflow-hidden">
                                 <img src="{{ $review->image }}" alt="Review oleh {{ $review->company_name }}" class="w-full h-full object-cover rounded-full">
@@ -433,7 +439,7 @@
                             </div>
                         </figcaption>
                         <blockquote>
-                            <p class="text-gray-600 text-base mt-6 line-clamp-3 break-words">
+                            <p class="text-gray-600 text-base mt-6">
                                 {{ $review->comment }}
                             </p>
                             <div class="flex gap-1 mt-5">

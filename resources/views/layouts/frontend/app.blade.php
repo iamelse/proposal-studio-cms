@@ -242,7 +242,7 @@
         track.innerHTML += track.innerHTML;
 
         let position = 0;
-        let speed = 1; // Semakin kecil = semakin lambat
+        let speed = 0.8; // Semakin kecil = semakin lambat
         let trackWidth = track.scrollWidth / 2;
 
         function animate() {
