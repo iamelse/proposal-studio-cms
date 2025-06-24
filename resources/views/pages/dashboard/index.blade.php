@@ -55,6 +55,76 @@
                 </div>
             </div>
 
+            <div class="flex justify-end gap-6 px-6">
+                <!-- Reset Filter Button -->
+                <a href="{{ route('be.dashboard.index') }}"
+                   class="flex items-center gap-2 h-[42px] px-4 py-2.5 rounded-lg border border-gray-400 bg-gray-100 text-gray-700 font-medium transition-all hover:bg-gray-200 hover:border-gray-500 focus:ring focus:ring-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700">
+                    <i class="bx bx-reset text-lg"></i>
+                    Reset Filter
+                </a>
+
+                <!-- Filter Modal -->
+                <div x-data="{ open: false, selectedField: '{{ request()->query('filter') ? array_key_first(request('filter')) : '' }}' }">
+                    <!-- Filter Button -->
+                    <button @click.prevent="open = true"
+                            class="flex items-center gap-2 h-[42px] px-4 py-2.5 rounded-lg border border-purple-500 bg-purple-600 text-white font-medium transition-all hover:bg-purple-700 hover:border-purple-600 focus:ring focus:ring-purple-300 dark:bg-purple-700 dark:border-purple-600 dark:hover:bg-purple-800">
+                        <i class="bx bx-filter text-lg"></i>
+                        Filter
+                    </button>
+
+                    <!-- Modal -->
+                    <div x-cloak x-show="open" @keydown.escape.window="open = false"
+                         class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                        <div @click.away="open = false"
+                             class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 w-1/2">
+                            <h2 class="text-lg font-semibold text-gray-800 dark:text-white">Filter Options</h2>
+
+                            <!-- Form -->
+                            <form method="GET" action="{{ route('be.dashboard.index') }}">
+                                <!-- Range Input (e.g., 7d, 90d, etc.) -->
+                                <div class="mt-4">
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                        Range (Days Ago) — e.g., 7d, 30d, 60d, 90d
+                                    </label>
+
+                                    <input type="text" name="range"
+                                           value="{{ old('range', request('range', '')) }}"
+                                           pattern="^\d+d$"
+                                           placeholder="7d"
+                                           class="w-full mt-1 px-3 py-2 rounded-lg
+                                                  bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300
+                                                  focus:ring focus:ring-blue-500 focus:outline-none
+                                                  border {{ $errors->has('range') ? 'border-red-500 dark:border-red-400' : 'border-gray-300 dark:border-gray-700' }}"
+                                    >
+
+                                    @if ($errors->has('range'))
+                                        <p class="text-xs text-red-600 dark:text-red-400 mt-1">
+                                            *{{ $errors->first('range') }}
+                                        </p>
+                                    @else
+                                        <span class="text-xs text-gray-600 dark:text-gray-400">
+                                            Use format like <code>7d</code>, <code>90d</code>, etc.
+                                        </span>
+                                    @endif
+                                </div>
+
+                                <!-- Buttons -->
+                                <div class="mt-6 flex justify-end gap-3">
+                                    <button type="button" @click="open = false"
+                                            class="px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100">
+                                        Cancel
+                                    </button>
+                                    <button type="submit"
+                                            class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                                        Apply
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Summary Cards -->
             <div class="gap-6 px-6">
                 @php
@@ -99,49 +169,6 @@
 
                     <!-- Post View Chart -->
                     <div id="post-view-chart"></div>
-
-                    <!-- Filter Dropdown -->
-                    <div class="grid grid-cols-1 items-center border-t border-gray-200 dark:border-gray-700 justify-between">
-                        <div class="flex justify-between items-center pt-5">
-                            <!-- Range Filter Button -->
-                            <button
-                                id="dropdownDefaultButton"
-                                data-dropdown-toggle="lastDaysdropdown"
-                                data-dropdown-placement="bottom"
-                                class="text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 text-center inline-flex items-center dark:hover:text-white"
-                                type="button">
-                                {{ $rangeLabels[$selectedRange] ?? 'Last 7 days' }}
-                                <svg class="w-2.5 m-2.5 ms-1.5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                                </svg>
-                            </button>
-
-                            <!-- Dropdown menu -->
-                            <div id="lastDaysdropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700">
-                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-                                    @foreach($rangeLabels as $key => $label)
-                                        <li>
-                                            <a href="{{ request()->fullUrlWithQuery(['range' => $key]) }}"
-                                               class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white {{ $selectedRange === $key ? 'font-semibold text-gray-900 dark:text-white' : '' }}">
-                                                {{ $label }}
-                                            </a>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-
-                            <!--
-                            <a
-                                href="#"
-                                class="uppercase text-sm font-semibold inline-flex items-center rounded-lg text-blue-600 hover:text-blue-700 dark:hover:text-blue-500 hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2">
-                                Leads Report
-                                <svg class="w-2.5 h-2.5 ms-1.5 rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-                                </svg>
-                            </a>
-                            -->
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -220,6 +247,26 @@
 @endsection
 
 @section('bottom-scripts')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            @if($errors->has('range'))
+                Swal.fire({
+                    toast: true,
+                    position: "top-end",
+                    icon: "error",
+                    title: "{{ $errors->first('range') }}",
+                    showConfirmButton: false,
+                    timer: 6000,
+                    timerProgressBar: true,
+                    customClass: {
+                        popup: 'bg-white dark:bg-gray-800 shadow-lg',
+                        title: 'font-normal text-base text-gray-800 dark:text-gray-200'
+                    }
+                });
+            @endif
+        });
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.46.0/dist/apexcharts.min.js"></script>
     <script>
