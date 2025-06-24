@@ -60,11 +60,16 @@ class HomeController extends Controller
     {
         $today = Carbon::today()->toDateString();
 
-        // Tambahkan +1 setiap kali dipanggil (non-unik)
-        VisitorStatistic::updateOrCreate(
-            ['date' => $today],
-            ['visitors' => DB::raw('visitors + 1')]
-        );
+        $stat = VisitorStatistic::where('date', $today)->first();
+
+        if ($stat) {
+            $stat->increment('visitors');
+        } else {
+            VisitorStatistic::create([
+                'date' => $today,
+                'visitors' => 1,
+            ]);
+        }
     }
 
     protected function _incrementDailyVisitor(): void
