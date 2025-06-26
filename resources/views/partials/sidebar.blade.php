@@ -103,6 +103,15 @@
                             'label' => 'Categories',
                             'permission' => PermissionEnum::READ_POST_CATEGORY
                         ],
+                        [
+                            'order' => 3,
+                            'active' => 'unisharp.lfm.show',
+                            'route' => 'unisharp.lfm.show',
+                            'url' => '/admin/laravel-filemanager?type=image',
+                            'icon' => 'bx-file',
+                            'label' => 'Image File Manager',
+                            'permission' => PermissionEnum::READ_FILE_MANAGER
+                        ],
                     ]
                 ],
                 [
@@ -294,12 +303,14 @@
                <ul class="flex flex-col gap-4 mb-6">
                   @foreach ($menu['children'] as $child)
                      @php
-                           $isActive = is_array($child['active'])
-                              ? collect($child['active'])->some(fn($route) => request()->routeIs($route . ($child['exact'] ?? false ? '' : '*')))
-                              : request()->routeIs($child['active'] . ($child['exact'] ?? false ? '' : '*'));
+                               $href = $child['url'] ?? route($child['route']);
+
+                               $isActive = is_array($child['active'])
+                                  ? collect($child['active'])->some(fn($route) => request()->routeIs($route . ($child['exact'] ?? false ? '' : '*')))
+                                  : request()->routeIs($child['active'] . ($child['exact'] ?? false ? '' : '*'));
                      @endphp
                      <li>
-                        <a href="{{ route($child['route']) }}"
+                        <a href="{{ $href }}"
                            class="menu-item group {{ $isActive ? 'menu-item-active' : 'menu-item-inactive' }}">
                            <i class="bx bx-sm {{ $child['icon'] }}"></i>
                            {{ $child['label'] }}
