@@ -35,7 +35,7 @@ class OurServiceListController extends Controller
             keyword: $request->keyword,
             columns: $allowedFilterFields,
         )->sort(
-            sort_by: $request->sort_by ?? 'title',
+            sort_by: $request->sort_by ?? 'order',
             sort_order: $request->sort_order ?? 'ASC'
         )->paginate($request->query('limit') ?? 10);
 
@@ -67,6 +67,7 @@ class OurServiceListController extends Controller
             Service::create([
                 'title' => $request->title,
                 'description' => $request->description,
+                'order' => $request->order,
                 'image' => $imagePath
             ]);
 
@@ -102,6 +103,7 @@ class OurServiceListController extends Controller
             $service->update([
                 'title' => $request->title,
                 'description' => $request->description,
+                'order' => $request->order,
                 'image' => $imagePath ?? $service->image,
             ]);
 
@@ -115,6 +117,21 @@ class OurServiceListController extends Controller
             return redirect()->route('be.our-service-list.edit', $service->slug)
                 ->with('error', $e->getMessage());
         }
+    }
+
+    public function massUpdate(Request $request)
+    {
+        $orders = $request->input('orders');
+
+        foreach ($orders as $slug => $order) {
+            $service = Service::where('slug', $slug)->first();
+            if ($service) {
+                $service->order = $order;
+                $service->save();
+            }
+        }
+
+        return redirect()->route('be.our-service-list.index')->with('success', 'Orders updated successfully.');
     }
 
     public function destroy(Service $service): RedirectResponse

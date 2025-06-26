@@ -47,6 +47,13 @@ return [
             'report' => false,
         ],
 
+        'idcloudhost' => [
+            'driver'     => 'local',
+            'root'       => '/home/iamelsem/public_html/proposal-studio.iamelse.my.id',
+            'url'        => env('APP_URL'),   // otomatis jadi prefix URL
+            'visibility' => 'public',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

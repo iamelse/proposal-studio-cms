@@ -26,7 +26,7 @@ class UpdateEventRequest extends FormRequest
         return [
             'title' => 'required|max:255',
             'slug' => 'required|max:255|unique:events,slug,' . $eventId,
-            'image' => 'nullable|image|mimes:jpeg,jpg,png,gif,svg|max:2048',
+            'image' => 'nullable|image|max:2048',
         ];
     }
 }

@@ -25,13 +25,13 @@
     </div>
 
     <!-- Table Section -->
-    <div class="border-gray-100 p-5 dark:border-gray-800 sm:p-6" x-data="{ selected: [] }">
+    <div class="border-gray-100 p-5 dark:border-gray-800 sm:p-6" x-data="{ selected: [], serviceNames: window.serviceNames, serviceOrders: window.serviceOrders, }">
         <div class="rounded-2xl border border-gray-200 bg-white pt-4 dark:border-gray-800 dark:bg-white/[0.03]">
             <div class="mb-4 flex flex-col gap-2 px-5 sm:flex-row sm:items-end sm:justify-end sm:px-6">
 
                 <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
                     <div class="relative flex items-center gap-2">
-                        <!-- Delete Selected Button -->
+                    <!-- Delete Selected Button -->
                         <div x-data="{ openServiceMassDeleteModal: false, deleteUrl: '' }">
                             <!-- Delete Selected Button -->
                             <a href="#"
@@ -66,6 +66,53 @@
                                             Yes, Delete
                                         </a>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Batch Edit Button -->
+                        <div x-data="{ openBatchEditModal: false }">
+                            <button
+                                x-show="selected.length > 0"
+                                @click.prevent="openBatchEditModal = true"
+                                class="flex items-center gap-2 h-[42px] px-4 py-2.5 rounded-lg border border-yellow-500 bg-yellow-500 text-white font-medium transition-all hover:bg-yellow-600 focus:ring focus:ring-yellow-300"
+                            >
+                                <i class="bx bx-edit text-lg"></i>
+                                Batch Edit
+                            </button>
+
+                            <!-- Batch Edit Modal -->
+                            <div x-show="openBatchEditModal" x-cloak class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 w-full max-w-2xl">
+                                    <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Batch Edit Order</h2>
+
+                                    <form method="POST" action="{{ route('be.our-service-list.mass.update') }}">
+                                        @csrf
+
+                                        <div class="space-y-4">
+                                            <template x-for="slug in selected" :key="slug">
+                                                <div class="flex items-center gap-4">
+                                                    <label class="block w-1/3 text-sm font-medium text-gray-700 dark:text-gray-300">
+                                                        Order for <span x-text="serviceNames[slug] ?? slug"></span>
+                                                    </label>
+                                                    <input type="number" :name="`orders[${slug}]`"
+                                                           :value="serviceOrders[slug]"
+                                                           class="w-2/3 mt-1 px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 focus:ring focus:ring-blue-500" required>
+                                                </div>
+                                            </template>
+                                        </div>
+
+                                        <div class="mt-6 flex justify-end gap-3">
+                                            <button type="button" @click="openBatchEditModal = false"
+                                                    class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600">
+                                                Cancel
+                                            </button>
+                                            <button type="submit"
+                                                    class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                                                Save Changes
+                                            </button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -190,6 +237,7 @@
                             <th class="w-20 px-4 py-3 font-medium">No.</th>
                             <th class="flex flex-col items-center px-4 py-3 font-medium">Icon</th>
                             <th class="w-20 px-4 py-3 font-medium">Title</th>
+                            <th class="w-20 px-4 py-3 font-medium">Order</th>
                             <th class="px-4 py-3 font-medium">Created At</th>
                             <th class="px-4 py-3 font-medium">Updated At</th>
                             <th class="px-4 py-3 font-medium text-center">Actions</th>
@@ -214,6 +262,7 @@
                                 </div>
                             </td>
                             <td class="w-20 px-4 py-3">{{ $service->title }}</td>
+                            <td class="w-20 px-4 py-3">{{ $service->order }}</td>
                             <td class="px-4 py-3">{{ $service->formatted_created_at }}</td>
                             <td class="px-4 py-3">{{ $service->formatted_updated_at }}</td>
                             <td class="px-4 py-3 text-center relative">
@@ -273,7 +322,11 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="10" class="text-center py-4 text-gray-400">No data available.</td>
+                            <td colspan="8" class="h-[500px]">
+                                <div class="flex items-center justify-center h-full text-gray-400">
+                                    No data available.
+                                </div>
+                            </td>
                         </tr>
                         @endforelse
                     </tbody>
@@ -335,12 +388,12 @@
                 });
             @endif
 
-            @if(session('error'))
+            @if($errors->any() || session('error'))
                 Swal.fire({
                     toast: true,
                     position: "top-end",
                     icon: "error",
-                    title: "{{ session('error') }}",
+                    title: "{{ session('error') ?? 'Something went wrong. Please check the form and try again.' }}",
                     showConfirmButton: false,
                     timer: 4000,
                     timerProgressBar: true,
@@ -351,5 +404,9 @@
                 });
             @endif
         });
+    </script>
+    <script>
+        window.serviceNames = @json($services->pluck('title', 'slug'));
+        window.serviceOrders = @json($services->pluck('order', 'slug'));
     </script>
 @endsection

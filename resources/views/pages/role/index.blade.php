@@ -271,7 +271,11 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="10" class="text-center py-4 text-gray-400">No data available.</td>
+                            <td colspan="6" class="h-[500px]">
+                                <div class="flex items-center justify-center h-full text-gray-400">
+                                    No data available.
+                                </div>
+                            </td>
                         </tr>
                         @endforelse
                     </tbody>
@@ -333,12 +337,12 @@
                 });
             @endif
 
-            @if(session('error'))
+            @if($errors->any() || session('error'))
                 Swal.fire({
                     toast: true,
                     position: "top-end",
                     icon: "error",
-                    title: "{{ session('error') }}",
+                    title: "{{ session('error') ?? 'Something went wrong. Please check the form and try again.' }}",
                     showConfirmButton: false,
                     timer: 4000,
                     timerProgressBar: true,

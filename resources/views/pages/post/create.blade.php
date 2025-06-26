@@ -119,7 +119,7 @@
                         <!-- Excerpt -->
                         <div class="mt-4">
                             <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                                Excerpt <span class="text-error-500">*</span>
+                                Excerpt / Summary <span class="text-error-500">*</span>
                             </label>
                             <div x-data="{ hasError: {{ session('errors') && session('errors')->has('excerpt') ? 'true' : 'false' }} }">
                             <textarea
@@ -415,6 +415,16 @@
                                             Align right
                                             <div class="tooltip-arrow" data-popper-arrow></div>
                                         </div>
+                                        <button id="toggleJustifyAlignButton" type="button" data-tooltip-target="tooltip-justify-align" class="p-1.5 text-gray-500 rounded-sm cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
+                                            </svg>
+                                            <span class="sr-only">Align justify</span>
+                                        </button>
+                                        <div id="tooltip-justify-align" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
+                                            Align justify
+                                            <div class="tooltip-arrow" data-popper-arrow></div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-2 pt-2 flex-wrap">
@@ -495,25 +505,42 @@
                                             </li>
                                         </ul>
                                     </div>
+                                    <!-- File Manager Button (folder) -->
+                                    <button id="lfmImageButton"
+                                            type="button"
+                                            data-tooltip-target="tooltip-lfm"
+                                            class="p-1.5 rounded-sm text-gray-500 hover:text-gray-900 hover:bg-gray-100
+                                                dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600
+                                                  inline-flex items-center">
+                                        <i class="bx bx-image-add text-xl leading-none"></i>
+                                        <span class="sr-only">Add image</span>
+                                    </button>
+
+                                    <div id="tooltip-lfm" role="tooltip"
+                                         class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white
+                                                bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
+                                        Add image
+                                        <div class="tooltip-arrow" data-popper-arrow></div>
+                                    </div>
                                     <button id="addImageButton" type="button" data-tooltip-target="tooltip-image" class="p-1.5 text-gray-500 rounded-sm cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
                                         <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                             <path fill-rule="evenodd" d="M13 10a1 1 0 0 1 1-1h.01a1 1 0 1 1 0 2H14a1 1 0 0 1-1-1Z" clip-rule="evenodd"/>
                                             <path fill-rule="evenodd" d="M2 6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12c0 .556-.227 1.06-.593 1.422A.999.999 0 0 1 20.5 20H4a2.002 2.002 0 0 1-2-2V6Zm6.892 12 3.833-5.356-3.99-4.322a1 1 0 0 0-1.549.097L4 12.879V6h16v9.95l-3.257-3.619a1 1 0 0 0-1.557.088L11.2 18H8.892Z" clip-rule="evenodd"/>
                                         </svg>
-                                        <span class="sr-only">Add image</span>
+                                        <span class="sr-only">Embed image</span>
                                     </button>
                                     <div id="tooltip-image" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
-                                        Add image
+                                        Embed image
                                         <div class="tooltip-arrow" data-popper-arrow></div>
                                     </div>
                                     <button id="addVideoButton" type="button" data-tooltip-target="tooltip-video" class="p-1.5 text-gray-500 rounded-sm cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
                                         <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                             <path fill-rule="evenodd" d="M9 7V2.221a2 2 0 0 0-.5.365L4.586 6.5a2 2 0 0 0-.365.5H9Zm2 0V2h7a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9h5a2 2 0 0 0 2-2Zm-2 4a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2H9Zm0 2h2v2H9v-2Zm7.965-.557a1 1 0 0 0-1.692-.72l-1.268 1.218a1 1 0 0 0-.308.721v.733a1 1 0 0 0 .37.776l1.267 1.032a1 1 0 0 0 1.631-.776v-2.984Z" clip-rule="evenodd"/>
                                         </svg>
-                                        <span class="sr-only">Add video</span>
+                                        <span class="sr-only">Embed video</span>
                                     </button>
                                     <div id="tooltip-video" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
-                                        Add video
+                                        Embed video
                                         <div class="tooltip-arrow" data-popper-arrow></div>
                                     </div>
                                     <button id="toggleListButton" type="button" data-tooltip-target="tooltip-list" class="p-1.5 text-gray-500 rounded-sm cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
@@ -623,6 +650,104 @@
                     </form>
                 </div>
             </div>
+
+            <!-- Backdrop + Modal -->
+            <div id="imgOptionsModal"
+                 class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40">
+                <!-- Modal box -->
+                <div class="relative bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 w-[400px] mx-auto mt-20">
+
+                    <!-- Close Button -->
+                    <button id="closeImgOptionsBtn"
+                            class="absolute top-3 right-3 text-gray-400 hover:text-gray-900 dark:hover:text-white">
+                        <i class="bx bx-x text-2xl"></i>
+                        <span class="sr-only">Close</span>
+                    </button>
+
+                    <!-- Modal Content -->
+                    <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">
+                        Picture
+                        <span id="imgOptionsUrl"
+                              class="block text-xs font-normal text-gray-500 dark:text-gray-400 break-all mt-1">
+                            <!-- Selected image URL will appear here -->
+                        </span>
+                    </h2>
+
+                    <form id="imgOptionsForm" class="space-y-4">
+
+                        <!-- Width & Height -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    Width
+                                </label>
+                                <input name="width" type="text" placeholder="px / %"
+                                       class="w-full rounded-md border-gray-300 dark:border-gray-600
+                                           focus:border-blue-500 focus:ring-blue-500 text-sm
+                                           dark:bg-gray-700 dark:text-gray-200">
+                                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                    Set the image width in pixels (e.g., 300) or percentage (e.g., 50%). Leave empty for auto width.
+                                </p>
+                            </div>
+                            <div>
+                                <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    Height
+                                </label>
+                                <input name="height" type="text" placeholder="px / %"
+                                       class="w-full rounded-md border-gray-300 dark:border-gray-600
+                                           focus:border-blue-500 focus:ring-blue-500 text-sm
+                                           dark:bg-gray-700 dark:text-gray-200">
+                                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                    Set the image height in pixels or percentage. Leave empty for auto height.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Alt Text -->
+                        <div>
+                            <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
+                                Alt text
+                            </label>
+                            <input name="alt" type="text"
+                                   class="w-full rounded-md border-gray-300 dark:border-gray-600
+                                       focus:border-blue-500 focus:ring-blue-500 text-sm
+                                       dark:bg-gray-700 dark:text-gray-200">
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                Describe the image for accessibility and SEO purposes.
+                            </p>
+                        </div>
+
+                        <!-- CSS Class -->
+                        <div>
+                            <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
+                                CSS class
+                            </label>
+                            <input name="class" type="text"
+                                   class="w-full rounded-md border-gray-300 dark:border-gray-600
+                                       focus:border-blue-500 focus:ring-blue-500 text-sm
+                                       dark:bg-gray-700 dark:text-gray-200">
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                Add optional custom CSS classes (e.g., <code>rounded-lg</code>, <code>shadow-md</code>).
+                            </p>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex justify-end space-x-3 mt-4">
+                            <button type="button"
+                                    id="cancelImgOptionsBtn"
+                                    class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg
+                                        hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600">
+                                Cancel
+                            </button>
+
+                            <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                                Insert
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
         </div>
     </main>
     <!-- ===== Main Content End ===== -->
@@ -633,35 +758,35 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             @if(session('success'))
-            Swal.fire({
-                toast: true,
-                position: "top-end",
-                icon: "success",
-                title: "{{ session('success') }}",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                customClass: {
-                    popup: 'bg-white dark:bg-gray-800 shadow-lg',
-                    title: 'font-normal text-base text-gray-800 dark:text-gray-200'
-                }
-            });
+                Swal.fire({
+                    toast: true,
+                    position: "top-end",
+                    icon: "success",
+                    title: "{{ session('success') }}",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    customClass: {
+                        popup: 'bg-white dark:bg-gray-800 shadow-lg',
+                        title: 'font-normal text-base text-gray-800 dark:text-gray-200'
+                    }
+                });
             @endif
 
-            @if(session('error'))
-            Swal.fire({
-                toast: true,
-                position: "top-end",
-                icon: "error",
-                title: "{{ session('error') }}",
-                showConfirmButton: false,
-                timer: 4000,
-                timerProgressBar: true,
-                customClass: {
-                    popup: 'bg-white dark:bg-gray-800 shadow-lg',
-                    title: 'font-normal text-base text-gray-800 dark:text-gray-200'
-                }
-            });
+            @if($errors->any() || session('error'))
+                Swal.fire({
+                    toast: true,
+                    position: "top-end",
+                    icon: "error",
+                    title: "{{ session('error') ?? 'Something went wrong. Please check the form and try again.' }}",
+                    showConfirmButton: false,
+                    timer: 4000,
+                    timerProgressBar: true,
+                    customClass: {
+                        popup: 'bg-white dark:bg-gray-800 shadow-lg',
+                        title: 'font-normal text-base text-gray-800 dark:text-gray-200'
+                    }
+                });
             @endif
         });
     </script>
@@ -731,6 +856,18 @@
             const textarea = document.getElementById("hidden-textarea");
 
             if (!editorElement || !textarea) return;
+
+            const ImageWithSize = Image.extend({
+                addAttributes () {
+                    return {
+                        ...this.parent?.(),
+                        style : { default: null },
+                        class : { default: null },
+                        width : { default: null },
+                        height: { default: null },
+                    }
+                },
+            })
 
             const FontSizeTextStyle = TextStyle.extend({
                 addAttributes() {
@@ -853,6 +990,7 @@
                     Underline,
                     TextAlign.configure({ types: ['heading', 'paragraph'] }),
                     Image,
+                    ImageWithSize,
                     YouTube,
                 ],
                 editorProps: {
@@ -889,6 +1027,7 @@
             document.getElementById('toggleLeftAlignButton')?.addEventListener('click', () => editor.chain().focus().setTextAlign('left').run());
             document.getElementById('toggleCenterAlignButton')?.addEventListener('click', () => editor.chain().focus().setTextAlign('center').run());
             document.getElementById('toggleRightAlignButton')?.addEventListener('click', () => editor.chain().focus().setTextAlign('right').run());
+            document.getElementById('toggleJustifyAlignButton')?.addEventListener('click', () => editor.chain().focus().setTextAlign('justify').run());
             document.getElementById('toggleListButton')?.addEventListener('click', () => editor.chain().focus().toggleBulletList().run());
             document.getElementById('toggleOrderedListButton')?.addEventListener('click', () => editor.chain().focus().toggleOrderedList().run());
             document.getElementById('toggleBlockquoteButton')?.addEventListener('click', () => editor.chain().focus().toggleBlockquote().run());
@@ -898,6 +1037,72 @@
                 const url = window.prompt('Enter image URL:', 'https://placehold.co/600x400');
                 if (url) editor.chain().focus().setImage({ src: url }).run();
             });
+
+            /* helper buka File-Manager */
+            function lfm(callback, type = 'image', prefix = '/admin/laravel-filemanager') {
+                const w = 900, h = 600
+                const x = (innerWidth - w) / 2
+                const y = (innerHeight - h) / 2
+                window.open(`${prefix}?type=${type}`, 'FileManager',
+                    `scrollbars=yes,width=${w},height=${h},top=${y},left=${x}`)
+                window.SetUrl = callback
+            }
+
+            /* tombol Open File-Manager */
+            document.getElementById('lfmImageButton')?.addEventListener('click', () => {
+                lfm((items) => {
+                    const { url, width: origW, height: origH } =
+                        Array.isArray(items) ? items[0] : items
+
+                    /* Isi default modal */
+                    const modalEl   = document.getElementById('imgOptionsModal')
+                    modalEl.querySelector('[name="width"]').value  = origW || ''
+                    modalEl.querySelector('[name="height"]').value = origH || ''
+                    modalEl.querySelector('[name="alt"]').value    = ''
+                    modalEl.querySelector('[name="class"]').value  = ''
+                    modalEl.dataset.imgUrl = url                  // simpan URL
+                    document.getElementById('imgOptionsUrl').textContent = url
+
+                    /* Tampilkan modal (Flowbite) */
+                    const modal = FlowbiteInstances.getInstance('Modal', 'imgOptionsModal')
+                        ?? new Modal(modalEl)
+                    modal.show()
+                })
+            })
+
+            /* submit modal → insert image */
+            document.getElementById('imgOptionsForm')?.addEventListener('submit', (e) => {
+                e.preventDefault()
+                const modalEl = document.getElementById('imgOptionsModal')
+                const url   = modalEl.dataset.imgUrl
+                const data  = Object.fromEntries(new FormData(e.target).entries())
+
+                const attrs = { src: url }
+                if (data.alt)   attrs.alt   = data.alt
+                if (data.class) attrs.class = data.class
+
+                const styleParts = []
+                if (data.width)  styleParts.push(`width:${data.width}`)
+                if (data.height) styleParts.push(`height:${data.height}`)
+                if (styleParts.length) attrs.style = styleParts.join(';') + ';'
+
+                editor.chain().focus().setImage(attrs).run()
+
+                /* tutup modal */
+                const modal = FlowbiteInstances.getInstance('Modal', 'imgOptionsModal')
+                modal?.hide()
+            })
+
+            /** Tutup Modal **/
+            document.getElementById('closeImgOptionsBtn')?.addEventListener('click', () => {
+                const modal = FlowbiteInstances.getInstance('Modal', 'imgOptionsModal')
+                modal?.hide()
+            })
+
+            document.getElementById('cancelImgOptionsBtn')?.addEventListener('click', () => {
+                const modal = FlowbiteInstances.getInstance('Modal', 'imgOptionsModal')
+                modal?.hide()
+            })
 
             document.getElementById('addVideoButton')?.addEventListener('click', () => {
                 const url = window.prompt('Enter YouTube URL:', 'https://www.youtube.com/watch?v=KaLxCiilHns');

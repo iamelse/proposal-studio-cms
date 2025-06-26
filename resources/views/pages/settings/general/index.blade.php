@@ -116,8 +116,11 @@
                                        {{ $errors->has('settings.site_logo') ? 'border-red-500 dark:border-red-500 focus:ring-red-500 dark:focus:ring-red-500' : 'border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 focus:ring-blue-500 dark:focus:ring-blue-500' }}"
                                            id="site_logo" name="settings[site_logo]" type="file" accept="image/*"
                                            onchange="previewImage(event, 'preview_site_logo')">
+                                    <p class="mt-1 text-xs font-medium text-gray-500 dark:text-gray-300" id="image_help">
+                                        Accepted formats: <span class="font-semibold text-gray-700 dark:text-gray-200">JPG, PNG, SVG</span>, or any valid image file. Max size: <span class="font-semibold text-gray-700 dark:text-gray-200">2MB</span>.
+                                    </p>
                                     @error('settings.site_logo')
-                                    <span class="text-xs mt-1 text-red-500">{{ $message }}</span>
+                                        <span class="text-xs mt-1 text-red-500">{{ $message }}</span>
                                     @enderror
 
                                     <div class="mt-2">
@@ -138,8 +141,11 @@
                                        {{ $errors->has('settings.og_image_home') ? 'border-red-500 dark:border-red-500 focus:ring-red-500 dark:focus:ring-red-500' : 'border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 focus:ring-blue-500 dark:focus:ring-blue-500' }}"
                                            id="og_image_home" name="settings[og_image_home]" type="file" accept="image/*"
                                            onchange="previewImage(event, 'preview_og_home')">
+                                    <p class="mt-1 text-xs font-medium text-gray-500 dark:text-gray-300" id="image_help">
+                                        Accepted formats: <span class="font-semibold text-gray-700 dark:text-gray-200">JPG, PNG, SVG</span>, or any valid image file. Max size: <span class="font-semibold text-gray-700 dark:text-gray-200">2MB</span>.
+                                    </p>
                                     @error('settings.og_image_home')
-                                    <span class="text-xs mt-1 text-red-500">{{ $message }}</span>
+                                        <span class="text-xs mt-1 text-red-500">{{ $message }}</span>
                                     @enderror
 
                                     <div class="mt-2">
@@ -160,8 +166,11 @@
                                         {{ $errors->has('settings.og_image_post_index') ? 'border-red-500 dark:border-red-500 focus:ring-red-500 dark:focus:ring-red-500' : 'border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 focus:ring-blue-500 dark:focus:ring-blue-500' }}"
                                            id="og_image_post_index" name="settings[og_image_post_index]" type="file" accept="image/*"
                                            onchange="previewImage(event, 'preview_og_post_index')">
+                                    <p class="mt-1 text-xs font-medium text-gray-500 dark:text-gray-300" id="image_help">
+                                        Accepted formats: <span class="font-semibold text-gray-700 dark:text-gray-200">JPG, PNG, SVG</span>, or any valid image file. Max size: <span class="font-semibold text-gray-700 dark:text-gray-200">2MB</span>.
+                                    </p>
                                     @error('settings.og_image_post_index')
-                                    <span class="text-xs mt-1 text-red-500">{{ $message }}</span>
+                                        <span class="text-xs mt-1 text-red-500">{{ $message }}</span>
                                     @enderror
 
                                     <div class="mt-2">
@@ -251,35 +260,35 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             @if(session('success'))
-            Swal.fire({
-                toast: true,
-                position: "top-end",
-                icon: "success",
-                title: "{{ session('success') }}",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                customClass: {
-                    popup: 'bg-white dark:bg-gray-800 shadow-lg',
-                    title: 'font-normal text-base text-gray-800 dark:text-gray-200'
-                }
-            });
+                Swal.fire({
+                    toast: true,
+                    position: "top-end",
+                    icon: "success",
+                    title: "{{ session('success') }}",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    customClass: {
+                        popup: 'bg-white dark:bg-gray-800 shadow-lg',
+                        title: 'font-normal text-base text-gray-800 dark:text-gray-200'
+                    }
+                });
             @endif
 
-            @if(session('error'))
-            Swal.fire({
-                toast: true,
-                position: "top-end",
-                icon: "error",
-                title: "{{ session('error') }}",
-                showConfirmButton: false,
-                timer: 4000,
-                timerProgressBar: true,
-                customClass: {
-                    popup: 'bg-white dark:bg-gray-800 shadow-lg',
-                    title: 'font-normal text-base text-gray-800 dark:text-gray-200'
-                }
-            });
+            @if($errors->any() || session('error'))
+                Swal.fire({
+                    toast: true,
+                    position: "top-end",
+                    icon: "error",
+                    title: "{{ session('error') ?? 'Something went wrong. Please check the form and try again.' }}",
+                    showConfirmButton: false,
+                    timer: 4000,
+                    timerProgressBar: true,
+                    customClass: {
+                        popup: 'bg-white dark:bg-gray-800 shadow-lg',
+                        title: 'font-normal text-base text-gray-800 dark:text-gray-200'
+                    }
+                });
             @endif
         });
 

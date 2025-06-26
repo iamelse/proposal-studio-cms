@@ -159,7 +159,7 @@
             </div>
 
             <div class="mt-10">
-                <a href="https://wa.me/{{ $settings['whatsapp_number_with_country_code'] }}?text=Hallo%20Kak%2C%20saya%20ingin%20tanya%20terkait%20proposal%2C%20apakah%20bisa%20dibantu%3F" target="_blank" rel="noopener noreferrer" aria-label="Konsultasi Gratis melalui WhatsApp">
+                <a href="{{ route('wa.redirect') }}" target="_blank" rel="noopener noreferrer" aria-label="Konsultasi Gratis melalui WhatsApp">
                     <button class="bg-[#05408C] hover:bg-[#05408C]/80 focus:ring-4 focus:ring-blue-300 ease-in duration-200 rounded-full flex py-4 px-6 md:py-5 md:px-8 gap-2 items-center">
                         <i class='bx bxl-whatsapp text-white text-2xl'></i>
                         <span class="font-medium text-base md:text-lg text-white">Konsultasi Gratis</span>
@@ -221,7 +221,7 @@
     @endphp
     <section id="about" class="flex flex-col items-center justify-between lg:flex-row mx-5 lg:mx-20 my-16 md:my-[100px]">
         <div class="max-w-xl">
-            <h2 class="text-baseBlack text-2xl md:text-4xl tracking-tight mb-4 font-bold">
+            <h2 class="text-baseBlack text-2xl text-center md:text-start md:text-4xl tracking-tight mb-4 font-bold">
                 {!! $content->title !!}
             </h2>
             <p class="mt-6 text-base md:text-lg text-baseBlack">
@@ -239,20 +239,26 @@
                         <div class="hidden md:block w-px h-10 bg-gray-300"></div>
                     @endif
 
-                    <div class="text-center">
-                        <h3 class="text-baseBlack font-semibold text-xl md:text-2xl lg:text-3xl">
-                            {{ $stat->value ?? '' }}{{ $stat->suffix ?? '' }}
-                        </h3>
-                        <p class="text-baseBlack font-normal text-base md:text-xl">
-                            {{ $stat->title ?? '' }}
-                        </p>
-                    </div>
+                        @php
+                            $value = $stat->value ?? '';
+                            $suffix = $stat->suffix ?? '';
+                            $formattedValue = preg_match('/^[A-Za-z]/', $suffix) ? $value . ' ' . $suffix : $value . $suffix;
+                        @endphp
+
+                        <div class="text-center">
+                            <h3 class="text-baseBlack font-semibold text-xl md:text-2xl lg:text-3xl">
+                                {{ $formattedValue }}
+                            </h3>
+                            <p class="text-baseBlack font-normal text-base md:text-xl">
+                                {{ $stat->title ?? '' }}
+                            </p>
+                        </div>
                 @endforeach
             </div>
 
         </div>
-        <figure class="max-w-xl mt-5 lg:mt-0">
-            <img class="object-cover w-full h-full rounded-lg" src="{{ getAboutUsImageSection($content) }}" alt="Foto Profil Proposal Studio">
+        <figure class="max-w-2xl mt-5 lg:mt-0 aspect-[16/9] overflow-hidden rounded-lg">
+            <img class="object-cover w-full h-full" src="{{ getAboutUsImageSection($content) }}" alt="Foto Profil Proposal Studio">
         </figure>
     </section>
 @endsection
@@ -414,15 +420,15 @@
             </h2>
         </div>
 
-        <div class="relative overflow-hidden mt-8 md:mt-16">
+        <div class="relative overflow-hidden mt-8 md:mt-16 pb-1">
             <!-- Fade effect sides -->
             <div class="absolute top-0 left-0 w-32 h-full z-10 bg-gradient-to-r from-white to-transparent pointer-events-none"></div>
             <div class="absolute top-0 right-0 w-32 h-full z-10 bg-gradient-to-l from-white to-transparent pointer-events-none"></div>
 
-            <!-- Marquee track -->
-            <div class="flex w-max gap-5 animate-marquee-fast">
+            <!-- Marquee track (JS animated) -->
+            <div id="marquee-track" class="flex w-max gap-5 flex-nowrap will-change-transform">
                 @foreach ($reviews as $review)
-                    <figure class="w-[400px] h-[240px] rounded-[20px] px-8 py-7 border border-slate-200 bg-white flex-shrink-0">
+                    <figure class="w-[400px] h-auto rounded-[20px] px-8 py-7 border border-slate-200 bg-white flex-shrink-0">
                         <figcaption class="flex gap-5 items-center">
                             <div class="w-14 h-14 rounded-full overflow-hidden">
                                 <img src="{{ $review->image }}" alt="Review oleh {{ $review->company_name }}" class="w-full h-full object-cover rounded-full">
@@ -433,7 +439,7 @@
                             </div>
                         </figcaption>
                         <blockquote>
-                            <p class="text-gray-600 text-base mt-6 line-clamp-3 break-words">
+                            <p class="text-gray-600 text-base mt-6">
                                 {{ $review->comment }}
                             </p>
                             <div class="flex gap-1 mt-5">
@@ -501,7 +507,7 @@
 
                 <!-- Tombol di kanan -->
                 <div class="flex justify-center lg:justify-end mt-6 lg:mt-0">
-                    <a href="https://wa.me/{{ $settings['whatsapp_number_with_country_code'] }}?text={{ urlencode('Hallo Kak, saya ingin tanya terkait proposal, apakah bisa dibantu?') }}">
+                    <a href="{{ route('wa.redirect') }}">
                         <button
                             class="flex gap-2 items-center justify-center px-4 py-2 bg-brandPrimary border border-white rounded-full
                                    lg:px-8 lg:py-4 lg:gap-4

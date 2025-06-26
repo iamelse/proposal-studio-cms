@@ -8,7 +8,7 @@
       :class="sidebarToggle ? 'justify-center' : 'justify-between'"
       class="flex items-center gap-2 pt-8 sidebar-header pb-7"
    >
-    <a href="{{ route('be.dashboard.index') }}">
+    <a class="hidden lg:block" href="{{ route('be.dashboard.index') }}"> <!-- default no class -->
       <span class="logo" :class="sidebarToggle ? 'hidden' : ''">
         <!-- Light mode logo -->
         <div class="flex items-center space-x-2 dark:hidden">
@@ -46,7 +46,15 @@
 </div>
 <!-- SIDEBAR HEADER -->
 <div
-   class="flex flex-col overflow-y-auto duration-300 ease-linear no-scrollbar"
+    id="sidebar-scroll-container"
+    x-init="
+      $nextTick(() => {
+         const activeItem = $el.querySelector('.menu-item-active');
+         if (activeItem) {
+            $el.scrollTop = activeItem.offsetTop - $el.clientHeight / 2;
+         }
+      })"
+     class="flex flex-col overflow-y-auto duration-300 ease-linear no-scrollbar"
 >
    <!-- Sidebar Menu -->
    <nav>
@@ -94,6 +102,15 @@
                             'icon' => 'bx-category', // sudah tepat untuk Categories
                             'label' => 'Categories',
                             'permission' => PermissionEnum::READ_POST_CATEGORY
+                        ],
+                        [
+                            'order' => 3,
+                            'active' => 'unisharp.lfm.show',
+                            'route' => 'unisharp.lfm.show',
+                            'url' => '/admin/laravel-filemanager?type=image',
+                            'icon' => 'bx-file',
+                            'label' => 'Image File Manager',
+                            'permission' => PermissionEnum::READ_FILE_MANAGER
                         ],
                     ]
                 ],
@@ -286,12 +303,14 @@
                <ul class="flex flex-col gap-4 mb-6">
                   @foreach ($menu['children'] as $child)
                      @php
-                           $isActive = is_array($child['active'])
-                              ? collect($child['active'])->some(fn($route) => request()->routeIs($route . ($child['exact'] ?? false ? '' : '*')))
-                              : request()->routeIs($child['active'] . ($child['exact'] ?? false ? '' : '*'));
+                               $href = $child['url'] ?? route($child['route']);
+
+                               $isActive = is_array($child['active'])
+                                  ? collect($child['active'])->some(fn($route) => request()->routeIs($route . ($child['exact'] ?? false ? '' : '*')))
+                                  : request()->routeIs($child['active'] . ($child['exact'] ?? false ? '' : '*'));
                      @endphp
                      <li>
-                        <a href="{{ route($child['route']) }}"
+                        <a href="{{ $href }}"
                            class="menu-item group {{ $isActive ? 'menu-item-active' : 'menu-item-inactive' }}">
                            <i class="bx bx-sm {{ $child['icon'] }}"></i>
                            {{ $child['label'] }}

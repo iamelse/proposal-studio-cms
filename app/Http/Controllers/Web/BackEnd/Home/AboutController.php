@@ -42,7 +42,10 @@ class AboutController extends Controller
 
             $rules = [
                 'title'       => ['HTML.Allowed' => 'span[style]'],  // Only <span> with style
-                'description' => ['HTML.Allowed' => 'span[style]'],
+                'description' => [
+                    'HTML.Allowed' => 'span[style],p[style],strong,em,u,br',
+                    'CSS.AllowedProperties' => 'color,text-align',
+                ],
             ];
 
             $cleanedContent = cleanHtmlFields($content, $rules);

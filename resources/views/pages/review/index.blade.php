@@ -190,6 +190,9 @@
                             <th class="w-20 px-4 py-3 font-medium">No.</th>
                             <th class="flex flex-col items-center px-4 py-3 font-medium">Image</th>
                             <th class="w-20 px-4 py-3 font-medium">Company Name</th>
+                            <th colspan="3" class="px-4 py-3 text-left font-semibold text-gray-800 max-w-xl truncate">
+                                Reviews
+                            </th>
                             <th class="w-20 px-4 py-3 font-medium">Rating</th>
                             <th class="px-4 py-3 font-medium">Created At</th>
                             <th class="px-4 py-3 font-medium">Updated At</th>
@@ -215,6 +218,11 @@
                                 </div>
                             </td>
                             <td class="w-20 px-4 py-3">{{ $review->company_name }}</td>
+                            <td colspan="3" class="px-4 py-3 max-w-xl text-gray-700">
+                                <p class="line-clamp-10 break-words">
+                                    {{ $review->comment }}
+                                </p>
+                            </td>
                             <td class="w-20 px-4 py-3">{{ $review->rating }}/5.0</td>
                             <td class="px-4 py-3">{{ $review->formatted_created_at }}</td>
                             <td class="px-4 py-3">{{ $review->formatted_updated_at }}</td>
@@ -275,7 +283,11 @@
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="10" class="text-center py-4 text-gray-400">No data available.</td>
+                            <td colspan="11" class="h-[500px]">
+                                <div class="flex items-center justify-center h-full text-gray-400">
+                                    No data available.
+                                </div>
+                            </td>
                         </tr>
                         @endforelse
                     </tbody>
@@ -337,12 +349,12 @@
                 });
             @endif
 
-            @if(session('error'))
+            @if($errors->any() || session('error'))
                 Swal.fire({
                     toast: true,
                     position: "top-end",
                     icon: "error",
-                    title: "{{ session('error') }}",
+                    title: "{{ session('error') ?? 'Something went wrong. Please check the form and try again.' }}",
                     showConfirmButton: false,
                     timer: 4000,
                     timerProgressBar: true,

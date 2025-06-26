@@ -11,12 +11,14 @@
     "require": {
         "php": "^8.2",
         "cviebrock/eloquent-sluggable": "^12.0",
+        "intervention/image-laravel": "^1.5",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
         "laravolt/avatar": "^6.1",
         "mews/purifier": "^3.4",
         "opcodesio/log-viewer": "^3.15",
         "spatie/laravel-permission": "^6.16",
+        "unisharp/laravel-filemanager": "^2.10",
         "yogameleniawan/search-sort-eloquent": "^1.2"
     },
     "require-dev": {

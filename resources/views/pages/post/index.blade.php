@@ -225,6 +225,7 @@
                                 <th class="px-4 py-3 font-medium">Title</th>
                                 <th class="px-4 py-3 font-medium">Category</th>
                                 <th class="px-4 py-3 font-medium">Status</th>
+                                <th class="px-4 py-3 font-medium">Views</th>
                                 <th class="px-4 py-3 font-medium">Published At</th>
                                 <th class="px-4 py-3 font-medium">Created At</th>
                                 <th class="px-4 py-3 font-medium">Updated At</th>
@@ -252,7 +253,17 @@
                                     </td>
                                     <td class="px-4 py-3">{{ $post->title }}</td>
                                     <td class="px-4 py-3">{{ $post->category->name }}</td>
-                                    <td class="px-4 py-3">{{ strtoupper($post->status) }}</td>
+
+                                    @php
+                                        $status = App\Enums\PostStatus::from($post->status);
+                                    @endphp
+
+                                    <td class="px-4 py-3">
+                                        <span class="text-xs font-medium px-2.5 py-0.5 rounded {{ $status->badgeColor() }}">
+                                            {{ $status->label() }}
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-3">{{ $post->view_stats_sum_views }}</td>
                                     <td class="px-4 py-3">{{ $post->published_at }}</td>
                                     <td class="px-4 py-3">{{ $post->formatted_created_at }}</td>
                                     <td class="px-4 py-3">{{ $post->formatted_updated_at }}</td>
@@ -312,9 +323,13 @@
                                     </td>
                                 </tr>
                             @empty
-                                <tr>
-                                    <td colspan="10" class="text-center py-4 text-gray-400">No data available.</td>
-                                </tr>
+                            <tr>
+                                <td colspan="13" class="h-[500px] text-center text-gray-400">
+                                    <div class="flex items-center justify-center h-full w-full">
+                                        No data available.
+                                    </div>
+                                </td>
+                            </tr>
                             @endforelse
                             </tbody>
                         </table>
@@ -360,35 +375,35 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             @if(session('success'))
-            Swal.fire({
-                toast: true,
-                position: "top-end",
-                icon: "success",
-                title: "{{ session('success') }}",
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
-                customClass: {
-                    popup: 'bg-white dark:bg-gray-800 shadow-lg',
-                    title: 'font-normal text-base text-gray-800 dark:text-gray-200'
-                }
-            });
+                Swal.fire({
+                    toast: true,
+                    position: "top-end",
+                    icon: "success",
+                    title: "{{ session('success') }}",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    customClass: {
+                        popup: 'bg-white dark:bg-gray-800 shadow-lg',
+                        title: 'font-normal text-base text-gray-800 dark:text-gray-200'
+                    }
+                });
             @endif
 
-            @if(session('error'))
-            Swal.fire({
-                toast: true,
-                position: "top-end",
-                icon: "error",
-                title: "{{ session('error') }}",
-                showConfirmButton: false,
-                timer: 4000,
-                timerProgressBar: true,
-                customClass: {
-                    popup: 'bg-white dark:bg-gray-800 shadow-lg',
-                    title: 'font-normal text-base text-gray-800 dark:text-gray-200'
-                }
-            });
+            @if($errors->any() || session('error'))
+                Swal.fire({
+                    toast: true,
+                    position: "top-end",
+                    icon: "error",
+                    title: "{{ session('error') ?? 'Something went wrong. Please check the form and try again.' }}",
+                    showConfirmButton: false,
+                    timer: 4000,
+                    timerProgressBar: true,
+                    customClass: {
+                        popup: 'bg-white dark:bg-gray-800 shadow-lg',
+                        title: 'font-normal text-base text-gray-800 dark:text-gray-200'
+                    }
+                });
             @endif
         });
     </script>

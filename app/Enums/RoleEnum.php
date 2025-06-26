@@ -80,6 +80,8 @@ enum RoleEnum: string
                 PermissionEnum::READ_POST,
                 PermissionEnum::UPDATE_POST,
                 PermissionEnum::DELETE_POST,
+
+                PermissionEnum::READ_FILE_MANAGER
             ],
             self::AUTHOR => [
                 PermissionEnum::READ_DASHBOARD,
@@ -88,6 +90,8 @@ enum RoleEnum: string
                 PermissionEnum::READ_POST,
                 PermissionEnum::UPDATE_POST,
                 PermissionEnum::DELETE_POST,
+
+                PermissionEnum::READ_FILE_MANAGER,
             ],
         };
     }

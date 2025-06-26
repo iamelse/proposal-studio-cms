@@ -15,10 +15,6 @@ class ServiceSeeder extends Seeder
     {
         $services = [
             [
-                'title' => 'Proposal Bisnis',
-                'description' => 'Dokumen rinci yang merencanakan dan meyakinkan tentang potensi kesuksesan suatu bisnis.',
-            ],
-            [
                 'title' => 'Proposal Kegiatan',
                 'description' => 'Dokumen yang merinci rencana dan pelaksanaan suatu kegiatan atau acara untuk mendapatkan persetujuan dan dukungan.',
             ],
@@ -27,12 +23,16 @@ class ServiceSeeder extends Seeder
                 'description' => 'Dokumen permohonan dukungan finansial dari sponsor untuk suatu acara atau inisiatif tertentu.',
             ],
             [
-                'title' => 'Proposal Investasi',
-                'description' => 'Dokumen yang merinci potensi keuntungan dan proyeksi keuangan suatu investasi untuk meyakinkan para investor.',
-            ],
-            [
                 'title' => 'Proposal Kerjasama',
                 'description' => 'Dokumen formal yang merinci tujuan, manfaat, dan syarat-syarat kerjasama antara pihak-pihak terlibat.',
+            ],
+            [
+                'title' => 'Proposal Bisnis',
+                'description' => 'Dokumen rinci yang merencanakan dan meyakinkan tentang potensi kesuksesan suatu bisnis.',
+            ],
+            [
+                'title' => 'Proposal Investasi',
+                'description' => 'Dokumen yang merinci potensi keuntungan dan proyeksi keuangan suatu investasi untuk meyakinkan para investor.',
             ],
             [
                 'title' => 'Proposal Sewa Tempat',
@@ -52,11 +52,12 @@ class ServiceSeeder extends Seeder
             ],
         ];
 
-        foreach ($services as $service) {
+        foreach ($services as $index => $service) {
             Service::create([
                 'title' => $service['title'],
                 'description' => $service['description'],
                 'image' => null,
+                'order' => $index + 1,
             ]);
         }
     }

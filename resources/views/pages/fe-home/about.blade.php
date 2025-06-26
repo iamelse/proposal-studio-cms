@@ -42,12 +42,14 @@
                             }">
 
                             <!-- Preview Image -->
-                            <div x-show="previewUrl" class="my-2 w-full max-w-md aspect-square rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-700">
-                                <img
-                                    :src="previewUrl"
-                                    class="w-full h-full object-cover"
-                                    alt="Image Preview"
-                                >
+                            <div class="flex justify-center">
+                                <div x-show="previewUrl" class="my-2 w-full max-w-2xl aspect-[16/9] rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700">
+                                    <img
+                                        :src="previewUrl"
+                                        class="w-full h-full object-cover"
+                                        alt="Image Preview"
+                                    >
+                                </div>
                             </div>
 
                             <input
@@ -66,6 +68,9 @@
                                     ? 'border-red-500 dark:border-red-500 focus:ring-2 focus:ring-red-500 dark:focus:ring-red-500'
                                     : 'border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-500'"
                             >
+                            <p class="mt-1 text-xs font-medium text-gray-500 dark:text-gray-300" id="image_help">
+                                Accepted formats: <span class="font-semibold text-gray-700 dark:text-gray-200">JPG, PNG, SVG</span>, or any valid image file. Max size: <span class="font-semibold text-gray-700 dark:text-gray-200">2MB</span>.
+                            </p>
 
                             <!-- Error Message -->
                             <span class="text-xs mt-1 font-medium text-red-500 dark:text-red-500">
@@ -198,7 +203,7 @@
                             <!-- End Toolbar -->
 
                             <!-- Start Editable Text Area -->
-                            <div class="px-4 py-2 bg-white rounded-b-lg dark:bg-gray-800 @error('content.description') border-2 border-red-500 @else border-gray-200 dark:border-gray-700 @enderror">
+                            <div class="px-4 py-2 bg-white rounded-b-lg dark:bg-gray-800 @error('content.title') border-2 border-red-500 @else border-gray-200 dark:border-gray-700 @enderror">
                                 <label class="sr-only">Write comment</label>
                                 <div id="wysiwyg-title"
                                      class="block w-full px-0 text-sm text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"></div>
@@ -333,8 +338,54 @@
                                             </button>
                                         </div>
                                         <!-- End Color Picker and Color Buttons -->
-
                                         <!-- End Text Color -->
+
+                                        <!-- Start Align Button -->
+                                        <div class="px-1">
+                                            <span class="block w-px h-4 bg-gray-300 dark:bg-gray-600"></span>
+                                        </div>
+                                        <button id="toggleLeftAlignButton" type="button" data-tooltip-target="tooltip-left-align" class="p-1.5 text-gray-500 rounded-sm cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 6h8m-8 4h12M6 14h8m-8 4h12"/>
+                                            </svg>
+                                            <span class="sr-only">Align left</span>
+                                        </button>
+                                        <div id="tooltip-left-align" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
+                                            Align left
+                                            <div class="tooltip-arrow" data-popper-arrow></div>
+                                        </div>
+                                        <button id="toggleCenterAlignButton" type="button" data-tooltip-target="tooltip-center-align" class="p-1.5 text-gray-500 rounded-sm cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 6h8M6 10h12M8 14h8M6 18h12"/>
+                                            </svg>
+                                            <span class="sr-only">Align center</span>
+                                        </button>
+                                        <div id="tooltip-center-align" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
+                                            Align center
+                                            <div class="tooltip-arrow" data-popper-arrow></div>
+                                        </div>
+                                        <button id="toggleRightAlignButton" type="button" data-tooltip-target="tooltip-right-align" class="p-1.5 text-gray-500 rounded-sm cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 6h-8m8 4H6m12 4h-8m8 4H6"/>
+                                            </svg>
+                                            <span class="sr-only">Align right</span>
+                                        </button>
+                                        <div id="tooltip-right-align" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
+                                            Align right
+                                            <div class="tooltip-arrow" data-popper-arrow></div>
+                                        </div>
+                                        <button id="toggleJustifyAlignButton" type="button" data-tooltip-target="tooltip-justify-align" class="p-1.5 text-gray-500 rounded-sm cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
+                                            </svg>
+                                            <span class="sr-only">Align justify</span>
+                                        </button>
+                                        <div id="tooltip-justify-align" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
+                                            Align justify
+                                            <div class="tooltip-arrow" data-popper-arrow></div>
+                                        </div>
+                                        <!-- End Align Button -->
+
                                     </div>
                                 </div>
                             </div>
@@ -458,12 +509,12 @@
                 });
             @endif
 
-            @if(session('error'))
+            @if($errors->any() || session('error'))
                 Swal.fire({
                     toast: true,
                     position: "top-end",
                     icon: "error",
-                    title: "{{ session('error') }}",
+                    title: "{{ session('error') ?? 'Something went wrong. Please check the form and try again.' }}",
                     showConfirmButton: false,
                     timer: 4000,
                     timerProgressBar: true,
@@ -481,6 +532,7 @@
         import StarterKit from 'https://esm.sh/@tiptap/starter-kit@2.6.6';
         import TextStyle from 'https://esm.sh/@tiptap/extension-text-style@2.6.6';
         import { Color } from 'https://esm.sh/@tiptap/extension-color@2.6.6';
+        import TextAlign from 'https://esm.sh/@tiptap/extension-text-align@2.6.6';
 
         const editorsData = [
             { editorElementId: 'wysiwyg-title', hiddenTextareaId: 'hiddenTitle', suffix: 'Title' },
@@ -502,16 +554,24 @@
                     extensions: [
                         StarterKit.configure({
                             textStyle: false,
-                            color: false
+                            color: false,
                         }),
                         TextStyle,
                         Color,
+                        TextAlign.configure({
+                            types: ['paragraph'],
+                            alignments: ['left', 'center', 'right', 'justify'],
+                        }),
                     ],
                     editorProps: {
                         attributes: { class: 'focus:outline-none' },
                     },
+                    onFocus() {
+                        activeEditor = editor; // ✅ gunakan event onFocus dari tiptap
+                    },
                 });
 
+                // Sync to hidden textarea
                 hiddenTextarea.value = editor.getHTML();
                 editor.on('update', () => {
                     hiddenTextarea.value = editor.getHTML();
@@ -519,11 +579,7 @@
 
                 editors.push({ editor, hiddenTextarea, editorElement });
 
-                editorElement.addEventListener('focus', () => {
-                    activeEditor = editor;
-                });
-
-                // Color picker input
+                // Warna dari color picker input
                 const colorPicker = document.getElementById(`color${suffix}`);
                 if (colorPicker) {
                     colorPicker.addEventListener('input', e => {
@@ -538,7 +594,7 @@
                     });
                 });
 
-                // Reset color button
+                // Reset warna
                 const resetColorBtn = document.getElementById(`reset-color-${suffix.toLowerCase()}`);
                 if (resetColorBtn) {
                     resetColorBtn.addEventListener('click', () => {
@@ -547,7 +603,21 @@
                 }
             });
 
-            // On form submit, update hidden textareas
+            // ✅ Gunakan hanya activeEditor untuk alignment
+            document.getElementById('toggleLeftAlignButton')?.addEventListener('click', () => {
+                if (activeEditor) activeEditor.chain().focus().setTextAlign('left').run();
+            });
+            document.getElementById('toggleCenterAlignButton')?.addEventListener('click', () => {
+                if (activeEditor) activeEditor.chain().focus().setTextAlign('center').run();
+            });
+            document.getElementById('toggleRightAlignButton')?.addEventListener('click', () => {
+                if (activeEditor) activeEditor.chain().focus().setTextAlign('right').run();
+            });
+            document.getElementById('toggleJustifyAlignButton')?.addEventListener('click', () => {
+                if (activeEditor) activeEditor.chain().focus().setTextAlign('justify').run();
+            });
+
+            // Saat form submit, simpan HTML ke textarea
             const form = document.querySelector('form');
             if (form) {
                 form.addEventListener('submit', () => {
