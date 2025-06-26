@@ -651,50 +651,100 @@
                 </div>
             </div>
 
-            <!-- MODAL: Image options -->
-            <div id="imgOptionsModal" tabindex="-1"
-                 class="fixed inset-0 z-50 hidden overflow-y-auto overflow-x-hidden">
-                <div class="flex items-center justify-center min-h-screen">
-                    <div class="relative w-full max-w-md p-4 bg-white rounded-lg shadow dark:bg-gray-800">
-                        <button type="button"
-                                class="absolute top-2.5 right-2.5 text-gray-400 hover:text-gray-900"
-                                data-modal-hide="imgOptionsModal">
-                            <i class="bx bx-x text-2xl"></i>
-                            <span class="sr-only">Close modal</span>
-                        </button>
+            <!-- Backdrop + Modal -->
+            <div id="imgOptionsModal"
+                 class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40">
+                <!-- Modal box -->
+                <div class="relative bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 w-[400px] mx-auto mt-20">
 
-                        <h3 class="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
-                            Gambar &nbsp;<span id="imgOptionsUrl" class="text-xs text-gray-500 break-all"></span>
-                        </h3>
+                    <!-- Close Button -->
+                    <button id="closeImgOptionsBtn"
+                            class="absolute top-3 right-3 text-gray-400 hover:text-gray-900 dark:hover:text-white">
+                        <i class="bx bx-x text-2xl"></i>
+                        <span class="sr-only">Close</span>
+                    </button>
 
-                        <form id="imgOptionsForm" class="space-y-4">
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">Width</label>
-                                    <input name="width" type="text" placeholder="px / %" class="w-full input">
-                                </div>
-                                <div>
-                                    <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">Height</label>
-                                    <input name="height" type="text" placeholder="px / %" class="w-full input">
-                                </div>
+                    <!-- Modal Content -->
+                    <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">
+                        Picture
+                        <span id="imgOptionsUrl"
+                              class="block text-xs font-normal text-gray-500 dark:text-gray-400 break-all mt-1">
+                            <!-- Selected image URL will appear here -->
+                        </span>
+                    </h2>
+
+                    <form id="imgOptionsForm" class="space-y-4">
+
+                        <!-- Width & Height -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    Width
+                                </label>
+                                <input name="width" type="text" placeholder="px / %"
+                                       class="w-full rounded-md border-gray-300 dark:border-gray-600
+                                           focus:border-blue-500 focus:ring-blue-500 text-sm
+                                           dark:bg-gray-700 dark:text-gray-200">
+                                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                    Set the image width in pixels (e.g., 300) or percentage (e.g., 50%). Leave empty for auto width.
+                                </p>
                             </div>
                             <div>
-                                <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">Alt text</label>
-                                <input name="alt" type="text" class="w-full input">
+                                <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    Height
+                                </label>
+                                <input name="height" type="text" placeholder="px / %"
+                                       class="w-full rounded-md border-gray-300 dark:border-gray-600
+                                           focus:border-blue-500 focus:ring-blue-500 text-sm
+                                           dark:bg-gray-700 dark:text-gray-200">
+                                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                    Set the image height in pixels or percentage. Leave empty for auto height.
+                                </p>
                             </div>
-                            <div>
-                                <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">CSS class</label>
-                                <input name="class" type="text" class="w-full input">
-                            </div>
+                        </div>
 
-                            <div class="flex justify-end gap-2 pt-3">
-                                <button type="button"
-                                        class="btn-secondary"
-                                        data-modal-hide="imgOptionsModal">Batal</button>
-                                <button type="submit" class="btn-primary">Insert</button>
-                            </div>
-                        </form>
-                    </div>
+                        <!-- Alt Text -->
+                        <div>
+                            <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
+                                Alt text
+                            </label>
+                            <input name="alt" type="text"
+                                   class="w-full rounded-md border-gray-300 dark:border-gray-600
+                                       focus:border-blue-500 focus:ring-blue-500 text-sm
+                                       dark:bg-gray-700 dark:text-gray-200">
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                Describe the image for accessibility and SEO purposes.
+                            </p>
+                        </div>
+
+                        <!-- CSS Class -->
+                        <div>
+                            <label class="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
+                                CSS class
+                            </label>
+                            <input name="class" type="text"
+                                   class="w-full rounded-md border-gray-300 dark:border-gray-600
+                                       focus:border-blue-500 focus:ring-blue-500 text-sm
+                                       dark:bg-gray-700 dark:text-gray-200">
+                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                Add optional custom CSS classes (e.g., <code>rounded-lg</code>, <code>shadow-md</code>).
+                            </p>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex justify-end space-x-3 mt-4">
+                            <button type="button"
+                                    id="cancelImgOptionsBtn"
+                                    class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg
+                                        hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600">
+                                Cancel
+                            </button>
+
+                            <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                                Insert
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
 
@@ -1039,6 +1089,17 @@
                 editor.chain().focus().setImage(attrs).run()
 
                 /* tutup modal */
+                const modal = FlowbiteInstances.getInstance('Modal', 'imgOptionsModal')
+                modal?.hide()
+            })
+
+            /** Tutup Modal **/
+            document.getElementById('closeImgOptionsBtn')?.addEventListener('click', () => {
+                const modal = FlowbiteInstances.getInstance('Modal', 'imgOptionsModal')
+                modal?.hide()
+            })
+
+            document.getElementById('cancelImgOptionsBtn')?.addEventListener('click', () => {
                 const modal = FlowbiteInstances.getInstance('Modal', 'imgOptionsModal')
                 modal?.hide()
             })
