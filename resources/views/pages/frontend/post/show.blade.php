@@ -48,7 +48,7 @@
         <div class="mx-auto max-w-[1030px] px-4 sm:px-8 xl:px-0">
 
             <!-- Title & Excerpt -->
-            <div class="mx-auto max-w-[770px] text-center">
+            <div class="mx-auto max-w-[770px] text-center md:text-center">
                 <h1 class="mb-5 text-2xl font-bold text-gray-800 sm:text-3xl md:text-4xl">
                     {{ $post->title }}
                 </h1>
@@ -57,30 +57,32 @@
                 </p>
 
                 <!-- Author Info -->
-                <div class="mt-6 flex flex-col justify-center gap-3 sm:flex-row sm:items-center">
-                    <div class="flex h-10 w-10 overflow-hidden rounded-full">
-                        <img
-                            src="{{ getAuthorPostImagePath($post->user) }}"
-                            alt="{{ $post->user->name }}"
-                            width="40"
-                            height="40"
-                            loading="lazy"
-                        />
-                    </div>
+                <div class="mt-6 flex flex-wrap items-center justify-center gap-3 text-sm text-gray-700">
+                    <!-- Avatar -->
+                    <img
+                        src="{{ getAuthorPostImagePath($post->user) }}"
+                        alt="{{ $post->user->name }}"
+                        class="h-9 w-9 md:h-10 md:w-10 rounded-full object-cover"
+                        width="40"
+                        height="40"
+                        loading="lazy"
+                    />
 
-                    <div class="flex flex-wrap items-center gap-4">
-                        <div class="flex flex-wrap items-center gap-2.5">
-                            <h4 class="text-sm font-medium text-gray-700">
-                                {{ $post->user->name }}
-                            </h4>
-                            <i class="bx bxs-circle text-gray-700 text-[6px] mx-3"></i>
-                            <div class="inline-flex items-center gap-2 text-gray-700">
-                                <i class="bx bx-calendar text-sm"></i>
-                                <p class="text-sm font-medium">{{ $post->formatted_published_at }}</p>
-                            </div>
-                        </div>
+                    <!-- Name -->
+                    <span class="font-medium">
+                        {{ $post->user->name }}
+                    </span>
+
+                    <!-- Dot Separator -->
+                    <span class="text-3xl">•</span>
+
+                    <!-- Date -->
+                    <div class="flex items-center gap-1">
+                        <i class="bx bx-calendar text-base"></i>
+                        <time class="font-medium">{{ $post->formatted_published_at }}</time>
                     </div>
                 </div>
+
             </div>
 
             <!-- Cover Image -->
