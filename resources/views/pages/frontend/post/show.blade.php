@@ -61,7 +61,7 @@
                     <!-- Avatar -->
                     <img
                         src="{{ getAuthorPostImagePath($post->user) }}"
-                        alt="{{ $post->user->name }}"
+                        alt="{{ $post->created_by_name }}"
                         class="h-9 w-9 md:h-10 md:w-10 rounded-full object-cover"
                         width="40"
                         height="40"
@@ -70,7 +70,7 @@
 
                     <!-- Name -->
                     <span class="font-medium">
-                        {{ $post->user->name }}
+                        {{ $post->created_by_name }}
                     </span>
 
                     <!-- Dot Separator -->

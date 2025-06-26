@@ -119,7 +119,7 @@
                         <!-- Excerpt -->
                         <div class="mt-4">
                             <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                                Excerpt <span class="text-error-500">*</span>
+                                Excerpt / Summary <span class="text-error-500">*</span>
                             </label>
                             <div x-data="{ hasError: {{ session('errors') && session('errors')->has('excerpt') ? 'true' : 'false' }} }">
                             <textarea

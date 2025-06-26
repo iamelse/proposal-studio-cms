@@ -165,13 +165,9 @@ class PostController extends Controller
                 'seo_description'   => $request->excerpt,
                 'seo_keywords'      => $request->seo_keywords,
                 'category_id'       => $request->category_id,
-                'user_id'           => $request->status === 'published'
-                    ? ($request->user_id ?? auth()->id())
-                    : $post->user_id,
-                'published_at'  => $request->status === 'published'
-                    ? ($request->published_at ?? now())
-                    : $post->published_at,
-                'cover'         => $imagePath ?? $post->cover, // fallback to existing cover
+                'user_id'           => $post->user_id,
+                'published_at'      => $post->published_at,
+                'cover'             => $imagePath ?? $post->cover, // fallback to existing cover
             ]);
 
             return redirect()->route('be.post.edit', $post->slug)
