@@ -66,9 +66,6 @@
                 <link rel="stylesheet"
                       href="{{ asset('build/'.$manifest['resources/css/app.css']['file']) }}">
             </noscript>
-
-            {{-- JS — module sudah defer; tambah defer utk non-module fallback --}}
-            <script src="{{ asset('build/'.$manifest['resources/js/app.js']['file']) }}" defer></script>
         @else
             {{-- Fallback if manifest.json is missing --}}
             <p style="color: red;">Error: Build files not found. Please run <code>npm run build</code>.</p>
