@@ -13,9 +13,6 @@
     <!-- Meta Keywords (opsional & jarang dipakai oleh Google) -->
     <meta name="keywords" content="jasa pembuatan proposal, konsultasi proposal, event proposal, jasa event, konsultan event">
 
-    <!-- Meta Robots -->
-    <meta name="robots" content="index, follow">
-
     <!-- Open Graph (Facebook, LinkedIn, dll) -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="{{ $settings['home_title'] ?? env('APP_NAME') }}" />
