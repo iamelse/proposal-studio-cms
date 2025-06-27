@@ -54,6 +54,4 @@ Route::get('/konsultasi-gratis', WhatsappRedirectController::class)
 
 if (app()->environment(['local', 'staging'])) {
     include __DIR__ . '/dev-idcloudhost.php';
-} else {
-    abort(404);
 }
