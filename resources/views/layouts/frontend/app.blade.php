@@ -55,18 +55,17 @@
         @endphp
 
         @if ($manifest && isset($manifest['resources/css/app.css'], $manifest['resources/js/app.js']))
-            {{-- CSS: preload + onload trick --}}
-            <link rel="preload"
-                  as="style"
-                  href="{{ asset('build/' . $manifest['resources/css/app.css']['file']) }}"
+            {{-- CSS — non-blocking preload trick --}}
+            <link rel="preload" as="style"
+                  href="{{ asset('build/'.$manifest['resources/css/app.css']['file']) }}"
                   onload="this.onload=null;this.rel='stylesheet'">
             <noscript>
                 <link rel="stylesheet"
-                      href="{{ asset('build/' . $manifest['resources/css/app.css']['file']) }}">
+                      href="{{ asset('build/'.$manifest['resources/css/app.css']['file']) }}">
             </noscript>
 
-            {{-- JS: explicit defer (non-blocking) --}}
-            <script src="{{ asset('build/' . $manifest['resources/js/app.js']['file']) }}" defer></script>
+            {{-- JS — module sudah defer; tambah defer utk non-module fallback --}}
+            <script src="{{ asset('build/'.$manifest['resources/js/app.js']['file']) }}" defer></script>
         @else
             {{-- Fallback if manifest.json is missing --}}
             <p style="color: red;">Error: Build files not found. Please run <code>npm run build</code>.</p>

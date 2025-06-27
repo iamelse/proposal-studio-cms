@@ -1,4 +1,24 @@
 {
+  "node_modules/boxicons/fonts/boxicons.eot": {
+    "file": "assets/boxicons-CSrLvhY_.eot",
+    "src": "node_modules/boxicons/fonts/boxicons.eot"
+  },
+  "node_modules/boxicons/fonts/boxicons.svg": {
+    "file": "assets/boxicons-Dp7W9qN3.svg",
+    "src": "node_modules/boxicons/fonts/boxicons.svg"
+  },
+  "node_modules/boxicons/fonts/boxicons.ttf": {
+    "file": "assets/boxicons-EIQNrSje.ttf",
+    "src": "node_modules/boxicons/fonts/boxicons.ttf"
+  },
+  "node_modules/boxicons/fonts/boxicons.woff": {
+    "file": "assets/boxicons-CTVby2V1.woff",
+    "src": "node_modules/boxicons/fonts/boxicons.woff"
+  },
+  "node_modules/boxicons/fonts/boxicons.woff2": {
+    "file": "assets/boxicons-CeGEncwm.woff2",
+    "src": "node_modules/boxicons/fonts/boxicons.woff2"
+  },
   "public/assets/fonts/outfit/subset-Outfit-Black.woff": {
     "file": "assets/subset-Outfit-Black-BlaMwh82.woff",
     "src": "public/assets/fonts/outfit/subset-Outfit-Black.woff"
@@ -72,7 +92,7 @@
     "src": "public/assets/fonts/outfit/subset-Outfit-Thin.woff2"
   },
   "resources/css/app.css": {
-    "file": "assets/app-gde8ULcC.css",
+    "file": "assets/app-ClO8vZ-6.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
