@@ -21,7 +21,19 @@
     <link rel="manifest" href="{{ asset('assets/images/favicons/site.webmanifest') }}">
 
     <!-- Boxicons -->
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="preload" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+          as="style" onload="this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet"
+              href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+    </noscript>
+
+    {{-- ── Preload Outfit font family ───────────────────────────────── --}}
+    <link rel="preload" href="{{ asset('assets/fonts/outfit/subset-Outfit-Regular.woff2') }}"
+          as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{{ asset('assets/fonts/outfit/subset-Outfit-Bold.woff2') }}"
+          as="font" type="font/woff2" crossorigin>
+    {{-- ─────────────────────────────────────────────────────────────── --}}
 
     @php
         use Illuminate\Support\Facades\App;
