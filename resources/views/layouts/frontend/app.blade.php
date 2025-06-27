@@ -35,6 +35,9 @@
           as="font" type="font/woff2" crossorigin>
     {{-- ─────────────────────────────────────────────────────────────── --}}
 
+    {{-- Preload Background --}}
+    <link rel="preload" as="image" href="{{ asset('assets/images/bg.webp') }}">
+
     @php
         use Illuminate\Support\Facades\App;
 

@@ -138,7 +138,7 @@
         $content = json_decode($hero->content);
     @endphp
 
-    <section id="home" class="mt-24 md:mt-[170px] max-w-full mx-4 flex items-center justify-center bg-cover bg-center" style="background-image: url('{{ asset('assets/images/bg.png') }}');">
+    <section id="home" class="mt-24 md:mt-[170px] max-w-full mx-4 flex items-center justify-center bg-cover bg-center" style="background-image: url('{{ asset('assets/images/bg.webp') }}');">
         <div class="text-center flex flex-col items-center mt-2 w-full">
             <header class="px-4 py-2 rounded-full md:px-4 md:py-3 border-2 border-brandSecondary bg-[#FAE8DF] w-fit">
                 <p class="text-xs font-medium md:text-sm text-brandSecondary">
