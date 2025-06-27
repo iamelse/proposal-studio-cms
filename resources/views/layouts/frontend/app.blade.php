@@ -77,7 +77,7 @@
     @stack('meta')
 </head>
 
-<body class="bg-white text-black">
+<body class="bg-white text-black sm:text-base lg:text-lg">
 <header>
     @include('partials.frontend.navbar')
 </header>
