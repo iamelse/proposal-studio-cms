@@ -77,12 +77,18 @@
             </a>
         @endauth
 
-        <!-- Hamburger Button -->
-        <button id="hamburgerBtn" class="flex flex-col gap-[5px] z-50">
-            <span class="h-[2px] w-5 bg-[#1f2328] rounded-full"></span>
-            <span class="h-[2px] w-4 bg-[#1f2328] rounded-full"></span>
-            <span class="h-[2px] w-5 bg-[#1f2328] rounded-full"></span>
-        </button>
+            <!-- Hamburger Button with Accessibility Enhancements -->
+            <button
+                id="hamburgerBtn"
+                class="flex flex-col gap-[5px] z-50"
+                aria-label="Buka menu navigasi"
+                aria-expanded="false"
+                aria-controls="mainMenu"
+            >
+                <span class="h-[2px] w-5 bg-[#1f2328] rounded-full"></span>
+                <span class="h-[2px] w-4 bg-[#1f2328] rounded-full"></span>
+                <span class="h-[2px] w-5 bg-[#1f2328] rounded-full"></span>
+            </button>
     </div>
 </nav>
 
