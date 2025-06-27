@@ -92,11 +92,14 @@ class DashboardService
     {
         $postIds = (clone $postQuery)->pluck('id');
 
-        return Post::select('posts.*', DB::raw('SUM(pvs.views) as total_views'))
-            ->join('post_view_statistics as pvs', 'pvs.post_id', '=', 'posts.id')
+        $sub = DB::table('post_view_statistics')
+            ->selectRaw('post_id, SUM(views) AS total_views')
+            ->groupBy('post_id');
+
+        return Post::select('posts.*', 'agg.total_views')
+            ->joinSub($sub, 'agg', 'agg.post_id', '=', 'posts.id')
             ->whereIn('posts.id', $postIds)
-            ->groupBy('posts.id')
-            ->orderByDesc('total_views')
+            ->orderByDesc('agg.total_views')
             ->first();
     }
 
