@@ -1,6 +1,78 @@
 {
+  "public/assets/fonts/outfit/subset-Outfit-Black.woff": {
+    "file": "assets/subset-Outfit-Black-BlaMwh82.woff",
+    "src": "public/assets/fonts/outfit/subset-Outfit-Black.woff"
+  },
+  "public/assets/fonts/outfit/subset-Outfit-Black.woff2": {
+    "file": "assets/subset-Outfit-Black-DtKoYZc8.woff2",
+    "src": "public/assets/fonts/outfit/subset-Outfit-Black.woff2"
+  },
+  "public/assets/fonts/outfit/subset-Outfit-Bold.woff": {
+    "file": "assets/subset-Outfit-Bold-DFvSQcfO.woff",
+    "src": "public/assets/fonts/outfit/subset-Outfit-Bold.woff"
+  },
+  "public/assets/fonts/outfit/subset-Outfit-Bold.woff2": {
+    "file": "assets/subset-Outfit-Bold-btUYb8Ur.woff2",
+    "src": "public/assets/fonts/outfit/subset-Outfit-Bold.woff2"
+  },
+  "public/assets/fonts/outfit/subset-Outfit-ExtraBold.woff": {
+    "file": "assets/subset-Outfit-ExtraBold-DOwMqGCO.woff",
+    "src": "public/assets/fonts/outfit/subset-Outfit-ExtraBold.woff"
+  },
+  "public/assets/fonts/outfit/subset-Outfit-ExtraBold.woff2": {
+    "file": "assets/subset-Outfit-ExtraBold-FeVnwEuY.woff2",
+    "src": "public/assets/fonts/outfit/subset-Outfit-ExtraBold.woff2"
+  },
+  "public/assets/fonts/outfit/subset-Outfit-ExtraLight.woff": {
+    "file": "assets/subset-Outfit-ExtraLight-q2BtWlyI.woff",
+    "src": "public/assets/fonts/outfit/subset-Outfit-ExtraLight.woff"
+  },
+  "public/assets/fonts/outfit/subset-Outfit-ExtraLight.woff2": {
+    "file": "assets/subset-Outfit-ExtraLight-BsbtalWo.woff2",
+    "src": "public/assets/fonts/outfit/subset-Outfit-ExtraLight.woff2"
+  },
+  "public/assets/fonts/outfit/subset-Outfit-Light.woff": {
+    "file": "assets/subset-Outfit-Light-3kd6SbPE.woff",
+    "src": "public/assets/fonts/outfit/subset-Outfit-Light.woff"
+  },
+  "public/assets/fonts/outfit/subset-Outfit-Light.woff2": {
+    "file": "assets/subset-Outfit-Light-BkjpX_zi.woff2",
+    "src": "public/assets/fonts/outfit/subset-Outfit-Light.woff2"
+  },
+  "public/assets/fonts/outfit/subset-Outfit-Medium.woff": {
+    "file": "assets/subset-Outfit-Medium-CITjnWjk.woff",
+    "src": "public/assets/fonts/outfit/subset-Outfit-Medium.woff"
+  },
+  "public/assets/fonts/outfit/subset-Outfit-Medium.woff2": {
+    "file": "assets/subset-Outfit-Medium-CTXXkKbs.woff2",
+    "src": "public/assets/fonts/outfit/subset-Outfit-Medium.woff2"
+  },
+  "public/assets/fonts/outfit/subset-Outfit-Regular.woff": {
+    "file": "assets/subset-Outfit-Regular-eQJtvGl3.woff",
+    "src": "public/assets/fonts/outfit/subset-Outfit-Regular.woff"
+  },
+  "public/assets/fonts/outfit/subset-Outfit-Regular.woff2": {
+    "file": "assets/subset-Outfit-Regular-PhnX1GUy.woff2",
+    "src": "public/assets/fonts/outfit/subset-Outfit-Regular.woff2"
+  },
+  "public/assets/fonts/outfit/subset-Outfit-SemiBold.woff": {
+    "file": "assets/subset-Outfit-SemiBold-AU0AlV1A.woff",
+    "src": "public/assets/fonts/outfit/subset-Outfit-SemiBold.woff"
+  },
+  "public/assets/fonts/outfit/subset-Outfit-SemiBold.woff2": {
+    "file": "assets/subset-Outfit-SemiBold-D2yIjgbt.woff2",
+    "src": "public/assets/fonts/outfit/subset-Outfit-SemiBold.woff2"
+  },
+  "public/assets/fonts/outfit/subset-Outfit-Thin.woff": {
+    "file": "assets/subset-Outfit-Thin-WU58QpeM.woff",
+    "src": "public/assets/fonts/outfit/subset-Outfit-Thin.woff"
+  },
+  "public/assets/fonts/outfit/subset-Outfit-Thin.woff2": {
+    "file": "assets/subset-Outfit-Thin-AhL7lXmZ.woff2",
+    "src": "public/assets/fonts/outfit/subset-Outfit-Thin.woff2"
+  },
   "resources/css/app.css": {
-    "file": "assets/app-tslFQMm7.css",
+    "file": "assets/app-gde8ULcC.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
