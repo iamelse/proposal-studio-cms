@@ -80,7 +80,7 @@ enum PermissionEnum: string
     case UPDATE_POST = 'posts_update';
     case DELETE_POST = 'posts_delete';
 
-    case READ_FILE_MANAGER = 'file_manager_read';
+    case READ_GALLERY = 'gallery_read';
 
     public static function all(): array
     {

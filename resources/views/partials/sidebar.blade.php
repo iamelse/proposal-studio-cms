@@ -108,9 +108,9 @@
                             'active' => 'unisharp.lfm.show',
                             'route' => 'unisharp.lfm.show',
                             'url' => '/admin/laravel-filemanager?type=image',
-                            'icon' => 'bx-file',
-                            'label' => 'Image File Manager',
-                            'permission' => PermissionEnum::READ_FILE_MANAGER
+                            'icon' => 'bx-images',
+                            'label' => 'Gallery',
+                            'permission' => PermissionEnum::READ_GALLERY
                         ],
                     ]
                 ],
