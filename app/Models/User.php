@@ -3,6 +3,8 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\CanResetPassword;
+use Illuminate\Auth\Passwords\CanResetPassword as CanResetPasswordTrait;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -13,10 +15,10 @@ use Spatie\Permission\Traits\HasRoles;
 use Yogameleniawan\SearchSortEloquent\Traits\Searchable;
 use Yogameleniawan\SearchSortEloquent\Traits\Sortable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements CanResetPassword
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasRoles, Searchable, Sortable;
+    use HasFactory, Notifiable, HasRoles, Searchable, Sortable, CanResetPasswordTrait;
 
     protected $guarded = ['id'];
 

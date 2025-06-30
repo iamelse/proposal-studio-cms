@@ -34,7 +34,7 @@ class UpdateUserRequest extends FormRequest
                 'required',
                 'string',
                 'email',
-                'max:255',
+                'email:rfc,dns,spoof',
                 Rule::unique('users', 'email')->ignore($this->user->id),
             ],
             'role' => 'required|exists:roles,name',

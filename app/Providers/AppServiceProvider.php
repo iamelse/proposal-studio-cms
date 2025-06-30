@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Section;
 use App\Models\Setting;
 use App\Models\SocialMedia;
+use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
@@ -28,6 +29,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        ResetPassword::createUrlUsing(function ($notifiable, string $token) {
+            return url(
+                route(
+                    'auth.password.reset',
+                    ['token' => $token, 'email' => $notifiable->getEmailForPasswordReset()],
+                    false
+                )
+            );
+        });
+
         $footer = Schema::hasTable('sections')
             ? Section::where('name', 'footer')->first()
             : null;
