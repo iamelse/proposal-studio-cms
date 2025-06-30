@@ -1,90 +1,88 @@
-/* ——— Boxicons (CDN install via npm atau import langsung css) ——— */
 @import "boxicons/css/boxicons.min.css";
 
-/* ——— Web-font: Outfit ——— */
-/*  path publik = /assets/fonts/...   (tanpa /public) */
+/** Fonts **/
 @font-face {
-    font-family: "Outfit";
-    src: url("/assets/fonts/outfit/subset-Outfit-Thin.woff2") format("woff2"),
-    url("/assets/fonts/outfit/subset-Outfit-Thin.woff")  format("woff");
-    font-weight: 100;
+    font-family: 'Outfit';
+    src: url('/public/assets/fonts/outfit/subset-Outfit-Black.woff2') format('woff2'),
+    url('/public/assets/fonts/outfit/subset-Outfit-Black.woff') format('woff');
+    font-weight: 900;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: "Outfit";
-    src: url("/assets/fonts/outfit/subset-Outfit-ExtraLight.woff2") format("woff2"),
-    url("/assets/fonts/outfit/subset-Outfit-ExtraLight.woff")  format("woff");
+    font-family: 'Outfit';
+    src: url('/public/assets/fonts/outfit/subset-Outfit-ExtraLight.woff2') format('woff2'),
+    url('/public/assets/fonts/outfit/subset-Outfit-ExtraLight.woff') format('woff');
     font-weight: 200;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: "Outfit";
-    src: url("/assets/fonts/outfit/subset-Outfit-Light.woff2") format("woff2"),
-    url("/assets/fonts/outfit/subset-Outfit-Light.woff")  format("woff");
+    font-family: 'Outfit';
+    src: url('/public/assets/fonts/outfit/subset-Outfit-Regular.woff2') format('woff2'),
+    url('/public/assets/fonts/outfit/subset-Outfit-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Outfit';
+    src: url('/public/assets/fonts/outfit/subset-Outfit-Light.woff2') format('woff2'),
+    url('/public/assets/fonts/outfit/subset-Outfit-Light.woff') format('woff');
     font-weight: 300;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: "Outfit";
-    src: url("/assets/fonts/outfit/subset-Outfit-Regular.woff2") format("woff2"),
-    url("/assets/fonts/outfit/subset-Outfit-Regular.woff")  format("woff");
-    font-weight: 400;
+    font-family: 'Outfit';
+    src: url('/public/assets/fonts/outfit/subset-Outfit-ExtraBold.woff2') format('woff2'),
+    url('/public/assets/fonts/outfit/subset-Outfit-ExtraBold.woff') format('woff');
+    font-weight: bold;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: "Outfit";
-    src: url("/assets/fonts/outfit/subset-Outfit-Medium.woff2") format("woff2"),
-    url("/assets/fonts/outfit/subset-Outfit-Medium.woff")  format("woff");
-    font-weight: 500;
-    font-style: normal;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: "Outfit";
-    src: url("/assets/fonts/outfit/subset-Outfit-SemiBold.woff2") format("woff2"),
-    url("/assets/fonts/outfit/subset-Outfit-SemiBold.woff")  format("woff");
+    font-family: 'Outfit';
+    src: url('/public/assets/fonts/outfit/subset-Outfit-SemiBold.woff2') format('woff2'),
+    url('/public/assets/fonts/outfit/subset-Outfit-SemiBold.woff') format('woff');
     font-weight: 600;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: "Outfit";
-    src: url("/assets/fonts/outfit/subset-Outfit-Bold.woff2") format("woff2"),
-    url("/assets/fonts/outfit/subset-Outfit-Bold.woff")  format("woff");
-    font-weight: 700;
+    font-family: 'Outfit';
+    src: url('/public/assets/fonts/outfit/subset-Outfit-Bold.woff2') format('woff2'),
+    url('/public/assets/fonts/outfit/subset-Outfit-Bold.woff') format('woff');
+    font-weight: bold;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: "Outfit";
-    src: url("/assets/fonts/outfit/subset-Outfit-ExtraBold.woff2") format("woff2"),
-    url("/assets/fonts/outfit/subset-Outfit-ExtraBold.woff")  format("woff");
-    font-weight: 800;
+    font-family: 'Outfit';
+    src: url('/public/assets/fonts/outfit/subset-Outfit-Medium.woff2') format('woff2'),
+    url('/public/assets/fonts/outfit/subset-Outfit-Medium.woff') format('woff');
+    font-weight: 500;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: "Outfit";
-    src: url("/assets/fonts/outfit/subset-Outfit-Black.woff2") format("woff2"),
-    url("/assets/fonts/outfit/subset-Outfit-Black.woff")  format("woff");
-    font-weight: 900;
+    font-family: 'Outfit';
+    src: url('/public/assets/fonts/outfit/subset-Outfit-Thin.woff2') format('woff2'),
+    url('/public/assets/fonts/outfit/subset-Outfit-Thin.woff') format('woff');
+    font-weight: 100;
     font-style: normal;
     font-display: swap;
 }
+/** Fonts **/
 
-/* ——— Tailwind directives ——— */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -115,6 +113,10 @@
 @layer base {
     body {
         @apply relative z-1 bg-gray-50 font-outfit text-base font-normal;
+    }
+    :where(h1) {
+        font-size: 2em;
+        margin-block: 0.67em;
     }
 }
 
