@@ -8,10 +8,12 @@
     <!-- Meta Robots -->
     <meta name="robots" content="index, follow">
 
+    <!-- Root Favicon -->
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
     <!-- Standard Favicons -->
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/images/favicons/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/images/favicons/favicon-32x32.png') }}">
-    <link rel="shortcut icon" href="{{ asset('assets/images/favicons/favicon.ico') }}">
 
     <!-- Apple Touch Icon -->
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/images/favicons/apple-touch-icon.png') }}">

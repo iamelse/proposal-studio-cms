@@ -2,22 +2,29 @@
 
 @section('content')
     @push('meta')
-        <title>{{ $title ?? 'Daftar Artikel - ' . env('APP_NAME') }}</title>
-        <meta name="description" content="Baca kumpulan artikel terbaru seputar berbagai topik menarik yang dikurasi secara informatif dan inspiratif.">
+        <!-- Meta title -->
+        <title>{{ $settings['post_index_title'] ?? env('APP_NAME') }}</title>
+
+        <!-- Meta Description -->
+        <meta name="description" content="{{ $settings['post_index_description'] }}">
+
+        <!-- Meta Keywords (opsional & jarang dipakai oleh Google) -->
         <meta name="keywords" content="artikel terbaru, blog, berita, informasi, edukasi, inspirasi">
+
+        <!-- Canonical URL -->
         <link rel="canonical" href="{{ url()->current() }}" />
 
         <!-- Open Graph -->
-        <meta property="og:title" content="{{ $title ?? 'Daftar Artikel - ' . env('APP_NAME') }}" />
-        <meta property="og:description" content="Jelajahi artikel-artikel pilihan kami yang menarik dan penuh informasi." />
+        <meta property="og:title" content="{{ $settings['post_index_title'] ?? env('APP_NAME') }}" />
+        <meta property="og:description" content="{{ $settings['post_index_description'] }}" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="{{ url()->current() }}" />
         <meta property="og:image" content="{{ asset('assets/images/social-share.png') }}" />
 
         <!-- Twitter Cards -->
         <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="{{ $title ?? 'Daftar Artikel - ' . env('APP_NAME') }}">
-        <meta name="twitter:description" content="Jelajahi artikel-artikel pilihan kami yang menarik dan penuh informasi.">
+        <meta name="twitter:title" content="{{ $settings['post_index_title'] ?? env('APP_NAME') }}">
+        <meta name="twitter:description" content="{{ $settings['post_index_description'] }}">
         <meta name="twitter:image" content="{{ asset('assets/images/social-share.png') }}">
     @endpush
 
