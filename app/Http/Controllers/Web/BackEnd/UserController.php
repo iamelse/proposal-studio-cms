@@ -109,12 +109,13 @@ class UserController extends Controller
     /**
      * Show form edit user
      */
-    public function edit(User $user): View
+    public function edit(User $user): View | RedirectResponse
     {
         Gate::authorize(PermissionEnum::UPDATE_USER->value);
 
-        if ($user->hasRole(RoleEnum::MASTER->value)) {
-            abort(403, 'Cannot edit a user with MASTER role.');
+        if ($user->id === auth()->id()) {
+            return redirect()->route('be.user.index')
+                             ->with('error', 'Anda tidak boleh meng-update akun Anda sendiri.');
         }
 
         $roles = Role::orderBy('name', 'ASC')->get();
@@ -130,8 +131,8 @@ class UserController extends Controller
     {
         Gate::authorize(PermissionEnum::UPDATE_USER->value);
 
-        if ($user->hasRole(RoleEnum::MASTER->value)) {
-            abort(403, 'Cannot update a user with MASTER role.');
+        if ($user->id === auth()->id()) {
+            abort(403, 'Anda tidak boleh meng-update akun Anda sendiri.');
         }
 
         try {
