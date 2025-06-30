@@ -192,7 +192,7 @@
                     <article class="flex-shrink-0 w-full px-8 flex flex-col items-center text-center max-w-full"
                              aria-label="Keunggulan: {{ $feature->title }}">
                         <figure class="rounded-full bg-white p-5 w-[108px] h-[108px] flex items-center justify-center mx-auto">
-                            <img src="{{ getWhyUsListImagePath($feature) }}"
+                            <img class="w-[108px] h-[108px]" src="{{ getWhyUsListImagePath($feature) }}"
                                  alt="Ikon {{ $feature->title }}" loading="lazy">
                         </figure>
                         <h3 class="font-medium text-lg text-white mt-4">{{ $feature->title }}</h3>
@@ -216,7 +216,7 @@
                 <article class="flex flex-col items-center text-center max-w-[160px]"
                          aria-label="Keunggulan: {{ $feature->title }}">
                     <figure class="rounded-full bg-white p-5 w-[108px] h-[108px] flex items-center justify-center">
-                        <img src="{{ getWhyUsListImagePath($feature) }}"
+                        <img class="w-[108px] h-[108px]" src="{{ getWhyUsListImagePath($feature) }}"
                              alt="Ikon {{ $feature->title }}" loading="lazy">
                     </figure>
                     <h3 class="font-medium text-base sm:text-lg md:text-xl text-white mt-3 break-words">
