@@ -20,7 +20,7 @@ class DashboardService
         $isMaster = $user->role === RoleEnum::MASTER->value;
         $postQuery = Post::query();
 
-        if (! $isMaster) {
+        if (!$isMaster) {
             $postQuery->where('user_id', $user->id);
         }
 
@@ -32,10 +32,10 @@ class DashboardService
 
         // Website visitor statistics
         $websiteVisitorStats = $this->getWebsiteVisitorHistory($range);
-        $websiteVisitorSummary = $this->summarizeWebVisitors($user, $range);
+        $websiteVisitorSummary = $this->summarizeWebVisitors($range);
 
         $whatsappClickStats = $this->getWhatsappClickHistory($range);
-        $whatsappClickSummary = $this->summarizeWhatsappClicks($user, $isMaster);
+        $whatsappClickSummary  = $this->summarizeWhatsappClicks($range);
 
         return [
             'title' => 'Dashboard',
@@ -214,43 +214,41 @@ class DashboardService
     }
 
     /**
-     * Generate a summary of web visitor statistics including total, average, and peak day.
+     * Ringkasan statistik pengunjung web: total, rata-rata harian, dan hari puncak.
      *
-     * @param \Illuminate\Contracts\Auth\Authenticatable $user The authenticated user.
-     * @param bool $isMaster Whether the user is a master (admin).
-     * @param string $range Time range string like '7d', '30d', etc.
-     * @return array Summary including total visitors, average per day, and peak visitor day.
-     *
-     * Useful for showing high-level metrics about site traffic.
+     * @param string $range  Contoh '7d', '30d', dst.
+     * @return array ['totalVisitors' => 123, 'avgVisitors' => 18, 'peakDay' => 'Senin, 23 Jun 2025']
      */
-    private function summarizeWebVisitors(Authenticatable $user, bool $isMaster, string $range = '7d'): array
+    private function summarizeWebVisitors(string $range = '7d'): array
     {
         [$fromDate, $intervalType] = $this->resolveDateRange($range);
 
-        $query = VisitorStatistic::select(
+        // agregasi seluruh data (tidak lagi difilter per user)
+        $data = VisitorStatistic::select(
             'date',
             DB::raw('SUM(visitors) as total_visitors')
-        )->where('date', '>=', $fromDate->toDateString());
-
-        if (! $isMaster) {
-            $query->where('user_id', $user->id);
-        }
-
-        $data = $query->groupBy('date')->orderBy('date')->get();
+        )
+            ->where('date', '>=', $fromDate->toDateString())
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get();
 
         $totalVisitors = $data->sum('total_visitors');
-        $dateRange = $this->generateDateRange($fromDate, now(), $intervalType);
-        $days = $dateRange->count();
 
-        $avgVisitors = $days > 0 ? round($totalVisitors / $days) : 0;
+        // hitung rata-rata harian berdasarkan rentang tanggal benar-benar penuh
+        $dateRange  = $this->generateDateRange($fromDate, now(), $intervalType);
+        $days       = $dateRange->count();
+        $avgVisitors= $days > 0 ? round($totalVisitors / $days) : 0;
 
-        $peakDay = $data->sortByDesc('total_visitors')->first()?->date;
-        $peakDayLabel = $peakDay ? Carbon::parse($peakDay)->translatedFormat('l, d M Y') : '-';
+        $peakDay    = $data->sortByDesc('total_visitors')->first()?->date;
+        $peakLabel  = $peakDay
+            ? Carbon::parse($peakDay)->translatedFormat('l, d M Y')
+            : '-';
 
         return [
             'totalVisitors' => $totalVisitors,
-            'avgVisitors' => $avgVisitors,
-            'peakDay' => $peakDayLabel,
+            'avgVisitors'   => $avgVisitors,
+            'peakDay'       => $peakLabel,
         ];
     }
 
