@@ -115,7 +115,7 @@ class UserController extends Controller
 
         if ($user->id === auth()->id()) {
             return redirect()->route('be.user.index')
-                             ->with('error', 'Anda tidak boleh meng-update akun Anda sendiri.');
+                             ->with('error', 'You cannot update your own account here. Please use the Edit Profile page.');
         }
 
         $roles = Role::orderBy('name', 'ASC')->get();
@@ -132,7 +132,7 @@ class UserController extends Controller
         Gate::authorize(PermissionEnum::UPDATE_USER->value);
 
         if ($user->id === auth()->id()) {
-            abort(403, 'Anda tidak boleh meng-update akun Anda sendiri.');
+            abort(403, 'You cannot update your own account here. Please use the Edit Profile page.');
         }
 
         try {

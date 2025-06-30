@@ -245,9 +245,12 @@
                                         class="absolute right-16 top-8 mt-1 w-40 rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-800 dark:bg-gray-900
                                         z-50 overflow-visible">
                                         @can(PermissionEnum::UPDATE_USER, $user)
-                                        <a href="{{ route('be.user.edit', $user->username) }}" class="block w-full px-4 py-2 text-left text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800">
-                                            Edit
-                                        </a>
+                                            @if ($user->id !== auth()->id())
+                                                <a href="{{ route('be.user.edit', $user->username) }}"
+                                                   class="block w-full px-4 py-2 text-left text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800">
+                                                    Edit
+                                                </a>
+                                            @endif
                                         @endcan
                                         <!-- Alpine.js State Wrapper -->
                                         <div x-data="{ openUserDeleteModal: false }">
