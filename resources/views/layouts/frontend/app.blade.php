@@ -10,7 +10,7 @@
 
     <!-- Root Favicon -->
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-    
+
     <!-- Standard Favicons -->
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/images/favicons/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/images/favicons/favicon-32x32.png') }}">
@@ -32,13 +32,6 @@
         <link rel="stylesheet"
               href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
     </noscript>
-
-    {{-- ── Preload Outfit font family ───────────────────────────────── --}}
-    <link rel="preload" href="{{ asset('assets/fonts/outfit/subset-Outfit-Regular.woff2') }}"
-          as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="{{ asset('assets/fonts/outfit/subset-Outfit-Bold.woff2') }}"
-          as="font" type="font/woff2" crossorigin>
-    {{-- ─────────────────────────────────────────────────────────────── --}}
 
     {{-- Preload Background --}}
     <link rel="preload" as="image" href="{{ asset('assets/images/bg.webp') }}">
