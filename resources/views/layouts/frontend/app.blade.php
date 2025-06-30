@@ -61,6 +61,28 @@
                 <link rel="stylesheet"
                       href="{{ asset('build/'.$manifest['resources/css/app.css']['file']) }}">
             </noscript>
+
+            {{-- ================== Preload font Outfit (semua woff/woff2) ============ --}}
+            @foreach ($manifest as $src => $data)
+                @if (Str::contains($src, 'fonts/outfit') &&
+                     Str::endsWith($src, ['.woff2', '.woff']))
+                    <link rel="preload"
+                          href="{{ asset('build/'.$data['file']) }}"
+                          as="font"
+                          type="font/{{ Str::afterLast($data['file'], '.') }}"
+                          crossorigin>
+                @endif
+            @endforeach
+
+            {{-- (Opsional) Preload Boxicons woff2 – hapus bila tak diperlukan --}}
+            @foreach ($manifest as $src => $data)
+                @if (Str::contains($src, 'boxicons/fonts') && Str::endsWith($src, '.woff2'))
+                    <link rel="preload"
+                          href="{{ asset('build/'.$data['file']) }}"
+                          as="font" type="font/woff2" crossorigin>
+                @endif
+            @endforeach
+
         @else
             {{-- Fallback if manifest.json is missing --}}
             <p style="color: red;">Error: Build files not found. Please run <code>npm run build</code>.</p>
